@@ -8,8 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
+import br.edu.toycenter.entities.Category;
 import br.edu.toycenter.entities.Product;
 import br.edu.toycenter.entities.User;
+import br.edu.toycenter.repositories.CategoryRepository;
 import br.edu.toycenter.repositories.ProductRepository;
 import br.edu.toycenter.repositories.UserRepository;
 
@@ -25,6 +27,9 @@ public class TestConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -44,5 +49,11 @@ public class TestConfig implements CommandLineRunner {
 				, "Console com 256 GB de memória");
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		
+		Category c1 = new Category(null, "Carrinhos");
+		Category c2 = new Category(null, "Bonecas");
+		Category c3 = new Category(null, "Consoles");
+		
+		categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
 	}
 }
