@@ -2,11 +2,14 @@ package br.edu.toycenter.entities;
 
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
 public class User {
 	
+	@Id
+	private String id;
 	private String cpf;
 	private String name;
 	private String email;
@@ -17,8 +20,9 @@ public class User {
 		
 	}
 	
-	public User(String cpf, String name, String email, String phone, String password) {
+	public User(String id, String cpf, String name, String email, String phone, String password) {
 		super();
+		this.id = id;
 		this.cpf = cpf;
 		this.name = name;
 		this.email = email;
@@ -26,6 +30,14 @@ public class User {
 		this.password = password;
 	}
 	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
 	public String getCpf() {
 		return cpf;
 	}
