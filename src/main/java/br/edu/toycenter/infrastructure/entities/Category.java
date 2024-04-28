@@ -1,5 +1,7 @@
 package br.edu.toycenter.infrastructure.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
@@ -11,6 +13,8 @@ public class Category {
 	@Id
 	private String id;
 	private String name;
+	
+	List<String> productsId = new ArrayList<>();
 	
 	public Category() {
 	}
@@ -40,6 +44,10 @@ public class Category {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public List<String> getProductsId() {
+		return productsId;
 	}
 
 	@Override

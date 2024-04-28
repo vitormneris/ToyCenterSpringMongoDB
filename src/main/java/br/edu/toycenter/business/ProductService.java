@@ -2,6 +2,7 @@ package br.edu.toycenter.business;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class ProductService {
 		}
 		
 		return listProductDTO;
+	}
+	
+	public Product findAllById(String id) {
+		Optional<Product> obj = repository.findById(id);
+		return obj.orElseThrow();
 	}
 }

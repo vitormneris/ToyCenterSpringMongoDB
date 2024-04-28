@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.toycenter.api.response.CategoryResponseDTO;
 import br.edu.toycenter.business.CategoryService;
-import br.edu.toycenter.infrastructure.entities.Category;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -19,8 +19,8 @@ public class CategoryController {
 	CategoryService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Category>> findAll() {
-		List<Category> list = service.findAll();
+	public ResponseEntity<List<CategoryResponseDTO>> findAll() {
+		List<CategoryResponseDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 }
