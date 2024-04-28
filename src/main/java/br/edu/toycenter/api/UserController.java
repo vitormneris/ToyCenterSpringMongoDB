@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.toycenter.api.response.UserResponseDTO;
 import br.edu.toycenter.business.UserService;
 import br.edu.toycenter.infrastructure.entities.User;
 
@@ -20,8 +21,8 @@ public class UserController {
 	UserService service;
 	
 	@GetMapping
-	public ResponseEntity<List<User>> findAll() {
-		List<User> list = service.findAll();
+	public ResponseEntity<List<UserResponseDTO>> findAll() {
+		List<UserResponseDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	

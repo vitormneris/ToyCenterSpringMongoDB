@@ -91,7 +91,7 @@ public class User {
 		this.password = password;
 	}
 	
-	public List<String> getOrders() {
+	public List<String> getOrdersId() {
 		return ordersId;
 	}
 

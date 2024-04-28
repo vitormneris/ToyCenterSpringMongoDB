@@ -77,7 +77,13 @@ public class TestConfig implements CommandLineRunner {
 		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1.getId());
 		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2.getId());
 		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u3.getId());
-		
+	
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+		
+		u1.getOrdersId().add(o1.getId());
+		u2.getOrdersId().add(o2.getId());
+		u3.getOrdersId().add(o3.getId());
+
+		userRepository.saveAll(Arrays.asList(u1, u2, u3));
 	}
 }
