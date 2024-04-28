@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.toycenter.api.convert.UserConvert;
+import br.edu.toycenter.api.request.UserRequestDTO;
 import br.edu.toycenter.api.response.UserResponseDTO;
 import br.edu.toycenter.infrastructure.entities.Order;
 import br.edu.toycenter.infrastructure.entities.User;
@@ -28,29 +29,58 @@ public class UserService {
 	
 	public List<UserResponseDTO> findAll() {
 		List<User> listUser = repository.findAll();
-		
 		List<UserResponseDTO> listUserDTO = new ArrayList<>();
 		
 		for (User user : listUser) {
-			List<Order> listOrder = new ArrayList<>();
-			
-			for (String orderId : user.getOrdersId()) {
-				Optional<Order> obj = orderRepository.findById(orderId);
-				listOrder.add(obj.get());
-			}
-			listUserDTO.add(userConvert.forUserResponseDTO(user, listOrder));
+			listUserDTO.add(userToUserResponseDTO(user));
 		}
 		
 		return listUserDTO;
 	}
 	
-	public User findByCpf(String cpf) {
+	public UserResponseDTO findByCpf(String cpf) {
 		Optional<User> obj = repository.findByCpf(cpf);
-		return obj.orElseThrow();
+		UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
+		return userDTO;
 	}
 	
-	public User findByEmail(String email) {
+	public UserResponseDTO findByEmail(String email) {
 		Optional<User> obj = repository.findByEmail(email);
-		return obj.orElseThrow();
+		UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
+		return userDTO;
+	}
+	
+	public UserResponseDTO insert(UserRequestDTO userRequestDTO) {
+		User user = userConvert.forUser(userRequestDTO);
+		User userInserted = repository.save(user);
+		return userToUserResponseDTO(userInserted);
+	}
+	
+	public UserResponseDTO update(String id, UserRequestDTO userRequestDTO) {
+		User user = userConvert.forUser(userRequestDTO);
+		Optional<User> obj = repository.findById(id);
+		updateData(obj.get(), user);
+		User userUpdated = repository.save(obj.get());
+		return userToUserResponseDTO(userUpdated);
+	}
+	
+	private void updateData(User obj, User user) {
+		obj.setCpf(user.getCpf());
+		obj.setName(user.getName());
+		obj.setEmail(user.getEmail());
+		obj.setPhone(user.getPhone());
+		obj.setPassword(user.getPassword());
+	}
+
+	public UserResponseDTO userToUserResponseDTO(User user) {
+		List<Order> listOrder = new ArrayList<>();
+		
+		for (String orderId : user.getOrdersId()) {
+			Optional<Order> obj = orderRepository.findById(orderId);
+			listOrder.add(obj.get());
+		}
+		
+		UserResponseDTO userDTO = userConvert.forUserResponseDTO(user, listOrder);
+		return userDTO;
 	}
 }

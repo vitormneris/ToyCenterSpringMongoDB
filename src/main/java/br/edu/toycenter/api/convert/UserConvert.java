@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import br.edu.toycenter.api.request.UserRequestDTO;
 import br.edu.toycenter.api.response.UserResponseDTO;
 import br.edu.toycenter.infrastructure.entities.Order;
 import br.edu.toycenter.infrastructure.entities.User;
@@ -11,22 +12,18 @@ import br.edu.toycenter.infrastructure.entities.User;
 @Component
 public class UserConvert {
 	
-//	public Product forProduct(ProductRequestDTO productDTO) {
-//		Product product = new Product.Builder()
-//				.id(productDTO.id())
-//				.name(productDTO.name())
-//				.brand(productDTO.brand())
-//				.price(productDTO.price())
-//				.description(productDTO.description())
-//				.details(productDTO.details())
-//				.build();
-//		
-//		for (String categoryId: productDTO.categories()) {
-//			product.getCategoriesId().add(categoryId);
-//		}
-//		
-//		return product;
-//	}
+	public User forUser(UserRequestDTO userDTO) {
+		User user = new User.Builder()
+				.id(userDTO.id())
+				.cpf(userDTO.cpf())
+				.name(userDTO.name())
+				.email(userDTO.email())
+				.phone(userDTO.phone())
+				.password(userDTO.password())
+				.build();
+
+		return user;
+	}
 	
 	public UserResponseDTO forUserResponseDTO(User user, List<Order> listOrder) {
 		UserResponseDTO userDTO = new UserResponseDTO(				
