@@ -1,16 +1,13 @@
 package br.edu.toycenter.api.convert;
 
-import java.util.List;
-
 import org.springframework.stereotype.Component;
 
 import br.edu.toycenter.api.response.OrderItemResponseDTO;
-import br.edu.toycenter.api.response.OrderResponseDTO;
-import br.edu.toycenter.infrastructure.entities.Order;
-import br.edu.toycenter.infrastructure.entities.User;
+import br.edu.toycenter.infrastructure.entities.OrderItem;
+import br.edu.toycenter.infrastructure.entities.Product;
 
 @Component
-public class OrderConvert {
+public class OrderItemConvert {
 	
 //	public Product forProduct(ProductRequestDTO productDTO) {
 //		Product product = new Product.Builder()
@@ -29,13 +26,12 @@ public class OrderConvert {
 //		return product;
 //	}
 	
-	public OrderResponseDTO forOrderResponseDTO(Order order, User user, List<OrderItemResponseDTO> orderItemDTO) {
-		OrderResponseDTO orderDTO = new OrderResponseDTO(				
-				order.getId(),
-				order.getMoment(),
-				user,
-				orderItemDTO);
+	public OrderItemResponseDTO forOrderItemResponseDTO(OrderItem orderItem, Product product) {
+		OrderItemResponseDTO OrderItemDTO = new OrderItemResponseDTO(				
+				orderItem.getQuantity(),
+				orderItem.getPrice(),
+				product);
 				
-		return orderDTO;
+		return OrderItemDTO;
 	}
 }

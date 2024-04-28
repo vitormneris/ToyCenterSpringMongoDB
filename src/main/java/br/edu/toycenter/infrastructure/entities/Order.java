@@ -1,6 +1,7 @@
 package br.edu.toycenter.infrastructure.entities;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
@@ -13,22 +14,25 @@ public class Order {
 	private String id;
 	private Instant moment;
 	private String userId;
+	private List<OrderItem> orderItens;
 	
 	public Order() {
 		
 	}
-
-	public Order(String id, Instant momemnt, String userId) {
+	
+    public Order(String id, Instant moment, String userId, List<OrderItem> orderItens) {
 		super();
 		this.id = id;
-		this.moment = momemnt;
+		this.moment = moment;
 		this.userId = userId;
+		this.orderItens = orderItens;
 	}
-	
-    public Order(Builder builder) {
+
+	public Order(Builder builder) {
     	id = builder.id;
     	moment = builder.moment;
     	userId = builder.userId;
+    	orderItens = builder.orderItens;
     }
 
 	public String getId() {
@@ -55,6 +59,10 @@ public class Order {
 		this.userId = userId;
 	}
 
+	public List<OrderItem> getOrderItens() {
+		return orderItens;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -71,17 +79,18 @@ public class Order {
 		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", moment=" + moment + ", userId=" + userId + "]";
+		return "Order [id=" + id + ", moment=" + moment + ", userId=" + userId + ", orderItens=" + orderItens + "]";
 	}
-	
+
 	public static class Builder {
 
         private String id;
         private Instant moment;
         private String userId;
+        private List<OrderItem> orderItens;
 
         public Builder id(String value) {
         	id = value;
@@ -98,7 +107,11 @@ public class Order {
         	userId = value;
             return this;
         }
-
+        
+        public Builder orderItens(List<OrderItem> value) {
+        	orderItens = value;
+            return this;
+        }
 
         public Order build() {
             return new Order(this);

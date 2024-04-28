@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import br.edu.toycenter.infrastructure.entities.Category;
 import br.edu.toycenter.infrastructure.entities.Order;
+import br.edu.toycenter.infrastructure.entities.OrderItem;
 import br.edu.toycenter.infrastructure.entities.Product;
 import br.edu.toycenter.infrastructure.entities.User;
 import br.edu.toycenter.infrastructure.repositories.CategoryRepository;
@@ -74,9 +75,13 @@ public class TestConfig implements CommandLineRunner {
 		
 		categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1.getId());
-		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2.getId());
-		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u3.getId());
+		OrderItem oi1 = new OrderItem(1, p1.getPrice(), p1.getId());
+		OrderItem oi2 = new OrderItem(2, p2.getPrice(), p2.getId());
+		OrderItem oi3 = new OrderItem(3, p3.getPrice(), p3.getId());
+		
+		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), u1.getId(), Arrays.asList(oi1));
+		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), u2.getId(), Arrays.asList(oi2));
+		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), u3.getId(), Arrays.asList(oi3));
 	
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 		
@@ -85,5 +90,8 @@ public class TestConfig implements CommandLineRunner {
 		u3.getOrdersId().add(o3.getId());
 
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
+		
+
+		
 	}
 }
