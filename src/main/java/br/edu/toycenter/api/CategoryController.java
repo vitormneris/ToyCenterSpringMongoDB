@@ -1,4 +1,4 @@
-package br.edu.toycenter.resources;
+package br.edu.toycenter.api;
 
 import java.util.List;
 
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.toycenter.entities.Category;
-import br.edu.toycenter.services.CategoryService;
+import br.edu.toycenter.business.CategoryService;
+import br.edu.toycenter.infrastructure.entities.Category;
 
 @RestController
 @RequestMapping(value = "/categories")
-public class CategoryResource {
+public class CategoryController {
 	
 	@Autowired
 	CategoryService service;

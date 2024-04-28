@@ -1,5 +1,7 @@
-package br.edu.toycenter.entities;
+package br.edu.toycenter.infrastructure.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
@@ -16,6 +18,8 @@ public class Product {
 	private String description;
 	private String details;
 	
+	private List<String> categoriesId = new ArrayList<>();
+ 	
 	public Product() {
 	}
 
@@ -28,6 +32,15 @@ public class Product {
 		this.description = description;
 		this.details = details;
 	}
+	
+    public Product(Builder builder) {
+    	id = builder.id;
+    	name = builder.name;
+    	brand = builder.brand;
+    	price = builder.price;
+    	description = builder.description;
+    	details = builder.details;
+    }
 
 	public String getId() {
 		return id;
@@ -76,7 +89,11 @@ public class Product {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-
+	
+	public List<String> getCategoriesId() {
+		return categoriesId;
+	}
+ 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -93,10 +110,57 @@ public class Product {
 		Product other = (Product) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	
 
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", brand=" + brand + ", price=" + price + ", description="
 				+ description + ", details=" + details + "]";
 	}
+	
+	public static class Builder {
+
+        private String id;
+        private String name;
+        private String brand;
+        private Double price;
+        private String description;
+        private String details;
+
+        public Builder id(String value) {
+        	id = value;
+            return this;
+        }
+
+        public Builder name(String value) {
+        	name = value;
+            return this;
+        }
+
+
+        public Builder brand(String value) {
+        	brand = value;
+            return this;
+        }
+
+        public Builder price(Double value) {
+        	price = value;
+            return this;
+        }
+
+        public Builder description(String value) {
+        	description = value;
+            return this;
+        }
+
+        public Builder details(String value) {
+        	details = value;
+            return this;
+        }
+
+        public Product build() {
+            return new Product(this);
+        }
+    }
 }

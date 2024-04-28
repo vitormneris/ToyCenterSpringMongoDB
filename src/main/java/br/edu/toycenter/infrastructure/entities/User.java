@@ -1,4 +1,4 @@
-package br.edu.toycenter.entities;
+package br.edu.toycenter.infrastructure.entities;
 
 import java.util.Objects;
 
@@ -29,6 +29,16 @@ public class User {
 		this.phone = phone;
 		this.password = password;
 	}
+	
+    public User(Builder builder) {
+
+    	id = builder.id;
+    	cpf = builder.cpf;
+    	name = builder.name;
+    	email = builder.email;
+    	phone = builder.phone;
+    	password = builder.password;
+    }
 	
 	public String getId() {
 		return id;
@@ -100,4 +110,49 @@ public class User {
 		return "User [cpf=" + cpf + ", name=" + name + ", email=" + email + ", phone=" + phone + ", password="
 				+ password + "]";
 	}
+	
+	public static class Builder {
+
+        private String id;
+        private String cpf;
+        private String name;
+        private String email;
+        private String phone;
+        private String password;
+
+        public Builder id(String value) {
+        	id = value;
+            return this;
+        }
+
+        public Builder cpf(String value) {
+        	cpf = value;
+            return this;
+        }
+
+
+        public Builder name(String value) {
+        	name = value;
+            return this;
+        }
+
+        public Builder email(String value) {
+        	email = value;
+            return this;
+        }
+
+        public Builder phone(String value) {
+        	phone = value;
+            return this;
+        }
+
+        public Builder password(String value) {
+        	password = value;
+            return this;
+        }
+
+        public User build() {
+            return new User(this);
+        }
+    }
 }

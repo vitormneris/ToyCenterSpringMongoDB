@@ -1,4 +1,4 @@
-package br.edu.toycenter.services;
+package br.edu.toycenter.business;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.edu.toycenter.entities.User;
-import br.edu.toycenter.repositories.UserRepository;
+import br.edu.toycenter.infrastructure.entities.User;
+import br.edu.toycenter.infrastructure.repositories.UserRepository;
 
 @Service
 public class UserService {

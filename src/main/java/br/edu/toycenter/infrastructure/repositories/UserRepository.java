@@ -1,10 +1,10 @@
-package br.edu.toycenter.repositories;
+package br.edu.toycenter.infrastructure.repositories;
 
 import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import br.edu.toycenter.entities.User;
+import br.edu.toycenter.infrastructure.entities.User;
 
 public interface UserRepository extends MongoRepository<User, String> {
 	

@@ -8,12 +8,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import br.edu.toycenter.entities.Category;
-import br.edu.toycenter.entities.Product;
-import br.edu.toycenter.entities.User;
-import br.edu.toycenter.repositories.CategoryRepository;
-import br.edu.toycenter.repositories.ProductRepository;
-import br.edu.toycenter.repositories.UserRepository;
+import br.edu.toycenter.infrastructure.entities.Category;
+import br.edu.toycenter.infrastructure.entities.Product;
+import br.edu.toycenter.infrastructure.entities.User;
+import br.edu.toycenter.infrastructure.repositories.CategoryRepository;
+import br.edu.toycenter.infrastructure.repositories.ProductRepository;
+import br.edu.toycenter.infrastructure.repositories.UserRepository;
 
 @Configuration
 @Profile("test")
@@ -55,5 +55,11 @@ public class TestConfig implements CommandLineRunner {
 		Category c3 = new Category(null, "Consoles");
 		
 		categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
+		
+		p1.getCategoriesId().add(c1.getId());
+		p2.getCategoriesId().add(c2.getId());
+		p3.getCategoriesId().add(c3.getId());
+		
+		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 	}
 }

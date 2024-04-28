@@ -1,4 +1,4 @@
-package br.edu.toycenter.resources;
+package br.edu.toycenter.api;
 
 import java.util.List;
 
@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.toycenter.entities.User;
-import br.edu.toycenter.services.UserService;
+import br.edu.toycenter.business.UserService;
+import br.edu.toycenter.infrastructure.entities.User;
 
 @RestController
 @RequestMapping(value = "/users")
-public class UserResource {
+public class UserController {
 	
 	@Autowired
 	UserService service;
