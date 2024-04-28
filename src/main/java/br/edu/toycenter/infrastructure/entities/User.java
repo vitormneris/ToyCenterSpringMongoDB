@@ -1,5 +1,7 @@
 package br.edu.toycenter.infrastructure.entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
@@ -16,6 +18,8 @@ public class User {
 	private String phone;
 	private String password;
 	
+	List<String> ordersId = new ArrayList<>();
+	
 	public User() {
 		
 	}
@@ -31,7 +35,6 @@ public class User {
 	}
 	
     public User(Builder builder) {
-
     	id = builder.id;
     	cpf = builder.cpf;
     	name = builder.name;
@@ -86,6 +89,10 @@ public class User {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public List<String> getOrders() {
+		return ordersId;
 	}
 
 	@Override
