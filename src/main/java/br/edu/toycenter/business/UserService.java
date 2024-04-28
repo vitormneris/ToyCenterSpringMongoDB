@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.toycenter.api.convert.UserConvert;
 import br.edu.toycenter.api.request.UserRequestDTO;
@@ -62,6 +63,15 @@ public class UserService {
 		updateData(obj.get(), user);
 		User userUpdated = repository.save(obj.get());
 		return userToUserResponseDTO(userUpdated);
+	}
+	
+	@Transactional
+	public void delete(String id) {
+		Optional<User> objUser = repository.findById(id);
+		Optional<Order> objOrder = orderRepository.findByUserId(id);
+
+		repository.delete(objUser.get());
+		orderRepository.delete(objOrder.get());
 	}
 	
 	private void updateData(User obj, User user) {

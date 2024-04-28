@@ -12,23 +12,6 @@ import br.edu.toycenter.infrastructure.entities.User;
 @Component
 public class OrderConvert {
 	
-//	public Product forProduct(ProductRequestDTO productDTO) {
-//		Product product = new Product.Builder()
-//				.id(productDTO.id())
-//				.name(productDTO.name())
-//				.brand(productDTO.brand())
-//				.price(productDTO.price())
-//				.description(productDTO.description())
-//				.details(productDTO.details())
-//				.build();
-//		
-//		for (String categoryId: productDTO.categories()) {
-//			product.getCategoriesId().add(categoryId);
-//		}
-//		
-//		return product;
-//	}
-	
 	public OrderResponseDTO forOrderResponseDTO(Order order, User user, List<OrderItemResponseDTO> orderItemDTO) {
 		OrderResponseDTO orderDTO = new OrderResponseDTO(				
 				order.getId(),
