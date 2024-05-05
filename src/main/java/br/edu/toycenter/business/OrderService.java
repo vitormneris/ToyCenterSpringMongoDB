@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.toycenter.api.convert.OrderConvert;
 import br.edu.toycenter.api.convert.OrderItemConvert;
+import br.edu.toycenter.api.request.OrderRequestDTO;
 import br.edu.toycenter.api.response.OrderItemResponseDTO;
 import br.edu.toycenter.api.response.OrderResponseDTO;
 import br.edu.toycenter.infrastructure.entities.Order;
@@ -46,6 +48,40 @@ public class OrderService {
 		}
 		
 		return listOrderDTO;
+	}
+	
+	public OrderResponseDTO findById(String id) {
+		Optional<Order> obj = repository.findById(id);
+		OrderResponseDTO orderResponseDTO = orderToOrderResponseDTO(obj.orElseThrow());
+		return orderResponseDTO;
+	}
+	
+	public OrderResponseDTO insert(OrderRequestDTO orderRequestDTO) {
+		Order order = orderConvert.forOrder(orderRequestDTO);
+		Order orderInserted = repository.save(order);
+		return orderToOrderResponseDTO(orderInserted);
+	}
+	
+	public OrderResponseDTO update(String id, OrderRequestDTO orderRequestDTO) {
+		Order order = orderConvert.forOrder(orderRequestDTO);
+		Optional<Order> obj = repository.findById(id);
+		updateData(obj.get(), order);
+		Order orderUpdated = repository.save(obj.get());
+		return orderToOrderResponseDTO(orderUpdated);
+	}
+	
+	@Transactional
+	public void delete(String id) {
+		Optional<Order> obj = repository.findById(id);
+
+		repository.delete(obj.get());
+	}
+	
+	private void updateData(Order obj, Order order) {
+		obj.setId(order.getId());
+		obj.setMoment(order.getMoment());
+		obj.setUserId(order.getUserId());
+		obj.setOrderItens(order.getOrderItens());
 	}
 	
 	public OrderResponseDTO orderToOrderResponseDTO(Order order) {

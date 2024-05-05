@@ -63,6 +63,10 @@ public class Order {
 		return orderItens;
 	}
 
+	public void setOrderItens(List<OrderItem> orderItens) {
+		this.orderItens = orderItens;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

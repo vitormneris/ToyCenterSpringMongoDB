@@ -39,6 +39,12 @@ public class UserService {
 		return listUserDTO;
 	}
 	
+	public UserResponseDTO findById(String id) {
+		Optional<User> obj = repository.findById(id);
+		UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
+		return userDTO;
+	}
+	
 	public UserResponseDTO findByCpf(String cpf) {
 		Optional<User> obj = repository.findByCpf(cpf);
 		UserResponseDTO userDTO = userToUserResponseDTO(obj.get());

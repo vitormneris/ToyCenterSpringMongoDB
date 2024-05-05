@@ -30,6 +30,12 @@ public class UserController {
 		return ResponseEntity.ok().body(list);
 	}
 	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<UserResponseDTO> findById(@PathVariable String id) {
+		UserResponseDTO obj = service.findById(id);
+	    return ResponseEntity.ok().body(obj);
+	}
+	
 	@GetMapping(value = "/email/{email}")
 	public ResponseEntity<UserResponseDTO> findByEmail(@PathVariable String email) {
 		UserResponseDTO obj = service.findByEmail(email);
