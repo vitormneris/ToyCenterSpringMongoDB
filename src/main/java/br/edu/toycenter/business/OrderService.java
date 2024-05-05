@@ -38,24 +38,27 @@ public class OrderService {
 	private OrderItemConvert orderItemConvert;
 	
 	public List<OrderResponseDTO> findAll() {
-		List<Order> listOrder = repository.findAll();
-		
+		List<Order> listOrder = repository.findAll();	
 		List<OrderResponseDTO> listOrderDTO = new ArrayList<>();
 	
 		for (Order order : listOrder) {
-			Optional<User> userObj = userRepository.findById(order.getUserId());
-			List<OrderItemResponseDTO> listOrderItemDTO = new ArrayList<>();
-			
-			for (OrderItem orderItem : order.getOrderItens()) {
-				Optional<Product> productObj = productRepository.findById(orderItem.getProductId());
-				OrderItemResponseDTO orderItemDTO = orderItemConvert.forOrderItemResponseDTO(orderItem, productObj.get());
-				listOrderItemDTO.add(orderItemDTO);
-			}	
-			OrderResponseDTO orderDTO = orderConvert.forOrderResponseDTO(order, userObj.get(), listOrderItemDTO);
-			listOrderDTO.add(orderDTO);
-				
+			listOrderDTO.add(orderToOrderResponseDTO(order));
 		}
 		
 		return listOrderDTO;
+	}
+	
+	public OrderResponseDTO orderToOrderResponseDTO(Order order) {
+		Optional<User> userObj = userRepository.findById(order.getUserId());
+		List<OrderItemResponseDTO> listOrderItemDTO = new ArrayList<>();
+		
+		for (OrderItem orderItem : order.getOrderItens()) {
+			Optional<Product> productObj = productRepository.findById(orderItem.getProductId());
+			OrderItemResponseDTO orderItemDTO = orderItemConvert.forOrderItemResponseDTO(orderItem, productObj.get());
+			listOrderItemDTO.add(orderItemDTO);
+		}	
+		
+		OrderResponseDTO orderDTO = orderConvert.forOrderResponseDTO(order, userObj.get(), listOrderItemDTO);
+		return orderDTO;
 	}
 }
