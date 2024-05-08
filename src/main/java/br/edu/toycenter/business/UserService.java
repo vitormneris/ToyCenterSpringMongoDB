@@ -58,17 +58,28 @@ public class UserService {
 	}
 	
 	public UserResponseDTO insert(UserRequestDTO userRequestDTO) {
-		User user = userConvert.forUser(userRequestDTO);
-		User userInserted = repository.save(user);
-		return userToUserResponseDTO(userInserted);
+		try {
+			User user = userConvert.forUser(userRequestDTO);
+			user.setId(null);
+			checkFields(user);
+			User userInserted = repository.save(user);
+			return userToUserResponseDTO(userInserted);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 	}
 	
 	public UserResponseDTO update(String id, UserRequestDTO userRequestDTO) {
-		User user = userConvert.forUser(userRequestDTO);
-		Optional<User> obj = repository.findById(id);
-		updateData(obj.get(), user);
-		User userUpdated = repository.save(obj.get());
-		return userToUserResponseDTO(userUpdated);
+		try {
+			User user = userConvert.forUser(userRequestDTO);
+			Optional<User> obj = repository.findById(id);
+			updateData(obj.get(), user);
+			checkFields(obj.get());
+			User userUpdated = repository.save(obj.get());
+			return userToUserResponseDTO(userUpdated);
+		} catch (IllegalArgumentException e){
+			throw new IllegalArgumentException(e.getMessage());	
+		}
 	}
 	
 	@Transactional
@@ -81,11 +92,11 @@ public class UserService {
 	}
 	
 	private void updateData(User obj, User user) {
-		obj.setCpf(user.getCpf());
-		obj.setName(user.getName());
-		obj.setEmail(user.getEmail());
-		obj.setPhone(user.getPhone());
-		obj.setPassword(user.getPassword());
+		obj.setCpf((user.getCpf() == null) ? obj.getCpf() : user.getCpf());
+		obj.setName((user.getName() == null) ? obj.getName() : user.getName());
+		obj.setEmail((user.getEmail() == null) ? obj.getEmail() : user.getEmail());
+		obj.setPhone((user.getPhone() == null) ? obj.getPhone() : user.getPhone());
+		obj.setPassword((user.getPassword() == null) ? obj.getPassword() : user.getPassword());
 	}
 
 	public UserResponseDTO userToUserResponseDTO(User user) {
@@ -98,5 +109,34 @@ public class UserService {
 		
 		UserResponseDTO userDTO = userConvert.forUserResponseDTO(user, listOrder);
 		return userDTO;
+	}
+	
+	private void checkFields(User user) throws IllegalArgumentException {
+		if (user == null) throw new IllegalArgumentException("Os campos não podem ser nulos");
+		
+		isNullOrBlank(user.getCpf());
+		if (!user.getCpf().matches("^[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}$")) 
+			throw new IllegalArgumentException("Formato de CPF Inválido.");
+		
+		isNullOrBlank(user.getName());
+		if (!user.getName().matches("^[a-zA-Z ]+$")) 
+			throw new IllegalArgumentException("Formato de nome Inválido."); 
+		
+		isNullOrBlank(user.getEmail());
+		if (!user.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) 
+			throw new IllegalArgumentException("Formato de e-mail Inválido.");
+		
+		isNullOrBlank(user.getPhone());
+		if (!user.getPhone().matches("\\(?\\d{2}\\)? ?(?:\\d{4,5}-?\\d{4}|\\d{4}-?\\d{4})$")) 
+			throw new IllegalArgumentException("Formato de telefone Inválido.");
+		
+		isNullOrBlank(user.getPassword());
+		if (!(user.getPassword().length() >= 8))
+			throw new IllegalArgumentException("Formato de senha Inválido.");
+	}
+	
+	private void isNullOrBlank(String string) throws IllegalArgumentException {
+		if (string == null || string.isBlank()) 
+			throw new IllegalArgumentException("Os campos não podem ser nulos.");
 	}
 }

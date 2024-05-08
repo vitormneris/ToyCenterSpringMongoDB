@@ -114,10 +114,10 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [cpf=" + cpf + ", name=" + name + ", email=" + email + ", phone=" + phone + ", password="
-				+ password + "]";
+		return "User [id=" + id + ", cpf=" + cpf + ", name=" + name + ", email=" + email + ", phone=" + phone
+				+ ", password=" + password + ", ordersId=" + ordersId + "]";
 	}
-	
+
 	public static class Builder {
 
         private String id;

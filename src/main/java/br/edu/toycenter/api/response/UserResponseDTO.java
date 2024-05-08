@@ -7,7 +7,7 @@ import br.edu.toycenter.infrastructure.entities.Order;
 public record UserResponseDTO(
 		String id,
 		String cpf,
-		String nome,
+		String name,
 		String email,
 		String phone,
 		String password,
