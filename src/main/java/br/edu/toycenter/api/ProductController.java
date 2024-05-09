@@ -1,5 +1,6 @@
 package br.edu.toycenter.api;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.edu.toycenter.api.request.ProductRequestDTO;
 import br.edu.toycenter.api.response.ProductResponseDTO;
@@ -39,7 +41,8 @@ public class ProductController {
 	@PostMapping
 	public ResponseEntity<ProductResponseDTO> insert(@RequestBody ProductRequestDTO productDTO) {
 		ProductResponseDTO obj = service.insert(productDTO);
-		return ResponseEntity.ok().body(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.id()).toUri();
+	    return ResponseEntity.created(uri).body(obj);
 	}
 	
 	@PutMapping(value = "/{id}")

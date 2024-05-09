@@ -90,6 +90,7 @@ public class UserService {
 			User user = userConvert.forUser(userRequestDTO);
 			Optional<User> obj = repository.findById(id);
 			updateData(obj.get(), user);
+			obj.get().setId(id);
 			checkFields(obj.get());
 			User userUpdated = repository.save(obj.get());
 			return userToUserResponseDTO(userUpdated);

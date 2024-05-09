@@ -2,6 +2,7 @@ package br.edu.toycenter.business;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import br.edu.toycenter.api.convert.ProductConvert;
 import br.edu.toycenter.api.request.ProductRequestDTO;
 import br.edu.toycenter.api.response.ProductResponseDTO;
+import br.edu.toycenter.business.exceptions.InvalidFormatException;
+import br.edu.toycenter.business.exceptions.ResourceNotFoundException;
 import br.edu.toycenter.infrastructure.entities.Category;
 import br.edu.toycenter.infrastructure.entities.Product;
 import br.edu.toycenter.infrastructure.repositories.CategoryRepository;
@@ -40,38 +43,60 @@ public class ProductService {
 	}
 	
 	public ProductResponseDTO findById(String id) {
-		Optional<Product> obj = repository.findById(id);
-		ProductResponseDTO responseDTO = productToProductResponseDTO(obj.orElseThrow());
-		return responseDTO;
+		try {
+			Optional<Product> obj = repository.findById(id);
+			ProductResponseDTO responseDTO = productToProductResponseDTO(obj.orElseThrow());
+			return responseDTO;
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("Id", id);
+		}
 	}
-	
+
 	public ProductResponseDTO insert(ProductRequestDTO productRequestDTO) {
-		Product product = productConvert.forProduct(productRequestDTO);
-		Product productInserted = repository.save(product);
-		return productToProductResponseDTO(productInserted);
+		try {
+			Product product = productConvert.forProduct(productRequestDTO);
+			product.setId(null);
+			checkFields(product);
+			Product productInserted = repository.save(product);
+			return productToProductResponseDTO(productInserted);
+		} catch (InvalidFormatException e) {
+			throw new InvalidFormatException(e.getMessage());
+		}
 	}
 	
 	public ProductResponseDTO update(String id, ProductRequestDTO productRequestDTO) {
-		Product product = productConvert.forProduct(productRequestDTO);
-		Optional<Product> obj = repository.findById(id);
-		updateData(obj.get(), product);
-		Product productUpdated = repository.save(obj.get());
-		return productToProductResponseDTO(productUpdated);
+		try {
+			Product product = productConvert.forProduct(productRequestDTO);
+			Optional<Product> obj = repository.findById(id);
+			updateData(obj.get(), product);
+			obj.get().setId(id);
+			checkFields(obj.get());
+			Product productUpdated = repository.save(obj.get());
+			return productToProductResponseDTO(productUpdated);
+		}catch (InvalidFormatException e) {
+			throw new InvalidFormatException(e.getMessage());
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("Id", id);
+		} 
 	}
 	
 	@Transactional
 	public void delete(String id) {
-		Optional<Product> obj = repository.findById(id);
-
-		repository.delete(obj.get());
+		try {
+			Optional<Product> obj = repository.findById(id);
+	
+			repository.delete(obj.get());
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("Id", id);
+		}
 	}
 	
 	private void updateData(Product obj, Product product) {
-		obj.setName(product.getName());
-		obj.setBrand(product.getBrand());
-		obj.setPrice(product.getPrice());
-		obj.setDescription(product.getDescription());
-		obj.setDetails(product.getDetails());
+		obj.setName((product.getName() == null) ? obj.getName() : product.getName());
+		obj.setBrand((product.getBrand() == null) ? obj.getBrand() : product.getBrand());
+		obj.setPrice((product.getPrice() == null) ? obj.getPrice() : product.getPrice());
+		obj.setDescription((product.getDescription() == null) ? obj.getDescription() : product.getDescription());
+		obj.setDetails((product.getDetails() == null) ? obj.getDetails() : product.getDetails());
 	}
 	
 	public ProductResponseDTO productToProductResponseDTO(Product product) {
@@ -84,5 +109,25 @@ public class ProductService {
 		
 		ProductResponseDTO productDTO = productConvert.forProductResponseDTO(product, listCategory);
 		return productDTO;
+	}
+	
+	private void checkFields(Product product) throws InvalidFormatException {
+		if (product == null) throw new InvalidFormatException("Os campos não podem ser nulos");
+		
+		isNullOrBlank(product.getName());
+		isNullOrBlank(product.getBrand());
+		isNullOrBlank(product.getPrice());
+		isNullOrBlank(product.getDescription());
+		isNullOrBlank(product.getDetails());
+	}
+	
+	private void isNullOrBlank(String string) {
+		if (string == null || string.isBlank()) 
+			throw new InvalidFormatException("The fields can not be null.");
+	}
+	
+	private void isNullOrBlank(Double doub) {
+		if (doub == null || doub <= 0f) 
+			throw new InvalidFormatException("This price is not valid.");
 	}
 }

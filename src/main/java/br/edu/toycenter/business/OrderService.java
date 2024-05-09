@@ -15,10 +15,8 @@ import br.edu.toycenter.api.response.OrderItemResponseDTO;
 import br.edu.toycenter.api.response.OrderResponseDTO;
 import br.edu.toycenter.infrastructure.entities.Order;
 import br.edu.toycenter.infrastructure.entities.OrderItem;
-import br.edu.toycenter.infrastructure.entities.Product;
 import br.edu.toycenter.infrastructure.entities.User;
 import br.edu.toycenter.infrastructure.repositories.OrderRepository;
-import br.edu.toycenter.infrastructure.repositories.ProductRepository;
 import br.edu.toycenter.infrastructure.repositories.UserRepository;
 
 @Service
@@ -29,9 +27,6 @@ public class OrderService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
-	@Autowired
-	private ProductRepository productRepository;
 	
 	@Autowired
 	private OrderConvert orderConvert; 
@@ -89,8 +84,7 @@ public class OrderService {
 		List<OrderItemResponseDTO> listOrderItemDTO = new ArrayList<>();
 		
 		for (OrderItem orderItem : order.getOrderItens()) {
-			Optional<Product> productObj = productRepository.findById(orderItem.getProductId());
-			OrderItemResponseDTO orderItemDTO = orderItemConvert.forOrderItemResponseDTO(orderItem, productObj.get());
+			OrderItemResponseDTO orderItemDTO = orderItemConvert.forOrderItemResponseDTO(orderItem);
 			listOrderItemDTO.add(orderItemDTO);
 		}	
 		

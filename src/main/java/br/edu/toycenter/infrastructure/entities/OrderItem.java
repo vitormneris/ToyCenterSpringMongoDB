@@ -4,23 +4,23 @@ public class OrderItem {
 	
 	private Integer quantity;
 	private Double price;
-	private String productId;
+	private Product product;
 	
 	public OrderItem() {
 		
 	}
 	
-    public OrderItem(Integer quantity, Double price, String productId) {
+    public OrderItem(Integer quantity, Double price, Product product) {
 		super();
 		this.quantity = quantity;
 		this.price = price;
-		this.productId = productId;
+		this.product = product;
 	}
 
 	public OrderItem(Builder builder) {
     	quantity = builder.quantity;
     	price = builder.price;
-    	productId = builder.productId;
+    	product = builder.product;
     }
 
 	public Integer getQuantity() {
@@ -38,25 +38,25 @@ public class OrderItem {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
-
-	public String getProductId() {
-		return productId;
-	}
-
-	public void setProductId(String product) {
-		this.productId = product;
-	}
 	
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 	@Override
 	public String toString() {
-		return "OrderItem [quantity=" + quantity + ", price=" + price + ", productId=" + productId + "]";
+		return "OrderItem [quantity=" + quantity + ", price=" + price + ", product=" + product + "]";
 	}
 
 	public static class Builder {
 
         private Integer quantity;
         private Double price;
-        private String productId;
+        private Product product;
 
         public Builder quantity(Integer value) {
         	quantity = value;
@@ -68,8 +68,8 @@ public class OrderItem {
         	return this;
         }
 
-        public Builder productId(String value) {
-        	productId = value;
+        public Builder product(Product value) {
+        	product = value;
             return this;
         }
 
