@@ -42,9 +42,9 @@ public class TestConfig implements CommandLineRunner {
 	public void run(String... args) throws Exception {
         mongoTemplate.getDb().drop();
 		
-		User u1 = new User(null, "951.954.148-88", "Maria Brown", "maria@gmail.com", "988888888", "654123");
-		User u2 = new User(null, "152.361.141-64", "Alex Green", "alex@gmail.com", "977777777", "123456");
-		User u3 = new User(null, "142.141.391-51", "James Red", "james@gmail.com", "966666666", "654321");
+		User u1 = new User(null, "951.954.148-88", "Maria Brown", "maria@gmail.com", "11988888888", "65cc4123");
+		User u2 = new User(null, "152.361.141-64", "Alex Green", "alex@gmail.com", "11977777777", "123cc456");
+		User u3 = new User(null, "142.141.391-51", "James Red", "james@gmail.com", "11966666666", "654cc321");
 		
 		userRepository.saveAll(Arrays.asList(u1, u2, u3));
 		

@@ -2,6 +2,7 @@ package br.edu.toycenter.business;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import br.edu.toycenter.api.convert.UserConvert;
 import br.edu.toycenter.api.request.UserRequestDTO;
 import br.edu.toycenter.api.response.UserResponseDTO;
+import br.edu.toycenter.business.exceptions.InvalidFormatException;
+import br.edu.toycenter.business.exceptions.ResourceNotFoundException;
 import br.edu.toycenter.infrastructure.entities.Order;
 import br.edu.toycenter.infrastructure.entities.User;
 import br.edu.toycenter.infrastructure.repositories.OrderRepository;
@@ -40,21 +43,33 @@ public class UserService {
 	}
 	
 	public UserResponseDTO findById(String id) {
-		Optional<User> obj = repository.findById(id);
-		UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
-		return userDTO;
+		try {
+			Optional<User> obj = repository.findById(id);
+			UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
+			return userDTO;
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("Id", id);
+		}
 	}
 	
 	public UserResponseDTO findByCpf(String cpf) {
-		Optional<User> obj = repository.findByCpf(cpf);
-		UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
-		return userDTO;
+		try {
+			Optional<User> obj = repository.findByCpf(cpf);
+			UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
+			return userDTO;
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("CPF", cpf);
+		}
 	}
 	
 	public UserResponseDTO findByEmail(String email) {
-		Optional<User> obj = repository.findByEmail(email);
-		UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
-		return userDTO;
+		try {
+			Optional<User> obj = repository.findByEmail(email);
+			UserResponseDTO userDTO = userToUserResponseDTO(obj.get());
+			return userDTO;
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("E-mal", email);
+		}
 	}
 	
 	public UserResponseDTO insert(UserRequestDTO userRequestDTO) {
@@ -64,9 +79,10 @@ public class UserService {
 			checkFields(user);
 			User userInserted = repository.save(user);
 			return userToUserResponseDTO(userInserted);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException(e.getMessage());
+		} catch (InvalidFormatException e){
+			throw new InvalidFormatException(e.getMessage());	
 		}
+	
 	}
 	
 	public UserResponseDTO update(String id, UserRequestDTO userRequestDTO) {
@@ -77,18 +93,24 @@ public class UserService {
 			checkFields(obj.get());
 			User userUpdated = repository.save(obj.get());
 			return userToUserResponseDTO(userUpdated);
-		} catch (IllegalArgumentException e){
-			throw new IllegalArgumentException(e.getMessage());	
+		} catch (InvalidFormatException e){
+			throw new InvalidFormatException(e.getMessage());	
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("Id", id);
 		}
 	}
 	
 	@Transactional
 	public void delete(String id) {
-		Optional<User> objUser = repository.findById(id);
-		Optional<Order> objOrder = orderRepository.findByUserId(id);
-
-		repository.delete(objUser.get());
-		orderRepository.delete(objOrder.get());
+		try {
+			Optional<User> objUser = repository.findById(id);
+			Optional<Order> objOrder = orderRepository.findByUserId(id);
+	
+			repository.delete(objUser.get());
+			orderRepository.delete(objOrder.get());
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("Id", id);
+		}
 	}
 	
 	private void updateData(User obj, User user) {
@@ -111,32 +133,32 @@ public class UserService {
 		return userDTO;
 	}
 	
-	private void checkFields(User user) throws IllegalArgumentException {
-		if (user == null) throw new IllegalArgumentException("Os campos não podem ser nulos");
+	private void checkFields(User user) throws InvalidFormatException {
+		if (user == null) throw new InvalidFormatException("Os campos não podem ser nulos");
 		
 		isNullOrBlank(user.getCpf());
 		if (!user.getCpf().matches("^[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}$")) 
-			throw new IllegalArgumentException("Formato de CPF Inválido.");
+			throw new InvalidFormatException("CPF", user.getCpf());
 		
 		isNullOrBlank(user.getName());
 		if (!user.getName().matches("^[a-zA-Z ]+$")) 
-			throw new IllegalArgumentException("Formato de nome Inválido."); 
+			throw new InvalidFormatException("Name", user.getName());
 		
 		isNullOrBlank(user.getEmail());
 		if (!user.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) 
-			throw new IllegalArgumentException("Formato de e-mail Inválido.");
+			throw new InvalidFormatException("E-mail", user.getEmail());
 		
 		isNullOrBlank(user.getPhone());
 		if (!user.getPhone().matches("\\(?\\d{2}\\)? ?(?:\\d{4,5}-?\\d{4}|\\d{4}-?\\d{4})$")) 
-			throw new IllegalArgumentException("Formato de telefone Inválido.");
+			throw new InvalidFormatException("Phone", user.getPhone());
 		
 		isNullOrBlank(user.getPassword());
 		if (!(user.getPassword().length() >= 8))
-			throw new IllegalArgumentException("Formato de senha Inválido.");
+			throw new InvalidFormatException("Password");
 	}
 	
-	private void isNullOrBlank(String string) throws IllegalArgumentException {
+	private void isNullOrBlank(String string) {
 		if (string == null || string.isBlank()) 
-			throw new IllegalArgumentException("Os campos não podem ser nulos.");
+			throw new InvalidFormatException("The fields can not be null.");
 	}
 }
