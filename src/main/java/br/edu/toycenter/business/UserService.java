@@ -82,7 +82,6 @@ public class UserService {
 		} catch (InvalidFormatException e){
 			throw new InvalidFormatException(e.getMessage());	
 		}
-	
 	}
 	
 	public UserResponseDTO update(String id, UserRequestDTO userRequestDTO) {
@@ -158,7 +157,7 @@ public class UserService {
 			throw new InvalidFormatException("Password");
 	}
 	
-	private void isNullOrBlank(String string) {
+	private void isNullOrBlank(String string) throws InvalidFormatException {
 		if (string == null || string.isBlank()) 
 			throw new InvalidFormatException("The fields can not be null.");
 	}

@@ -94,6 +94,10 @@ public class User {
 	public List<String> getOrdersId() {
 		return ordersId;
 	}
+	
+	public void setOrdersId(List<String> ordersId) {
+		this.ordersId = ordersId;
+	}
 
 	@Override
 	public int hashCode() {

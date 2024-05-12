@@ -121,12 +121,12 @@ public class ProductService {
 		isNullOrBlank(product.getDetails());
 	}
 	
-	private void isNullOrBlank(String string) {
+	private void isNullOrBlank(String string) throws InvalidFormatException {
 		if (string == null || string.isBlank()) 
 			throw new InvalidFormatException("The fields can not be null.");
 	}
 	
-	private void isNullOrBlank(Double doub) {
+	private void isNullOrBlank(Double doub) throws InvalidFormatException {
 		if (doub == null || doub <= 0f) 
 			throw new InvalidFormatException("This price is not valid.");
 	}

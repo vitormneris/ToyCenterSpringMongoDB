@@ -14,7 +14,6 @@ public class UserConvert {
 	
 	public User forUser(UserRequestDTO userDTO) {
 		User user = new User.Builder()
-				.id(userDTO.id())
 				.cpf(userDTO.cpf())
 				.name(userDTO.name())
 				.email(userDTO.email())

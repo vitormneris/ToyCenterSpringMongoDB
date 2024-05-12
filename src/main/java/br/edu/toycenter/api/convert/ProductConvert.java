@@ -14,7 +14,6 @@ public class ProductConvert {
 	
 	public Product forProduct(ProductRequestDTO productDTO) {
 		Product product = new Product.Builder()
-				.id(productDTO.id())
 				.name(productDTO.name())
 				.brand(productDTO.brand())
 				.price(productDTO.price())
