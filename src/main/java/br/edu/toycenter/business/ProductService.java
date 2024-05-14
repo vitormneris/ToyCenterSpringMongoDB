@@ -85,6 +85,21 @@ public class ProductService {
 		try {
 			Optional<Product> obj = repository.findById(id);
 	
+			for (String categoryId : obj.get().getCategoriesId()) {
+				Optional<Category> objCategory = categoryRepository.findById(categoryId);
+				
+				List<String> listProductsId = objCategory.get().getProductsId();
+				objCategory.get().setProductsId(new ArrayList<>());
+
+				for (String objProductId : listProductsId) {
+					if (!(obj.get().getId().equals(objProductId))) {
+						objCategory.get().getProductsId().add(objProductId);
+					}
+				}
+				
+				categoryRepository.save(objCategory.get());
+			}
+			
 			repository.delete(obj.get());
 		} catch (NoSuchElementException e) {
 			throw new ResourceNotFoundException("Id", id);

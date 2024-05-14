@@ -50,6 +50,10 @@ public class Category {
 		return productsId;
 	}
 
+	public void setProductsId(List<String> productsId) {
+		this.productsId = productsId;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name);
@@ -69,9 +73,9 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + "]";
+		return "Category [id=" + id + ", name=" + name + ", productsId=" + productsId + "]";
 	}
-	
+
 	public static class Builder {
 
         private String id;

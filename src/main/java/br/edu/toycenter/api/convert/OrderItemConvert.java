@@ -11,8 +11,6 @@ import br.edu.toycenter.infrastructure.entities.OrderItem;
 import br.edu.toycenter.infrastructure.entities.Product;
 import br.edu.toycenter.infrastructure.repositories.ProductRepository;
 
-
-
 @Component
 public class OrderItemConvert {
 	
@@ -20,8 +18,10 @@ public class OrderItemConvert {
 	private ProductRepository productRepository;
 	
 	public OrderItem forOrderItem(OrderItemRequestDTO orderItemRequest) {
-		Optional<Product> obj = productRepository.findById(orderItemRequest.productId());
-		
+		Optional<Product> obj = null;
+		if (orderItemRequest.productId() != null) 
+			obj = productRepository.findById(orderItemRequest.productId());
+	
 		OrderItem OrderItem = new OrderItem.Builder()
 				.quantity(orderItemRequest.quantity())
 				.product(obj.get())

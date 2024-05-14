@@ -94,6 +94,10 @@ public class Product {
 		return categoriesId;
 	}
  
+	public void setCategoriesId(List<String> categoriesId) {
+		this.categoriesId = categoriesId;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
