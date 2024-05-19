@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.edu.toycenter.infrastructure.entities.Order;
 
-public record UserResponseDTO(
+public record ClientResponseDTO(
 		String id,
 		String cpf,
 		String name,

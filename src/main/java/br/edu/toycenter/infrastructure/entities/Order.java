@@ -3,7 +3,6 @@ package br.edu.toycenter.infrastructure.entities;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,25 +17,24 @@ public class Order {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	private String userId;
+	private String clientId;
 	private List<OrderItem> orderItens = new ArrayList<>();
 	
 	public Order() {
 		
 	}
 	
-    public Order(String id, Instant moment, String userId, List<OrderItem> orderItens) {
-		super();
+    public Order(String id, Instant moment, String clientId, List<OrderItem> orderItens) {
 		this.id = id;
 		this.moment = moment;
-		this.userId = userId;
+		this.clientId = clientId;
 		this.orderItens = orderItens;
 	}
 
 	public Order(Builder builder) {
     	id = builder.id;
     	moment = builder.moment;
-    	userId = builder.userId;
+    	clientId = builder.clientId;
     	orderItens = builder.orderItens;
     }
 
@@ -56,12 +54,12 @@ public class Order {
 		this.moment = moment;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getClientId() {
+		return clientId;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
 	}
 
 	public List<OrderItem> getOrderItens() {
@@ -72,33 +70,11 @@ public class Order {
 		this.orderItens = orderItens;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Order other = (Order) obj;
-		return Objects.equals(id, other.id);
-	}
-	
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", moment=" + moment + ", userId=" + userId + ", orderItens=" + orderItens + "]";
-	}
-
 	public static class Builder {
 
         private String id;
         private Instant moment;
-        private String userId;
+        private String clientId;
         private List<OrderItem> orderItens;
 
         public Builder id(String value) {
@@ -112,8 +88,8 @@ public class Order {
         }
 
 
-        public Builder userId(String value) {
-        	userId = value;
+        public Builder clientId(String value) {
+        	clientId = value;
             return this;
         }
         

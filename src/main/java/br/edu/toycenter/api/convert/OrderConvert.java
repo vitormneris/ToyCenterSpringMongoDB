@@ -10,9 +10,9 @@ import br.edu.toycenter.api.request.OrderItemRequestDTO;
 import br.edu.toycenter.api.request.OrderRequestDTO;
 import br.edu.toycenter.api.response.OrderItemResponseDTO;
 import br.edu.toycenter.api.response.OrderResponseDTO;
+import br.edu.toycenter.infrastructure.entities.Client;
 import br.edu.toycenter.infrastructure.entities.Order;
 import br.edu.toycenter.infrastructure.entities.OrderItem;
-import br.edu.toycenter.infrastructure.entities.User;
 
 @Component
 public class OrderConvert {
@@ -31,18 +31,18 @@ public class OrderConvert {
 				
 		Order order = new Order.Builder()
 				.id(orderDTO.id())
-				.userId(orderDTO.userId())
+				.clientId(orderDTO.clientId())
 				.orderItens(listOrdemItem)
 				.build();
 
 		return order;
 	}
 	
-	public OrderResponseDTO forOrderResponseDTO(Order order, User user, List<OrderItemResponseDTO> orderItemDTO) {
+	public OrderResponseDTO forOrderResponseDTO(Order order, Client client, List<OrderItemResponseDTO> orderItemDTO) {
 		OrderResponseDTO orderDTO = new OrderResponseDTO(				
 				order.getId(),
 				order.getMoment(),
-				user,
+				client,
 				orderItemDTO);
 				
 		return orderDTO;

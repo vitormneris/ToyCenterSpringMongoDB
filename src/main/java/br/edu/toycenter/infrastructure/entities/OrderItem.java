@@ -11,7 +11,6 @@ public class OrderItem {
 	}
 	
     public OrderItem(Integer quantity, Double price, Product product) {
-		super();
 		this.quantity = quantity;
 		this.price = price;
 		this.product = product;
@@ -45,11 +44,6 @@ public class OrderItem {
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-
-	@Override
-	public String toString() {
-		return "OrderItem [quantity=" + quantity + ", price=" + price + ", product=" + product + "]";
 	}
 
 	public static class Builder {

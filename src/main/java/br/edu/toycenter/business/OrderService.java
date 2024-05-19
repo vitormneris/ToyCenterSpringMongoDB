@@ -20,9 +20,9 @@ import br.edu.toycenter.business.exceptions.ResourceNotFoundException;
 import br.edu.toycenter.infrastructure.entities.Order;
 import br.edu.toycenter.infrastructure.entities.OrderItem;
 import br.edu.toycenter.infrastructure.entities.Product;
-import br.edu.toycenter.infrastructure.entities.User;
+import br.edu.toycenter.infrastructure.entities.Client;
 import br.edu.toycenter.infrastructure.repositories.OrderRepository;
-import br.edu.toycenter.infrastructure.repositories.UserRepository;
+import br.edu.toycenter.infrastructure.repositories.ClientRepository;
 
 @Service
 public class OrderService {
@@ -31,7 +31,7 @@ public class OrderService {
 	private OrderRepository repository;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private ClientRepository clientRepository;
 	
 	@Autowired
 	private OrderConvert orderConvert; 
@@ -96,10 +96,10 @@ public class OrderService {
 	public void delete(String id) {
 		try {
 			Optional<Order> obj = repository.findById(id);
-			Optional<User> objUser = userRepository.findById(obj.get().getUserId());
+			Optional<Client> objClient = clientRepository.findById(obj.get().getClientId());
 			
-			objUser.get().setOrdersId(new ArrayList<>());
-			userRepository.save(objUser.get());
+			objClient.get().setOrdersId(new ArrayList<>());
+			clientRepository.save(objClient.get());
 			
 			repository.delete(obj.get());
 		} catch (NoSuchElementException e) {
@@ -128,7 +128,7 @@ public class OrderService {
 	}
 	
 	public OrderResponseDTO orderToOrderResponseDTO(Order order) {
-		Optional<User> userObj = userRepository.findById(order.getUserId());
+		Optional<Client> clientObj = clientRepository.findById(order.getClientId());
 		List<OrderItemResponseDTO> listOrderItemDTO = new ArrayList<>();
 		
 		for (OrderItem orderItem : order.getOrderItens()) {
@@ -136,7 +136,7 @@ public class OrderService {
 			listOrderItemDTO.add(orderItemDTO);
 		}	
 		
-		OrderResponseDTO orderDTO = orderConvert.forOrderResponseDTO(order, userObj.get(), listOrderItemDTO);
+		OrderResponseDTO orderDTO = orderConvert.forOrderResponseDTO(order, clientObj.get(), listOrderItemDTO);
 		return orderDTO;
 	}
 	
@@ -144,7 +144,7 @@ public class OrderService {
 		if (order == null) throw new InvalidFormatException("The fields can not be null.");
 		
 		isNullOrBlank(order.getMoment());
-		isNullOrBlank(order.getUserId());
+		isNullOrBlank(order.getClientId());
 		
 		for (OrderItem oi : order.getOrderItens()) {
 			isNullOrBlank(oi.getQuantity());
@@ -155,7 +155,7 @@ public class OrderService {
 	
 	private void isNullOrBlank(String string) throws InvalidFormatException {
 		if (string == null || string.isBlank()) 
-			throw new InvalidFormatException("This user is not valid.");
+			throw new InvalidFormatException("This client is not valid.");
 	}
 	
 	private void isNullOrBlank(Double doub) throws InvalidFormatException {

@@ -15,51 +15,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.edu.toycenter.api.request.UserRequestDTO;
-import br.edu.toycenter.api.response.UserResponseDTO;
-import br.edu.toycenter.business.UserService;
+import br.edu.toycenter.api.request.AdministratorRequestDTO;
+import br.edu.toycenter.api.response.AdministratorResponseDTO;
+import br.edu.toycenter.business.AdministratorService;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserController {
+@RequestMapping(value = "/administrators")
+public class AdministratorController {
 	
 	@Autowired
-	UserService service;
+	AdministratorService service;
 	
 	@GetMapping
-	public ResponseEntity<List<UserResponseDTO>> findAll() {
-		List<UserResponseDTO> list = service.findAll();
+	public ResponseEntity<List<AdministratorResponseDTO>> findAll() {
+		List<AdministratorResponseDTO> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<UserResponseDTO> findById(@PathVariable String id) {
-		UserResponseDTO obj = service.findById(id);
+	public ResponseEntity<AdministratorResponseDTO> findById(@PathVariable String id) {
+		AdministratorResponseDTO obj = service.findById(id);
 	    return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping(value = "/email/{email}")
-	public ResponseEntity<UserResponseDTO> findByEmail(@PathVariable String email) {
-		UserResponseDTO obj = service.findByEmail(email);
-	    return ResponseEntity.ok().body(obj);
-	}
-	
-	@GetMapping(value = "/cpf/{cpf}")
-	public ResponseEntity<UserResponseDTO> findByCpf(@PathVariable String cpf) {
-		UserResponseDTO obj = service.findByCpf(cpf);
+	public ResponseEntity<AdministratorResponseDTO> findByEmail(@PathVariable String email) {
+		AdministratorResponseDTO obj = service.findByEmail(email);
 	    return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<UserResponseDTO> insert(@RequestBody UserRequestDTO userRequestDTO) {
-		UserResponseDTO obj = service.insert(userRequestDTO);
+	public ResponseEntity<AdministratorResponseDTO> insert(@RequestBody AdministratorRequestDTO administratorRequestDTO) {
+		AdministratorResponseDTO obj = service.insert(administratorRequestDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.id()).toUri();
 	    return ResponseEntity.created(uri).body(obj);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<UserResponseDTO> update(@PathVariable String id, @RequestBody UserRequestDTO userRequestDTO) {
-		UserResponseDTO obj = service.update(id, userRequestDTO);
+	public ResponseEntity<AdministratorResponseDTO> update(@PathVariable String id, @RequestBody AdministratorRequestDTO administratorRequestDTO) {
+		AdministratorResponseDTO obj = service.update(id, administratorRequestDTO);
 	    return ResponseEntity.ok().body(obj);
 	}
 	

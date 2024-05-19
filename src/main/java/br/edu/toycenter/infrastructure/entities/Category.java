@@ -2,7 +2,6 @@ package br.edu.toycenter.infrastructure.entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,7 +19,6 @@ public class Category {
 	}
 
 	public Category(String id, String name) {
-		super();
 		this.id = id;
 		this.name = name;
 	}
@@ -52,28 +50,6 @@ public class Category {
 
 	public void setProductsId(List<String> productsId) {
 		this.productsId = productsId;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, name);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Category other = (Category) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
-	}
-
-	@Override
-	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", productsId=" + productsId + "]";
 	}
 
 	public static class Builder {

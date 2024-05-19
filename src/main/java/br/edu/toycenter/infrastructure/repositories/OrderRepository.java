@@ -8,5 +8,5 @@ import br.edu.toycenter.infrastructure.entities.Order;
 
 public interface OrderRepository extends MongoRepository<Order, String> {
 	
-	public Optional<Order> findByUserId(String userId);
+	public Optional<Order> findByClientId(String clientId);
 }

@@ -4,6 +4,6 @@ import java.util.List;
 
 public record OrderRequestDTO(
 		String id,
-		String userId,
+		String clientId,
 		List<OrderItemRequestDTO> orderItens)  {
 }
