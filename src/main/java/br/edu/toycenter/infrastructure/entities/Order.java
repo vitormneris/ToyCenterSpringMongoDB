@@ -69,6 +69,14 @@ public class Order {
 	public void setOrderItens(List<OrderItem> orderItens) {
 		this.orderItens = orderItens;
 	}
+	
+	public Double getTotal() {
+		Double sum = 0.0;
+		for (OrderItem item : getOrderItens()) {
+			sum += item.getSubTotal();
+		}
+		return sum;
+	}
 
 	public static class Builder {
 

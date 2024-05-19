@@ -5,5 +5,6 @@ import br.edu.toycenter.infrastructure.entities.Product;
 public record OrderItemResponseDTO(
 		Integer quantity,
 		Double price, 
-		Product product)  {
+		Product product,
+		Double subTotal)  {
 }

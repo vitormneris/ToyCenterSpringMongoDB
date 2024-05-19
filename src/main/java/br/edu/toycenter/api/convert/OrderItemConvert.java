@@ -34,7 +34,8 @@ public class OrderItemConvert {
 		OrderItemResponseDTO OrderItemDTO = new OrderItemResponseDTO(				
 				orderItem.getQuantity(),
 				orderItem.getPrice(),
-				orderItem.getProduct());
+				orderItem.getProduct(),
+				orderItem.getSubTotal());
 				
 		return OrderItemDTO;
 	}

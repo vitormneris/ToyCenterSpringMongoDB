@@ -42,6 +42,7 @@ public class OrderConvert {
 		OrderResponseDTO orderDTO = new OrderResponseDTO(				
 				order.getId(),
 				order.getMoment(),
+				order.getTotal(),
 				client,
 				orderItemDTO);
 				

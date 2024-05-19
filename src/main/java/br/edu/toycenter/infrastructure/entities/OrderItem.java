@@ -45,6 +45,10 @@ public class OrderItem {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
+	
+	public Double getSubTotal() {
+		return price * quantity;
+	}
 
 	public static class Builder {
 
