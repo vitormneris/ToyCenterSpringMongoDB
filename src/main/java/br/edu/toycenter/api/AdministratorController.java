@@ -44,6 +44,12 @@ public class AdministratorController {
 	    return ResponseEntity.ok().body(obj);
 	}
 	
+	@PostMapping(value = "/login")
+	public ResponseEntity<Void> login(@RequestBody AdministratorRequestDTO administratorRequestDTO) {
+		service.login(administratorRequestDTO);
+	    return ResponseEntity.noContent().build();
+	}
+	
 	@PostMapping
 	public ResponseEntity<AdministratorResponseDTO> insert(@RequestBody AdministratorRequestDTO administratorRequestDTO) {
 		AdministratorResponseDTO obj = service.insert(administratorRequestDTO);

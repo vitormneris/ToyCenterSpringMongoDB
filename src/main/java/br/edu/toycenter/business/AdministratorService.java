@@ -13,6 +13,7 @@ import br.edu.toycenter.api.convert.AdministratorConvert;
 import br.edu.toycenter.api.request.AdministratorRequestDTO;
 import br.edu.toycenter.api.response.AdministratorResponseDTO;
 import br.edu.toycenter.business.exceptions.InvalidFormatException;
+import br.edu.toycenter.business.exceptions.LoginInvalidException;
 import br.edu.toycenter.business.exceptions.ResourceNotFoundException;
 import br.edu.toycenter.infrastructure.entities.Administrator;
 import br.edu.toycenter.infrastructure.repositories.AdministratorRepository;
@@ -93,6 +94,23 @@ public class AdministratorService {
 			repository.delete(objAdministrator.get());
 		} catch (NoSuchElementException e) {
 			throw new ResourceNotFoundException("Id", id);
+		}
+	}
+	
+	public void login(AdministratorRequestDTO administratorRequestDTO) {
+		try {
+
+			Administrator admRequest = administratorConvert.forAdministrator(administratorRequestDTO);
+	
+			Administrator admDatabase = repository.findByEmail(admRequest.getEmail()).orElseThrow(LoginInvalidException::new);
+			
+			if (admDatabase.getPassword().equals(admRequest.getPassword())) {
+				System.out.println("Login realizado com sucesso!");
+			} else {
+				throw new NoSuchElementException();
+			}
+		} catch (NoSuchElementException e) {
+			throw new LoginInvalidException();
 		}
 	}
 	

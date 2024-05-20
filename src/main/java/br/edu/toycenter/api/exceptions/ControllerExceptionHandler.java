@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import br.edu.toycenter.business.exceptions.DatabaseException;
 import br.edu.toycenter.business.exceptions.InvalidFormatException;
+import br.edu.toycenter.business.exceptions.LoginInvalidException;
 import br.edu.toycenter.business.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -35,6 +36,14 @@ public class ControllerExceptionHandler {
 	public ResponseEntity<StandardError> Database(DatabaseException e, HttpServletRequest request) {
 		String error = "Operation not allowed.";
 		HttpStatus status = HttpStatus.FORBIDDEN;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(LoginInvalidException.class)
+	public ResponseEntity<StandardError> LoginInvalid(LoginInvalidException e, HttpServletRequest request) {
+		String error = "Login not allowed.";
+		HttpStatus status = HttpStatus.UNAUTHORIZED;
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
