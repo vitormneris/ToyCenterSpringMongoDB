@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.toycenter.api.request.ProductRequestDTO;
 import br.edu.toycenter.api.response.ProductResponseDTO;
@@ -24,6 +26,9 @@ public class ProductWebController {
 	@Autowired
 	ProductService service;
 	
+	@Autowired
+	ProductRequestDTO productDTO;
+	
 	@GetMapping()
 	public String findAll(Model model) {
 		List<ProductResponseDTO> listProductDTO = service.findAll();
@@ -33,14 +38,12 @@ public class ProductWebController {
 	
 	@GetMapping("/insert")
 	public String insert(Model model) {
-		ProductRequestDTO productDTO = new ProductRequestDTO(null, null, null, null, null, null);
 		model.addAttribute("productDTO", productDTO);
 		return "product/insert";
 	}
 	
 	@GetMapping("/update/{id}")
 	public String update(Model model, @PathVariable("id") String id) {
-		ProductRequestDTO productDTO = new ProductRequestDTO(null, null, null, null, null, null);
 		model.addAttribute("productDTO", productDTO);
 		model.addAttribute("productId", id);
 		return "product/update";
@@ -53,14 +56,16 @@ public class ProductWebController {
 	}
 	
 	@PostMapping("/insert")
-	public String insert(@ModelAttribute("productDTO") ProductRequestDTO productDTO) {
-		service.insert(productDTO);
+	public String insert(@ModelAttribute("productDTO") ProductRequestDTO productDTO, @RequestParam("imageFile") MultipartFile file) {
+		ProductRequestDTO productDTOWithImage = service.productDTOWithImage(productDTO, file);
+		service.insert(productDTOWithImage);
 		return "redirect:/product";
 	}
 	
 	@PutMapping("/update/{id}")
-	public String update(@ModelAttribute("productDTO") ProductRequestDTO productDTO, @PathVariable String id) {
-		service.update(id, productDTO);
+	public String update(@ModelAttribute("productDTO") ProductRequestDTO productDTO, @RequestParam("imageFile") MultipartFile file, @PathVariable String id) {
+		ProductRequestDTO productDTOWithImage = service.productDTOWithImage(productDTO, file);
+		service.update(id, productDTOWithImage);
 		return "redirect:/product";
 	}
 	
