@@ -15,6 +15,7 @@ public class ProductConvert {
 	public Product forProduct(ProductRequestDTO productDTO) {
 		Product product = new Product.Builder()
 				.name(productDTO.name())
+				.image(productDTO.image())
 				.brand(productDTO.brand())
 				.price(productDTO.price())
 				.description(productDTO.description())
@@ -28,6 +29,7 @@ public class ProductConvert {
 		ProductResponseDTO productDTO = new ProductResponseDTO(				
 				product.getId(),
 				product.getName(),
+				product.getImage(),
 				product.getBrand(),
 				product.getPrice(),
 				product.getDescription(),

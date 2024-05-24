@@ -108,6 +108,7 @@ public class ProductService {
 	
 	private void updateData(Product obj, Product product) {
 		obj.setName((product.getName() == null) ? obj.getName() : product.getName());
+		obj.setImage((product.getImage() == null) ? obj.getImage() : product.getImage());
 		obj.setBrand((product.getBrand() == null) ? obj.getBrand() : product.getBrand());
 		obj.setPrice((product.getPrice() == null) ? obj.getPrice() : product.getPrice());
 		obj.setDescription((product.getDescription() == null) ? obj.getDescription() : product.getDescription());
@@ -127,9 +128,10 @@ public class ProductService {
 	}
 	
 	private void checkFields(Product product) throws InvalidFormatException {
-		if (product == null) throw new InvalidFormatException("Os campos não podem ser nulos");
+		if (product == null) throw new InvalidFormatException("The fields can not be null.");
 		
 		isNullOrBlank(product.getName());
+		isNullOrBlank(product.getImage());
 		isNullOrBlank(product.getBrand());
 		isNullOrBlank(product.getPrice());
 		isNullOrBlank(product.getDescription());

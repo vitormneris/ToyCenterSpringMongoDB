@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<form th:action="@{/product/insert}" method="POST" th:object="${productDTO}">
+		<label>Name</label>
+		<input type="text" th:field="*{name}"> <br>
+		
+		<label>Image</label>
+		<input type="text" th:field="*{image}"> <br>
+		
+		<label>Brand</label>
+		<input type="text" th:field="*{brand}"> <br>
+		
+		<label>Price</label>
+		<input type="number" min="0.0" step="0.01" th:field="*{price}"> <br>
+		
+		<label>Description</label>
+		<input type="text" th:field="*{description}"> <br>
+		
+		<label>Details</label>
+		<input type="text" th:field="*{details}"> <br>
+		
+		<input type="submit" value="submit">
+	</form>
+</body>
+</html>

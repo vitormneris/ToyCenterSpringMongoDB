@@ -12,6 +12,7 @@ public class Product {
 	@Id
 	private String id;
 	private String name;
+    private String image;
 	private String brand;
 	private Double price;
 	private String description;
@@ -22,9 +23,10 @@ public class Product {
 	public Product() {
 	}
 
-	public Product(String id, String name, String brand, Double price, String description, String details) {
+	public Product(String id, String name, String image, String brand, Double price, String description, String details) {
 		this.id = id;
 		this.name = name;
+		this.image = image;
 		this.brand = brand;
 		this.price = price;
 		this.description = description;
@@ -34,6 +36,7 @@ public class Product {
     public Product(Builder builder) {
     	id = builder.id;
     	name = builder.name;
+    	image = builder.image;
     	brand = builder.brand;
     	price = builder.price;
     	description = builder.description;
@@ -54,6 +57,14 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+    public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 	public String getBrand() {
@@ -100,6 +111,7 @@ public class Product {
 
         private String id;
         private String name;
+        private String image;
         private String brand;
         private Double price;
         private String description;
@@ -114,9 +126,13 @@ public class Product {
         	name = value;
             return this;
         }
+        
+        public Builder image(String value) {
+        	image = value;
+            return this;
+        }
 
-
-        public Builder brand(String value) {
+		public Builder brand(String value) {
         	brand = value;
             return this;
         }
