@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<div th:each="orderDTO : ${listOrderDTO}">
+			<p th:text="${orderDTO.id}"></p>
+			<p th:text="${orderDTO.moment}"></p>
+			<p th:text="${orderDTO.total}"> </p>
+			<p th:text="${orderDTO.client.name}"></p>
+			<table border="solid black 3px">
+				<tr>
+					<th>Quantity</th>
+					<th>price</th>
+					<th>subTotal</th>
+					<th>Id</th>
+					<th>Name</th>
+					<th>Image</th>
+					<th>Brand</th>
+					<th>Price</th>
+					<th>Description</th>
+					<th>Details</th>
+					<th>Controles</th>
+				</tr>
+				<tr th:each="orderItem : ${orderDTO.orderItens}">
+					<td th:text="${orderItem.quantity}"></td>
+					<td th:text="${orderItem.price}"></td>
+					<td th:text="${orderItem.subTotal}"></td>
+					<td th:text="${orderItem.product.id}"></td>
+					<td th:text="${orderItem.product.name}"></td>
+					<td th:text="${orderItem.product.image}"> </td>
+					<td th:text="${orderItem.product.brand}"></td>
+					<td th:text="${orderItem.product.price}"></td>
+					<td th:text="${orderItem.product.description}"></td>
+					<td th:text="${orderItem.product.details}"></td>
+					<td>
+						<a th:href="@{'order/update/client/' + ${orderDTO.client.id}}">update</a>
+						<a th:href="@{'order/delete/client/' + ${orderDTO.client.id}}">delete</a>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</table>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<form th:action="@{'/order/insert'}" method="POST" th:object="${orderRequestDTO}" >
+
+		<label>Client Id</label>
+		<input type="text" th:field="*{clientId}"> <br>
+
+		<label>Quantity</label>
+		<input type="number" step="1" min="1" th:field="*{orderItens[__${itemStat.index}__].quantity}"> <br>
+
+		<label>Product Id</label>
+		<input type="text" th:field="*{orderItens[__${itemStat.index}__].productId}"> <br>
+
+		<input type="submit" value="submit">
+	</form>
+</body>
+</html>

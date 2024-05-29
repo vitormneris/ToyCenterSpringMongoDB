@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<form th:action="@{'/product/update/' + *{id}}" method="POST" th:object="${productRequestDTO}"  enctype='multipart/form-data'>
+		<input type="hidden" name="_method" value="put">
+		
+		<label>Id</label>
+		<input type="text" th:field="*{id}" readonly> <br>
+
+		<label>Name</label>
+		<input type="text" th:field="*{name}"> <br>
+		
+		<label>Image</label>
+		<input type="file" name="imageFile"> <br>
+		<img th:src="@{*{image}}">
+		
+		<label>Brand</label>
+		<input type="text" th:field="*{brand}"> <br>
+		
+		<label>Price</label>
+		<input type="number" min="0.0" step="0.01" th:field="*{price}"> <br>
+		
+		<label>Description</label>
+		<input type="text"  th:field="*{description}"> <br>
+		
+		<label>Details</label>
+		<input type="text"  th:field="*{details}"> <br>
+
+		<label>Select Categories:</label><br>
+		<div th:each="category : ${listCategoryDTO}">
+			<input type="checkbox" th:field="*{categoriesId}" th:value="${category.id}">
+			<label th:text="${category.name}"></label><br>
+		</div>
+
+		<input type="submit" value="submit">
+	</form>
+</body>
+</html>

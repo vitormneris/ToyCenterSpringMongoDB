@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<table border="solid black 3px">
+	  <tr>
+	    <th>Id</th>
+	    <th>Name</th>
+	    <th>Image</th>
+		<th>Brand</th>
+		<th>Price</th>
+		<th>Description</th>
+		<th>Details</th>
+		<th>Controles</th>
+	  </tr>
+	  
+	  <tr th:each="productDTO : ${listProductDTO}">
+	    <td th:text="${productDTO.id}"></td>
+	    <td th:text="${productDTO.name}"></td>
+	    <td> <img th:src="${productDTO.image}"> </td>
+		<td th:text="${productDTO.brand}"></td>
+		<td th:text="${productDTO.price}"></td>
+		<td th:text="${productDTO.description}"></td>
+		<td th:text="${productDTO.details}"></td>
+		<td th:text="${productDTO.details}"></td>
+		<td>
+			<a th:href="@{'order/insert/' + ${productDTO.id}}">insert in order</a>
+			<a th:href="@{'product/update/' + ${productDTO.id}}">update</a>
+			<a th:href="@{'product/delete/' + ${productDTO.id}}">delete</a>
+		</td>
+	  </tr>
+	</table>
+	<a href="product/insert">insert</a>
+</body>
+</html>

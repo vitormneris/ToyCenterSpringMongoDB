@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<form th:action="@{'/order/update/client/' + *{clientId}}" method="POST" th:object="${orderRequestDTO}">
+		<input type="hidden" name="_method" value="put">
+		
+		<label>Id</label>
+		<input type="text" th:value="*{id}" readonly> <br>
+
+		<label>Client Id</label>
+		<input type="text" th:field="*{clientId}" readonly> <br>
+		
+		<div th:each="orderItem, itemStat : *{orderItens}">
+			<label>Quantity</label>
+			<input type="number" step="1" min="1" th:field="*{orderItens[__${itemStat.index}__].quantity}"> <br>
+			
+			<label>Product Id</label>
+			<input type="text" th:field="*{orderItens[__${itemStat.index}__].productId}"> <br>
+		</div>
+		
+		<input type="submit" value="submit">
+	</form>
+</body>
+</html>
