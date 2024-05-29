@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li><a th:href="@{'/order'}">BACK TO ORDERS</a></li>
+		</ul>
+	</nav>
+
+	<form th:action="@{'/order/delete/client/' + ${clientId} + '/' + ${orderId} + '/' + ${index}}" method="POST" th:object="${orderDTO}">
+		<input type="hidden" name="_method" value="delete">
+		
+		<label>Id</label>
+		<input type="text" th:value="${index}" readonly> <br>
+
+		<input type="submit" value="submit">
+	</form>
+</body>
+</html>

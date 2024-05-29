@@ -114,12 +114,14 @@ public class ProductService {
 	
 	public ProductRequestDTO productDTOWithImage(ProductRequestDTO productDTO, MultipartFile file) {
 		ProductRequestDTO newProductDTO = new ProductRequestDTO(
+				productDTO.id(),
 				productDTO.name(), 
-				productDTO.brand(), 
 				uploadImage(file),
+				productDTO.brand(), 
 				productDTO.price(), 
 				productDTO.description(), 
-				productDTO.details());
+				productDTO.details(),
+				productDTO.categoriesId());
 		return newProductDTO;
 	}
 	
@@ -130,14 +132,16 @@ public class ProductService {
 		obj.setPrice((product.getPrice() == null) ? obj.getPrice() : product.getPrice());
 		obj.setDescription((product.getDescription() == null) ? obj.getDescription() : product.getDescription());
 		obj.setDetails((product.getDetails() == null) ? obj.getDetails() : product.getDetails());
+		obj.setCategoriesId((product.getCategoriesId() == null) ? obj.getCategoriesId() : product.getCategoriesId());
+
 	}
 	
     private String uploadImage(MultipartFile file) throws InvalidFormatException, InternalError {
-    	String url = "/home/vitor/Documents/workspace-spring-tool-suite-4-4.22.1.RELEASE/ToyCenterSpringMongoDB/src/main/resources/static/images/";
-        
+    	String url = "/home/vitor/Documents/workspace-spring-tool-suite-4-4.22.1.RELEASE/ToyCenterSpringMongoDB/src/main/resources/static/images/product/";
+    	
     	if (file.isEmpty()) 
-        	throw new InvalidFormatException("The image can't be null.");
-        	
+    		throw new InvalidFormatException("The image can not be null.");
+    	
         try {
 
             byte[] bytes = file.getBytes();
@@ -148,7 +152,7 @@ public class ProductService {
         	throw new InternalErrorException("Unable to save image");
         }
         
-        return "images/" + file.getOriginalFilename();
+        return "/images/product" + file.getOriginalFilename();
     }
 	
 	private ProductResponseDTO productToProductResponseDTO(Product product) {
@@ -172,6 +176,8 @@ public class ProductService {
 		isNullOrBlank(product.getPrice());
 		isNullOrBlank(product.getDescription());
 		isNullOrBlank(product.getDetails());
+		isNullOrBlank(product.getCategoriesId());
+
 	}
 	
 	private void isNullOrBlank(String string) throws InvalidFormatException {
@@ -182,5 +188,10 @@ public class ProductService {
 	private void isNullOrBlank(Double doub) throws InvalidFormatException {
 		if (doub == null || doub <= 0f) 
 			throw new InvalidFormatException("This price is not valid.");
+	}
+
+	private void isNullOrBlank(List<String> list) throws InvalidFormatException {
+		if (list == null || list.size() <= 0)
+			throw new InvalidFormatException("The list can not be null.");
 	}
 }

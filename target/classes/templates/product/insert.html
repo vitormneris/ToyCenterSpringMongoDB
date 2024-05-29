@@ -24,7 +24,13 @@
 		
 		<label>Details</label>
 		<input type="text" th:field="*{details}"> <br>
-		
+
+		<label>Select Categories:</label><br>
+		<div th:each="category : ${listCategoryDTO}">
+			<input type="checkbox" th:field="*{categoriesId}" th:value="${category.id}">
+			<label th:text="${category.name}"></label><br>
+		</div>
+
 		<input type="submit" value="submit">
 	</form>
 </body>

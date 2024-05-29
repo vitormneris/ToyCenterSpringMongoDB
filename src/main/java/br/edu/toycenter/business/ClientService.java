@@ -13,6 +13,7 @@ import br.edu.toycenter.api.convert.ClientConvert;
 import br.edu.toycenter.api.request.ClientRequestDTO;
 import br.edu.toycenter.api.response.ClientResponseDTO;
 import br.edu.toycenter.business.exceptions.InvalidFormatException;
+import br.edu.toycenter.business.exceptions.LoginInvalidException;
 import br.edu.toycenter.business.exceptions.ResourceNotFoundException;
 import br.edu.toycenter.infrastructure.entities.Client;
 import br.edu.toycenter.infrastructure.entities.Order;
@@ -78,6 +79,10 @@ public class ClientService {
 			client.setId(null);
 			checkFields(client);
 			Client clientInserted = repository.save(client);
+			Order order = new Order(null, null, clientInserted.getId(), new ArrayList<>());
+			Order orderInserted = orderRepository.save(order);
+			clientInserted.getOrdersId().add(orderInserted.getId());
+			repository.save(clientInserted);
 			return clientToClientResponseDTO(clientInserted);
 		} catch (InvalidFormatException e){
 			throw new InvalidFormatException(e.getMessage());	
@@ -104,13 +109,23 @@ public class ClientService {
 	public void delete(String id) {
 		try {
 			Optional<Client> objClient = repository.findById(id);
-			Optional<Order> objOrder = orderRepository.findByClientId(id);
+			List<Order> objOrder = orderRepository.findByClientId(id);
 	
 			repository.delete(objClient.get());
-			orderRepository.delete(objOrder.get());
+			orderRepository.deleteAll(objOrder);
 		} catch (NoSuchElementException e) {
 			throw new ResourceNotFoundException("Id", id);
 		}
+	}
+
+	public boolean login(ClientRequestDTO ClientRequestDTO) {
+
+		Client clientRequest = clientConvert.forClient(ClientRequestDTO);
+		Client clientDatabase = repository.findByEmail(clientRequest.getEmail()).orElseThrow(LoginInvalidException::new);
+
+		if (clientDatabase.getPassword().equals(clientRequest.getPassword()))
+			return true;
+		return false;
 	}
 	
 	private void updateData(Client obj, Client client) {

@@ -41,6 +41,7 @@ public class Product {
     	price = builder.price;
     	description = builder.description;
     	details = builder.details;
+		categoriesId = builder.categoriesId;
     }
 
 	public String getId() {
@@ -116,6 +117,7 @@ public class Product {
         private Double price;
         private String description;
         private String details;
+		private List<String> categoriesId;
 
         public Builder id(String value) {
         	id = value;
@@ -151,6 +153,11 @@ public class Product {
         	details = value;
             return this;
         }
+
+		public Builder categoriesId(List<String> value) {
+			categoriesId = value;
+			return this;
+		}
 
         public Product build() {
             return new Product(this);

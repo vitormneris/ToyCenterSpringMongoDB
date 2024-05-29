@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<nav>
+	<ul>
+		<li><a th:href="@{'/client/login'}">LOGIN CLIENT</a></li>
+		<li><a th:href="@{'/client/login'}">LOGIN ADMINISTRATOR</a></li>
+		<li><a th:href="@{'/order'}">GO TO ORDERS</a></li>
+		<li><a th:href="@{'/product'}">GO TO PRODUCT</a></li>
+		<li><a th:href="@{'/category'}">GO TO CATEGORIES</a></li>
+		<li><a th:href="@{'/product/findAll'}">TO MANAGER PRODUCT</a></li>
+		<li><a th:href="@{'/category/findAll'}">TO MANAGER CATEGORIES</a></li>	
+		<li><a th:href="@{'/administrator/findAll'}">TO MANAGER CLIENT</a></li>
+	</ul>
+	</nav>
+
+	<table border="solid black 3px">
+	  <tr>
+	    <th>Id</th>
+	    <th>Name</th>
+		<th>E-mail</th>
+		<th>password</th>
+		<th>Controles</th>
+	  </tr>
+	  
+	  <tr th:each="administratorDTO : ${listAdministratorDTO}">
+	    <td th:text="${administratorDTO.id}"></td>
+	    <td th:text="${administratorDTO.name}"> </td>
+		<td th:text="${administratorDTO.email}"></td>
+		<td th:text="${administratorDTO.password}"></td>
+		<td>
+			<a th:href="@{'/administrator/update/' + ${administratorDTO.id}}">update</a>
+			<a th:href="@{'/administrator/delete/' + ${administratorDTO.id}}">delete</a>
+		</td>
+	  </tr>
+	</table>
+	<a href="/administrator/insert">insert</a>
+</body>
+</html>

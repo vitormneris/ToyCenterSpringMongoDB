@@ -1,5 +1,6 @@
 package br.edu.toycenter.api.convert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -16,6 +17,8 @@ public class CategoryConvert {
 		Category category = new Category.Builder()
 				.id(categoryDTO.id())
 				.name(categoryDTO.name())
+				.image(categoryDTO.image())
+				.productsId(categoryDTO.productsId())
 				.build();
 
 		return category;
@@ -25,8 +28,24 @@ public class CategoryConvert {
 		CategoryResponseDTO categoryDTO = new CategoryResponseDTO(		
 				category.getId(),
 				category.getName(),
+				category.getImage(),
 				listProduct);
 				
 		return categoryDTO;
+	}
+
+	public CategoryRequestDTO forCategoryRequestDTO(CategoryResponseDTO categoryResponseDTO) {
+		List<String> productsId = new ArrayList<>();
+		for (Product product : categoryResponseDTO.products()) {
+			productsId.add(product.getId());
+		}
+
+		CategoryRequestDTO categoryRequestDTO = new CategoryRequestDTO(
+				categoryResponseDTO.id(),
+				categoryResponseDTO.name(),
+				categoryResponseDTO.image(),
+				productsId);
+		return categoryRequestDTO;
+
 	}
 }
