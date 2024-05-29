@@ -57,18 +57,18 @@ public class TestConfig implements CommandLineRunner {
 		
 		clientRepository.saveAll(Arrays.asList(uc1, uc2, uc3));
 		
-		Product p1 = new Product(null, "Carrinho de controle remoto", "Estrela", 99.90, "Carrinho de controle remoto de qualidade"
+		Product p1 = new Product(null, "Carrinho de controle remoto", "/image/toy.png", "Estrela", 99.90, "Carrinho de controle remoto de qualidade"
 				, "Carrinho a pilha de 40 cm" );
-		Product p2 = new Product(null, "Boneca da Barbie", "Funtoy", 120.99, "Boneca da Barbie do seus sonhos"
+		Product p2 = new Product(null, "Boneca da Barbie", "/image/toy1.png", "Funtoy", 120.99, "Boneca da Barbie do seus sonhos"
 				, "Boneca de plástico de 16 cm");
-		Product p3 = new Product(null, "PlayStation 3", "Sony", 1299.80, "Console de antepenúltima geração maravilhoso"
+		Product p3 = new Product(null, "PlayStation 3", "/image/toy2.png", "Sony", 1299.80, "Console de antepenúltima geração maravilhoso"
 				, "Console com 256 GB de memória");
 		
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 		
-		Category c1 = new Category(null, "Carrinhos");
-		Category c2 = new Category(null, "Bonecas");
-		Category c3 = new Category(null, "Consoles");
+		Category c1 = new Category(null, "Carrinhos", "/category/image.png");
+		Category c2 = new Category(null, "Bonecas", "/category/image.png");
+		Category c3 = new Category(null, "Consoles", "/category/image.png");
 		
 		categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
 		

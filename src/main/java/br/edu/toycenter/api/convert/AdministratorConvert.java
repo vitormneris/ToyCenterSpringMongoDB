@@ -28,4 +28,13 @@ public class AdministratorConvert {
 				
 		return administratorDTO;
 	}
+	
+	public AdministratorRequestDTO forAdministratorRequestDTO(AdministratorResponseDTO administratorResponseDTO) {
+		AdministratorRequestDTO administratorRequestDTO = new AdministratorRequestDTO(
+				administratorResponseDTO.id(),
+				administratorResponseDTO.name(),
+				administratorResponseDTO.email(),
+				administratorResponseDTO.password());
+		return administratorRequestDTO;
+	}
 }

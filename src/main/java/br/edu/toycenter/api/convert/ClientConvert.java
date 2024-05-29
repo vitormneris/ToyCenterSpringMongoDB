@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 import br.edu.toycenter.api.request.ClientRequestDTO;
 import br.edu.toycenter.api.response.ClientResponseDTO;
-import br.edu.toycenter.infrastructure.entities.Order;
 import br.edu.toycenter.infrastructure.entities.Client;
+import br.edu.toycenter.infrastructure.entities.Order;
 
 @Component
 public class ClientConvert {
@@ -35,5 +35,16 @@ public class ClientConvert {
 				listOrder);
 				
 		return clientDTO;
+	}
+
+	public ClientRequestDTO forClientRequestDTO(ClientResponseDTO clientResponseDTO) {
+		ClientRequestDTO clientRequestDTO = new ClientRequestDTO(
+				clientResponseDTO.id(),
+				clientResponseDTO.cpf(),
+				clientResponseDTO.name(),
+				clientResponseDTO.email(),
+				clientResponseDTO.phone(),
+				clientResponseDTO.password());
+		return clientRequestDTO;
 	}
 }

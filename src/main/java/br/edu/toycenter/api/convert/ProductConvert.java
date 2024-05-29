@@ -1,5 +1,6 @@
 package br.edu.toycenter.api.convert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -11,14 +12,16 @@ import br.edu.toycenter.infrastructure.entities.Product;
 
 @Component
 public class ProductConvert {
-	
+
 	public Product forProduct(ProductRequestDTO productDTO) {
 		Product product = new Product.Builder()
 				.name(productDTO.name())
+				.image(productDTO.image())
 				.brand(productDTO.brand())
 				.price(productDTO.price())
 				.description(productDTO.description())
 				.details(productDTO.details())
+				.categoriesId(productDTO.categoriesId())
 				.build();
 
 		return product;
@@ -28,6 +31,7 @@ public class ProductConvert {
 		ProductResponseDTO productDTO = new ProductResponseDTO(				
 				product.getId(),
 				product.getName(),
+				product.getImage(),
 				product.getBrand(),
 				product.getPrice(),
 				product.getDescription(),
@@ -37,5 +41,23 @@ public class ProductConvert {
 		return productDTO;
 	}
 	
+	public ProductRequestDTO forProductRequestDTO(ProductResponseDTO productResponseDTO) {
+		List<String> categoriesId = new ArrayList<>();
+		for (Category category : productResponseDTO.categories()) {
+			categoriesId.add(category.getId());
+		}
+
+		ProductRequestDTO productRequestDTO = new ProductRequestDTO(
+				productResponseDTO.id(),
+				productResponseDTO.name(),
+				productResponseDTO.image(),
+				productResponseDTO.brand(),
+				productResponseDTO.price(),
+				productResponseDTO.description(),
+				productResponseDTO.details(),
+				categoriesId);
+		return productRequestDTO;
+
+	}
 	
 }

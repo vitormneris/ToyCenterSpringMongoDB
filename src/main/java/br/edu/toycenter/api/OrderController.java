@@ -37,23 +37,29 @@ public class OrderController {
 		OrderResponseDTO obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
+
+	@GetMapping(value = "/client/{clientId}")
+	public ResponseEntity<List<OrderResponseDTO>> findByClientId(@PathVariable String clientId) {
+		List<OrderResponseDTO> obj = service.findByClientId(clientId);
+		return ResponseEntity.ok().body(obj);
+	}
 	
 	@PostMapping
 	public ResponseEntity<OrderResponseDTO> insert(@RequestBody OrderRequestDTO orderDTO) {
 		OrderResponseDTO obj = service.insert(orderDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.id()).toUri();
-	    return ResponseEntity.created(uri).body(obj);
+		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<OrderResponseDTO> update(@PathVariable String id, @RequestBody OrderRequestDTO orderDTO) {
-		OrderResponseDTO obj = service.update(id, orderDTO);
+	@PutMapping(value = "/{clientId}/{orderId}")
+	public ResponseEntity<OrderResponseDTO> updateByClientId(@PathVariable String clientId, @PathVariable String orderId, @RequestBody OrderRequestDTO orderDTO) {
+		OrderResponseDTO obj = service.updateByClientId(clientId, orderId, orderDTO);
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable String id) {
-		service.delete(id);
+	@DeleteMapping(value = "/{clientId}/{orderId}")
+	public ResponseEntity<Void> deleteByClientId(@PathVariable String clientId, @PathVariable String orderId) {
+		service.deleteByClientIdAndId(clientId, orderId);
 		return ResponseEntity.noContent().build();
 	}
 }

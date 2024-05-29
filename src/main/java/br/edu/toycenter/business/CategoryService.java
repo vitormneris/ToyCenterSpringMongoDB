@@ -1,5 +1,9 @@
 package br.edu.toycenter.business;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -8,11 +12,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.toycenter.api.convert.CategoryConvert;
 import br.edu.toycenter.api.request.CategoryRequestDTO;
 import br.edu.toycenter.api.response.CategoryResponseDTO;
 import br.edu.toycenter.business.exceptions.DatabaseException;
+import br.edu.toycenter.business.exceptions.InternalErrorException;
 import br.edu.toycenter.business.exceptions.InvalidFormatException;
 import br.edu.toycenter.business.exceptions.ResourceNotFoundException;
 import br.edu.toycenter.infrastructure.entities.Category;
@@ -116,15 +122,48 @@ public class CategoryService {
 	
 	private void updateData(Category obj, Category category) {
 		obj.setName((category.getName() == null) ? obj.getName() : category.getName());
+		obj.setImage((category.getImage() == null) ? obj.getImage() : category.getImage());
+		obj.setProductsId((category.getProductsId() == null) ? obj.getProductsId() : category.getProductsId());
+
+	}
+
+	public CategoryRequestDTO categoryDTOWithImage(CategoryRequestDTO categoryRequestDTO, MultipartFile file) {
+		CategoryRequestDTO newCategoryDTO = new CategoryRequestDTO(
+				categoryRequestDTO.id(),
+				categoryRequestDTO.name(),
+				uploadImage(file),
+				categoryRequestDTO.productsId());
+		return newCategoryDTO;
+	}
+
+	private String uploadImage(MultipartFile file) throws InvalidFormatException, InternalError {
+		String url = "/home/vitor/Documents/workspace-spring-tool-suite-4-4.22.1.RELEASE/ToyCenterSpringMongoDB/src/main/resources/static/images/category/";
+
+		if (file.isEmpty())
+			throw new InvalidFormatException("The image can not be null.");
+
+		try {
+
+			byte[] bytes = file.getBytes();
+			Path path = Paths.get(url + file.getOriginalFilename());
+			Files.write(path, bytes);
+
+		} catch (IOException e) {
+			throw new InternalErrorException("Unable to save image");
+		}
+
+		return "/images/category/" + file.getOriginalFilename();
 	}
 	
 	public CategoryResponseDTO categoryToCategoryResponseDTO(Category category) {
 		List<Product> listProduct = new ArrayList<>();
-		
-		for (String productId : category.getProductsId()) {
-			Optional<Product> obj = productRepository.findById(productId);
 
-			listProduct.add(obj.orElseThrow());
+		if (category.getProductsId() != null) {
+			for (String productId : category.getProductsId()) {
+				Optional<Product> obj = productRepository.findById(productId);
+
+				listProduct.add(obj.orElseThrow());
+			}
 		}
 		
 		CategoryResponseDTO categoryDTO = categoryConvert.forCategoryResponseDTO(category, listProduct);
@@ -135,6 +174,8 @@ public class CategoryService {
 		if (category == null) throw new InvalidFormatException("The fields can not be null.");
 		
 		isNullOrBlank(category.getName());
+		isNullOrBlank(category.getImage());
+
 	}
 	
 	private void isNullOrBlank(String string) throws InvalidFormatException {

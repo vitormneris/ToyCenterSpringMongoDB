@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+
+<nav>
+	<ul>
+		<li><a th:href="@{'/client/login'}">LOGIN</a></li>
+		<li><a th:href="@{'/order'}">GO TO ORDERS</a></li>
+		<li><a th:href="@{'/product'}">GO TO PRODUCT</a></li>
+		<li><a th:href="@{'/category/findAll'}">TO MANAGER CATEGORIES</a></li>
+		<li><a th:href="@{'/product/findAll'}">TO MANAGER  PRODUCTS</a></li>
+		<li><a th:href="@{'/client/findAll'}">TO MANAGER CLIENT</a></li>	
+		<li><a th:href="@{'/administrator/findAll'}">TO MANAGER ADMINISTRATOR</a></li>	
+	</ul>
+</nav>
+
+<table border="solid black 3px">
+	<tr>
+		<th>Id</th>
+		<th>Name</th>
+		<th>Image</th>
+	</tr>
+
+	<tr th:each="categoryDTO : ${listCategoryDTO}">
+		<td th:text="${categoryDTO.id}"></td>
+		<td th:text="${categoryDTO.name}"></td>
+	 	<td> <a th:href="@{'/product/productsByCategory/' + ${categoryDTO.id}}" ><img th:src="${categoryDTO.image}"> </a> </td>
+	</tr>
+</table>
+</body>
+</html>

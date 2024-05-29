@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<nav>
+		<ul>
+			<li><a th:href="@{'/order'}">BACK TO ORDERS</a></li>
+		</ul>
+	</nav>
+
+	<form th:action="@{'/order/update/client/' + ${clientId} + '/' + ${orderId}}" method="POST" th:object="${requestDTO}">
+		<input type="hidden" name="_method" value="put">
+
+		<label>Id</label>
+		<input type="text" th:value="*{id}" readonly> <br>
+
+		<label>Client Id</label>
+		<input type="text" th:field="*{clientId}" readonly> <br>
+
+		<label>Quantity</label>
+		<input type="number" step="1" min="1" th:field="*{orderItems[__${number}__].quantity}"> <br>
+
+		<label>Product Id</label>
+		<input type="text" th:field="*{orderItems[__${number}__].productId}" readonly> <br>
+
+		<input type="submit" value="submit">
+	</form>
+</body>
+</html>

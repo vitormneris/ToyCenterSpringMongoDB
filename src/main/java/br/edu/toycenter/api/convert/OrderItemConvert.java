@@ -1,7 +1,5 @@
 package br.edu.toycenter.api.convert;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,16 +16,16 @@ public class OrderItemConvert {
 	private ProductRepository productRepository;
 	
 	public OrderItem forOrderItem(OrderItemRequestDTO orderItemRequest) {
-		Optional<Product> obj = null;
-		if (orderItemRequest.productId() != null) 
-			obj = productRepository.findById(orderItemRequest.productId());
-	
-		OrderItem OrderItem = new OrderItem.Builder()
+		Product product = null;
+		if (orderItemRequest.productId() != null)
+			product = productRepository.findById(orderItemRequest.productId()).orElseThrow();
+
+        OrderItem orderItem = new OrderItem.Builder()
 				.quantity(orderItemRequest.quantity())
-				.product(obj.get())
+				.product(product)
 				.build();
 				
-		return OrderItem;
+		return orderItem;
 	}
 	
 	public OrderItemResponseDTO forOrderItemResponseDTO(OrderItem orderItem) {
@@ -38,5 +36,21 @@ public class OrderItemConvert {
 				orderItem.getSubTotal());
 				
 		return OrderItemDTO;
+	}
+	
+	public OrderItemRequestDTO forOrderItemRequestDTO(OrderItemResponseDTO orderItemResponseDTO) {
+		OrderItemRequestDTO orderItemRequestDTO = new OrderItemRequestDTO(				
+				orderItemResponseDTO.quantity(),
+				orderItemResponseDTO.product().getId());
+				
+		return orderItemRequestDTO;
+	}
+
+	public OrderItemRequestDTO forOrderItemRequestDTO(OrderItem orderItem) {
+		OrderItemRequestDTO orderItemRequestDTO = new OrderItemRequestDTO(
+				orderItem.getQuantity(),
+				orderItem.getProduct().getId());
+
+		return orderItemRequestDTO;
 	}
 }

@@ -11,4 +11,5 @@ public record OrderResponseDTO(
 		Double total,
 		Client client,
 		List<OrderItemResponseDTO> orderItens) {
+
 }

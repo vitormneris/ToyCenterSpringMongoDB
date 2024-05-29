@@ -96,22 +96,14 @@ public class AdministratorService {
 			throw new ResourceNotFoundException("Id", id);
 		}
 	}
-	
-	public void login(AdministratorRequestDTO administratorRequestDTO) {
-		try {
 
-			Administrator admRequest = administratorConvert.forAdministrator(administratorRequestDTO);
-	
-			Administrator admDatabase = repository.findByEmail(admRequest.getEmail()).orElseThrow(LoginInvalidException::new);
-			
-			if (admDatabase.getPassword().equals(admRequest.getPassword())) {
-				System.out.println("Login realizado com sucesso!");
-			} else {
-				throw new NoSuchElementException();
-			}
-		} catch (NoSuchElementException e) {
-			throw new LoginInvalidException();
-		}
+	public boolean login(AdministratorRequestDTO administratorRequestDTO) {
+		Administrator admRequest = administratorConvert.forAdministrator(administratorRequestDTO);
+		Administrator admDatabase = repository.findByEmail(admRequest.getEmail()).orElseThrow(LoginInvalidException::new);
+		
+		if (admDatabase.getPassword().equals(admRequest.getPassword())) 
+			return true;
+		return false;
 	}
 	
 	private void updateData(Administrator obj, Administrator administrator) {

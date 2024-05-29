@@ -1,5 +1,8 @@
 package br.edu.toycenter.infrastructure.entities;
 
+import lombok.ToString;
+
+@ToString
 public class OrderItem {
 	
 	private Integer quantity;
@@ -48,6 +51,11 @@ public class OrderItem {
 	
 	public Double getSubTotal() {
 		return price * quantity;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderItem [quantity=" + quantity + ", price=" + price + ", product=" + product + "]";
 	}
 
 	public static class Builder {

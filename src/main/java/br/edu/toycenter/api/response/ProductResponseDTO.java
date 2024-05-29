@@ -7,6 +7,7 @@ import br.edu.toycenter.infrastructure.entities.Category;
 public record ProductResponseDTO(
 		String id,
 		String name,
+		String image,
 		String brand,
 		Double price,
 		String description,

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+
+	<nav>
+		<ul>
+			<li><a th:href="@{'/product'}">BACK TO PRODUCTS</a></li>
+		</ul>
+	</nav>
+
+	<form th:action="@{'/order/insert'}" method="POST" th:object="${orderRequestDTO}">
+		<input type="hidden" name="_method" value="put">
+		
+		<label>Select order id:</label><br>
+		<div th:each="id : ${listId}">
+			<input type="radio" th:field="*{id}" th:value="${id}">
+			<label th:text="${id}"></label><br>
+		</div>
+		
+		
+		<label>Client Id</label>
+		<input type="text" th:field="*{clientId}" readonly> <br>
+
+		<label>Quantity</label>
+		<input type="number" step="1" min="1" th:field="*{quantity}"> <br>
+
+		<label>Product Id</label>
+		<input type="text" th:field="*{productId}" readonly> <br>
+
+		<input type="submit" value="submit">
+	</form>
+</body>
+</html>

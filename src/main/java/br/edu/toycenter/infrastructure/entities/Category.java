@@ -12,20 +12,24 @@ public class Category {
 	@Id
 	private String id;
 	private String name;
+	private String image;
 	
 	List<String> productsId = new ArrayList<>();
 	
 	public Category() {
 	}
 
-	public Category(String id, String name) {
+	public Category(String id, String name, String image) {
 		this.id = id;
 		this.name = name;
+		this.image = image;
 	}
 	
     public Category(Builder builder) {
     	id = builder.id;
     	name = builder.name;
+		image = builder.image;
+		productsId = builder.productsId;
     }
 
 	public String getId() {
@@ -43,7 +47,15 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public List<String> getProductsId() {
 		return productsId;
 	}
@@ -56,6 +68,8 @@ public class Category {
 
         private String id;
         private String name;
+		private String image;
+		private List<String> productsId;
 
         public Builder id(String value) {
         	id = value;
@@ -66,6 +80,16 @@ public class Category {
         	name = value;
             return this;
         }
+
+		public Builder image(String value) {
+			image = value;
+			return this;
+		}
+
+		public Builder productsId(List<String> value) {
+			productsId = value;
+			return this;
+		}
 
         public Category build() {
             return new Category(this);

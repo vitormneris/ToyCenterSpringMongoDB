@@ -4,11 +4,13 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+@ToString
 @Document(collection = "order")
 public class Order {
 	
@@ -76,6 +78,12 @@ public class Order {
 			sum += item.getSubTotal();
 		}
 		return sum;
+	}
+	
+
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", moment=" + moment + ", clientId=" + clientId + ", orderItens=" + orderItens + "]";
 	}
 
 	public static class Builder {

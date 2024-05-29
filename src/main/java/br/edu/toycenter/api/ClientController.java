@@ -56,6 +56,12 @@ public class ClientController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.id()).toUri();
 	    return ResponseEntity.created(uri).body(obj);
 	}
+
+	@PostMapping(value = "/login")
+	public ResponseEntity<Void> login(@RequestBody ClientRequestDTO clientRequestDTO) {
+		service.login(clientRequestDTO);
+		return ResponseEntity.noContent().build();
+	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<ClientResponseDTO> update(@PathVariable String id, @RequestBody ClientRequestDTO clientRequestDTO) {
