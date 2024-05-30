@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
 	
     @Bean
     ProductRequestDTO productRequestDTO() {
-        return new ProductRequestDTO(null, null, null, null, null, null, null, null);
+        return new ProductRequestDTO(null, null, null, null, 0.0, null, null, null);
     }
 
     @Bean
@@ -47,6 +47,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     OrderItemRequestDTO orderItemRequestDTO() {
-        return new OrderItemRequestDTO(null, null);
+        return new OrderItemRequestDTO(0, null);
     }
 }

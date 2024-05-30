@@ -35,7 +35,35 @@ public class ClientWebController {
     
 	@Autowired
 	private HttpServletRequest request;
-    
+
+	@GetMapping("/findClient")
+	public String findAClient(Model model) {
+		if (!clientIsLogged()) return  "redirect:/client/login";
+
+		HttpSession session = request.getSession();
+		String clientId = (String) session.getAttribute("clientId");
+
+		ClientResponseDTO clientDTO = service.findById(clientId);
+		model.addAttribute("clientDTO", clientDTO);
+		return "/clientPerfil/findClient";
+	}
+
+	@GetMapping("/updateByClient/{clientId}")
+	public String updateByClient(Model model, @PathVariable String clientId) {
+		if (!clientIsLogged()) return  "redirect:/client/login";
+		ClientResponseDTO clientResponseDTO = service.findById(clientId);
+		clientDTO = clientConvert.forClientRequestDTO(clientResponseDTO);
+		model.addAttribute("clientDTO", clientDTO);
+		return "/clientPerfil/update";
+	}
+
+	@GetMapping("/deleteByClient/{id}")
+	public String deleteByClient(Model model, @PathVariable("id") String id) {
+		if (!clientIsLogged()) return  "redirect:/client/login";
+		model.addAttribute("clientId", id);
+		return "/clientPerfil/delete";
+	}
+
 	@GetMapping("/findAll")
 	public String findAll(Model model) {
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
@@ -69,7 +97,6 @@ public class ClientWebController {
 	@GetMapping("/delete/{id}")
 	public String delete(Model model, @PathVariable("id") String id) {
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
-		System.out.println(id);
 		model.addAttribute("clientId", id);
 		return "/client/delete";
 	}
@@ -79,7 +106,14 @@ public class ClientWebController {
         model.addAttribute("clientDTO", clientDTO);
         return "loginClient";
     }
-    
+
+	@GetMapping("/logout")
+	public String logout(Model model) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("clientId");
+		return "redirect:/product";
+	}
+
 	@PostMapping("/insert")
 	public String insert(@ModelAttribute("clientDTO") ClientRequestDTO clientDTO) {		
 		service.insert(clientDTO);
@@ -102,12 +136,19 @@ public class ClientWebController {
         }
         return "redirect:/client/login";
     }
-    
-	public String update(@ModelAttribute("clientDTO") ClientRequestDTO clientDTO) {		
-		service.insert(clientDTO);
-		return "redirect:/client/findAll";
+
+	@PutMapping("/updateByClient/{id}")
+	public String updateByClient(@ModelAttribute("clientDTO") ClientRequestDTO clientDTO, @PathVariable String id) {
+		service.update(id, clientDTO);
+		return "redirect:/client/findClient";
 	}
-	
+
+	@DeleteMapping("/deleteByClient/{id}")
+	public String deleteByClient(@PathVariable String id) {
+		service.delete(id);
+		return "redirect:/client/logout";
+	}
+
 	@PutMapping("/update/{id}")
 	public String update(@ModelAttribute("clientDTO") ClientRequestDTO clientDTO, @PathVariable String id) {
     	service.update(id, clientDTO);
@@ -118,6 +159,13 @@ public class ClientWebController {
 	public String delete(@PathVariable String id) {
 		service.delete(id);
 		return "redirect:/client/findAll";
+	}
+
+	private boolean clientIsLogged() {
+		HttpSession session = request.getSession();
+		String clientId = (String) session.getAttribute("clientId");
+		if (clientId == null) return false;
+		return true;
 	}
 	
 	private boolean administratorIsLogged() {

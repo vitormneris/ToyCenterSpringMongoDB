@@ -79,6 +79,13 @@ public class AdministratorWebController {
 		return "redirect:/administrator/findAll";
 	}
 
+	@GetMapping("/logout")
+	public String logout(Model model) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("administratorId");
+		return "redirect:/product";
+	}
+
     @PostMapping("/login")
     public String login(@ModelAttribute AdministratorRequestDTO administratorRequestDTO, HttpSession session) {
 

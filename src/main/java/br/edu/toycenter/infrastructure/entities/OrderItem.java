@@ -1,8 +1,5 @@
 package br.edu.toycenter.infrastructure.entities;
 
-import lombok.ToString;
-
-@ToString
 public class OrderItem {
 	
 	private Integer quantity;

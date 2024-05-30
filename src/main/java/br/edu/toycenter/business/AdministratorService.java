@@ -115,21 +115,21 @@ public class AdministratorService {
 	private void checkFields(Administrator administrator) throws InvalidFormatException {
 		if (administrator == null) throw new InvalidFormatException("Os campos não podem ser nulos");
 		
-		isNullOrBlank(administrator.getName());
+		isNullOrBlank(administrator.getName(), "name");
 		if (!administrator.getName().matches("^[a-zA-Z ]+$")) 
 			throw new InvalidFormatException("Name", administrator.getName());
 		
-		isNullOrBlank(administrator.getEmail());
+		isNullOrBlank(administrator.getEmail(), "e-mail");
 		if (!administrator.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) 
 			throw new InvalidFormatException("E-mail", administrator.getEmail());
 		
-		isNullOrBlank(administrator.getPassword());
+		isNullOrBlank(administrator.getPassword(), "password");
 		if (!(administrator.getPassword().length() >= 8))
 			throw new InvalidFormatException("Password");
 	}
 	
-	private void isNullOrBlank(String string) throws InvalidFormatException {
+	private void isNullOrBlank(String string, String field) throws InvalidFormatException {
 		if (string == null || string.isBlank()) 
-			throw new InvalidFormatException("The fields can not be null.");
+			throw new InvalidFormatException("The " + field + " can not be null.");
 	}
 }

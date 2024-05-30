@@ -118,7 +118,6 @@ public class ProductWebController {
 	@GetMapping("/delete/{id}")
 	public String delete(Model model, @PathVariable("id") String id) {
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
-
 		
 		model.addAttribute("productId", id);
 		return "/product/delete";

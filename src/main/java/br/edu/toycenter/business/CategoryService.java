@@ -92,8 +92,8 @@ public class CategoryService {
 		try {
 			
 			Optional<Category> obj = repository.findById(id);
-		
-			isLessThan2(obj.get().getProductsId());
+
+			isEqualsOne(obj.get().getProductsId());
 			
 			for (String productsId : obj.get().getProductsId()) {
 				Optional<Product> objProduct = productRepository.findById(productsId);
@@ -183,8 +183,8 @@ public class CategoryService {
 			throw new InvalidFormatException("The name can not be null.");
 	}
 	
-	private void isLessThan2(List<String> listString) throws DatabaseException {
-		if (!(listString.size() > 1)) 
+	private void isEqualsOne(List<String> listString) throws DatabaseException {
+		if (listString.size() == 1)
 			throw new DatabaseException("Can't possible delete to category, because he is associate with only a product.");
 	}
 }

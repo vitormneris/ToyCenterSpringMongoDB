@@ -1,6 +1,7 @@
 package br.edu.toycenter.config;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,18 @@ public class TestConfig implements CommandLineRunner {
 	
 		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 		
+		uc1.getOrdersId().add(o1.getId());
+		uc2.getOrdersId().add(o2.getId());
+		uc3.getOrdersId().add(o3.getId());
+
+		clientRepository.saveAll(Arrays.asList(uc1, uc2, uc3));
+
+		o1 = new Order(null, null, uc1.getId(), new ArrayList<>());
+		o2 = new Order(null, null, uc2.getId(), new ArrayList<>());
+		o3 = new Order(null, null, uc3.getId(), new ArrayList<>());
+
+		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
 		uc1.getOrdersId().add(o1.getId());
 		uc2.getOrdersId().add(o2.getId());
 		uc3.getOrdersId().add(o3.getId());
