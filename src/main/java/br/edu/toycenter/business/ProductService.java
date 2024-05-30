@@ -152,7 +152,7 @@ public class ProductService {
         	throw new InternalErrorException("Unable to save image");
         }
         
-        return "/images/product" + file.getOriginalFilename();
+        return "/images/product/" + file.getOriginalFilename();
     }
 	
 	private ProductResponseDTO productToProductResponseDTO(Product product) {
@@ -170,19 +170,19 @@ public class ProductService {
 	private void checkFields(Product product) throws InvalidFormatException {
 		if (product == null) throw new InvalidFormatException("The fields can not be null.");
 		
-		isNullOrBlank(product.getName());
-		isNullOrBlank(product.getImage());
-		isNullOrBlank(product.getBrand());
+		isNullOrBlank(product.getName(), "name");
+		isNullOrBlank(product.getImage(), "image");
+		isNullOrBlank(product.getBrand(), "brand");
 		isNullOrBlank(product.getPrice());
-		isNullOrBlank(product.getDescription());
-		isNullOrBlank(product.getDetails());
+		isNullOrBlank(product.getDescription(), "description");
+		isNullOrBlank(product.getDetails(), "details");
 		isNullOrBlank(product.getCategoriesId());
 
 	}
 	
-	private void isNullOrBlank(String string) throws InvalidFormatException {
+	private void isNullOrBlank(String string, String field) throws InvalidFormatException {
 		if (string == null || string.isBlank()) 
-			throw new InvalidFormatException("The fields can not be null.");
+			throw new InvalidFormatException("The " + field + " can not be null.");
 	}
 	
 	private void isNullOrBlank(Double doub) throws InvalidFormatException {
@@ -192,6 +192,6 @@ public class ProductService {
 
 	private void isNullOrBlank(List<String> list) throws InvalidFormatException {
 		if (list == null || list.size() <= 0)
-			throw new InvalidFormatException("The list can not be null.");
+			throw new InvalidFormatException("The categories can not be null.");
 	}
 }

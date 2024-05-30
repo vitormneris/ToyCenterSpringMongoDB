@@ -3,6 +3,8 @@ package br.edu.toycenter.api.web;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.toycenter.api.request.ClientRequestDTO;
+import br.edu.toycenter.api.request.EmailRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,7 @@ import br.edu.toycenter.api.request.OrderRequestDTO;
 import br.edu.toycenter.api.response.ClientResponseDTO;
 import br.edu.toycenter.api.response.OrderResponseDTO;
 import br.edu.toycenter.business.ClientService;
+import br.edu.toycenter.business.EmailService;
 import br.edu.toycenter.business.OrderService;
 import br.edu.toycenter.infrastructure.entities.Order;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +37,9 @@ public class OrderWebController {
 	
 	@Autowired
 	ClientService clientService;
+
+	@Autowired
+	EmailService emailService;
 	
 	@Autowired
 	OrderConvert convert;
@@ -72,7 +78,7 @@ public class OrderWebController {
 			listOrderId.add(order.getId());
 		}
 		
-		AuxOrderRequestDTO auxOrderRequestDTO = new AuxOrderRequestDTO(null, clientId, null, productId);
+		AuxOrderRequestDTO auxOrderRequestDTO = new AuxOrderRequestDTO(null, clientId, 0, productId);
 		
 		model.addAttribute("productId", productId);
 		model.addAttribute("listId", listOrderId);
@@ -108,6 +114,15 @@ public class OrderWebController {
 		model.addAttribute("clientId", clientId);
 		model.addAttribute("orderId", orderId);
 		return "order/deleteOrder";
+	}
+
+	@GetMapping(value = "/orderBuy/{clientId}")
+	public String orderBuy(Model model, @PathVariable("clientId") String clientId) {
+		if (!clientIsLogged()) return  "redirect:/client/login";
+		ClientResponseDTO clientRequestDTO = clientService.findById(clientId);
+		EmailRequestDTO emailRequestDTO = new EmailRequestDTO(clientRequestDTO.email(), "EFETUE SUA COMPRA", "CLIQUE NO LINK PARA PROSSEGUIR http://localhost:8080/category");
+		emailService.sendEmail(emailRequestDTO);
+		return "redirect:/product";
 	}
 
 	@PutMapping("/insert")

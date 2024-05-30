@@ -151,29 +151,29 @@ public class ClientService {
 	private void checkFields(Client client) throws InvalidFormatException {
 		if (client == null) throw new InvalidFormatException("Os campos não podem ser nulos");
 		
-		isNullOrBlank(client.getCpf());
+		isNullOrBlank(client.getCpf(), "CPF");
 		if (!client.getCpf().matches("^[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}$")) 
 			throw new InvalidFormatException("CPF", client.getCpf());
 		
-		isNullOrBlank(client.getName());
+		isNullOrBlank(client.getName(), "name");
 		if (!client.getName().matches("^[a-zA-Z ]+$")) 
 			throw new InvalidFormatException("Name", client.getName());
 		
-		isNullOrBlank(client.getEmail());
+		isNullOrBlank(client.getEmail(), "e-mail");
 		if (!client.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) 
 			throw new InvalidFormatException("E-mail", client.getEmail());
 		
-		isNullOrBlank(client.getPhone());
+		isNullOrBlank(client.getPhone(), "phone");
 		if (!client.getPhone().matches("\\(?\\d{2}\\)? ?(?:\\d{4,5}-?\\d{4}|\\d{4}-?\\d{4})$")) 
 			throw new InvalidFormatException("Phone", client.getPhone());
 		
-		isNullOrBlank(client.getPassword());
+		isNullOrBlank(client.getPassword(), "password");
 		if (!(client.getPassword().length() >= 8))
 			throw new InvalidFormatException("Password");
 	}
 	
-	private void isNullOrBlank(String string) throws InvalidFormatException {
+	private void isNullOrBlank(String string, String field) throws InvalidFormatException {
 		if (string == null || string.isBlank()) 
-			throw new InvalidFormatException("The fields can not be null.");
+			throw new InvalidFormatException("The " + field + " can not be null.");
 	}
 }
