@@ -7,4 +7,13 @@ public record OrderItemResponseDTO(
 		Double price, 
 		Product product,
 		Double subTotal)  {
+
+	@Override
+	public String toString() {
+		return "\n   Produto: " + product.getName() +
+			   "\n   Quantidade: " + quantity +
+			   "\n   Preço: " + price +
+			   "\n   Subtotal: " + subTotal +
+			   "\n";
+	}
 }

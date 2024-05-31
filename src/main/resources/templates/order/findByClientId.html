@@ -22,7 +22,7 @@
 	</nav>
 
 	<div th:each="orderDTO : ${orderDTOList}">
-		<a th:href="@{'/order/orderBuy/' + ${orderDTO.client.id}}">buy</a>
+		<a th:href="@{'/order/orderBuy/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">buy</a>
 		<a th:href="@{'/order/delete/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">delete order</a>
 		<p th:text="${orderDTO.id}"></p>
 		<p th:text="${orderDTO.moment}"></p>

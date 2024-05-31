@@ -1,5 +1,8 @@
 package br.edu.toycenter.api.convert;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,9 +46,16 @@ public class OrderConvert {
 	}
 	
 	public OrderResponseDTO forOrderResponseDTO(Order order, Client client, List<OrderItemResponseDTO> orderItemDTO) {
-		OrderResponseDTO orderDTO = new OrderResponseDTO(				
+		String formattedDateTime = "NO DATE";
+		if (order.getMoment() != null) {
+			Instant instant = order.getMoment();
+			ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");
+			formattedDateTime = formatter.format(instant.atZone(zoneId));
+		}
+		OrderResponseDTO orderDTO = new OrderResponseDTO(
 				order.getId(),
-				order.getMoment(),
+				formattedDateTime,
 				order.getTotal(),
 				client,
 				orderItemDTO);
@@ -54,6 +64,13 @@ public class OrderConvert {
 	}
 
 	public OrderResponseDTO forOrderResponseDTO(Order order) {
+		String formattedDateTime = "NO DATE";
+		if (order.getMoment() == null) {
+			Instant instant = order.getMoment();
+			ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");
+			formattedDateTime = formatter.format(instant.atZone(zoneId));
+		}
 		Client client = clientRepository.findById(order.getClientId()).orElseThrow();
 
 		List<OrderItemResponseDTO> orderItemResponseDTOS = new ArrayList<>();
@@ -63,7 +80,7 @@ public class OrderConvert {
 
 		OrderResponseDTO orderDTO = new OrderResponseDTO(
 				order.getId(),
-				order.getMoment(),
+				formattedDateTime,
 				order.getTotal(),
 				client,
 				orderItemResponseDTOS);
