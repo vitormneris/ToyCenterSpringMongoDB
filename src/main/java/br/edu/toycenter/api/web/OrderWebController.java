@@ -1,5 +1,8 @@
 package br.edu.toycenter.api.web;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +63,8 @@ public class OrderWebController {
 		HttpSession session = request.getSession();
 		String clientId = (String) session.getAttribute("clientId");
 		List<OrderResponseDTO> listResponseDTO = service.findByClientId(clientId);
-
+		int lastIndex = listResponseDTO.size() - 1;
+		listResponseDTO.remove(lastIndex);
 		model.addAttribute("orderDTOList", listResponseDTO);
 		return "order/findByClientId";
 	}
@@ -116,11 +120,29 @@ public class OrderWebController {
 		return "order/deleteOrder";
 	}
 
-	@GetMapping(value = "/orderBuy/{clientId}")
-	public String orderBuy(Model model, @PathVariable("clientId") String clientId) {
+	@GetMapping(value = "/orderBuy/{clientId}/{orderId}")
+	public String orderBuy(Model model, @PathVariable("clientId") String clientId, @PathVariable("orderId") String orderId) {
 		if (!clientIsLogged()) return  "redirect:/client/login";
 		ClientResponseDTO clientRequestDTO = clientService.findById(clientId);
-		EmailRequestDTO emailRequestDTO = new EmailRequestDTO(clientRequestDTO.email(), "EFETUE SUA COMPRA", "CLIQUE NO LINK PARA PROSSEGUIR http://localhost:8080/category");
+		OrderResponseDTO orderResponseDTO = service.findById(orderId);
+
+		Instant instant = Instant.now();
+		ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");
+		String formattedDateTime = formatter.format(instant.atZone(zoneId));
+
+		EmailRequestDTO emailRequestDTO = new EmailRequestDTO(clientRequestDTO.email(),
+				"Olá, " + clientRequestDTO.name() + ", efetue sua compra!",
+				"Olá, " + clientRequestDTO.name() + ", tudo bem?" +
+						"\n recebemos uma solicitação de compra da sua conta na TOYCENTER" +
+						"\n -------------------------------------------------------------" +
+						"\n PEDIDO:" +
+						"\n DATA E HORA: " + formattedDateTime +
+						"\n TOTAL: " + orderResponseDTO.total() +
+						"\n ITENS DE PEDIDO: " + orderResponseDTO.orderItens() +
+						"\n -------------------------------------------------------------" +
+						"\n CLIQUE NO LINK PARA PROSSEGUIR " +
+						"\n http://localhost:8080/category");
 		emailService.sendEmail(emailRequestDTO);
 		return "redirect:/product";
 	}
