@@ -1,20 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<link rel="stylesheet" th:href="@{/css/remodel.css}">
+	<link rel="stylesheet" th:href="@{/css/styleForm.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Inserir categoria</title>
 </head>
 <body>
-	<form th:action="@{'/category/insert'}" method="POST" th:object="${categoryRequestDTO}" enctype='multipart/form-data'>
-		<label>Name</label>
-		<input type="text" th:field="*{name}"> <br>
-		
-		<label>Image</label>
-		<input type="file" name="imageFile"> <br>
-		
-		<input type="submit" value="submit">
-	</form>
-	<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
+<header>
+	<nav class="nav-logo">
+		<div class="logo">
+			<a href="getAllToy.html"> <img
+					src="image/logoToyCenterAlt.svg" alt=""></a>
+		</div>
+
+		<div class="store-name">
+			<h1>TOY CENTER</h1>
+		</div>
+
+		<div class="space"></div>
+	</nav>
+
+	<nav class="menu">
+		<div class="menuList">
+			<a th:href="@{'/product'}">Inicio</a>
+			<a th:href="@{'/category'}">Categorias</a>
+
+			<div class="dropdown">
+				<button class="dropbtn">Administração</button>
+				<div class="dropdown-content">
+					<a th:href="@{'/product/findAll'}">Brinquedos</a>
+					<a th:href="@{'/category/findAll'}">Categorias</a>
+					<a th:href="@{'/client/findAll'}">Clientes</a>
+					<a th:href="@{'/administrator/findAll'}">Administradores</a>
+				</div>
+			</div>
+
+			<a th:href="@{'/order'}">Ver pedidos</a>
+			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a th:href="@{'/client/login'}">Entrar</a>
+		</div>
+	</nav>
+
+</header>
+    
+	<a class="botao" th:href="@{'/category/findAll'}">Voltar</a>
+
+	
+    <main id="Main_ContentNT" class="Container_NewToy">
+    	<form id="Content_NewCategory" th:action="@{'/category/insert'}" th:object="${categoryRequestDTO}" method="POST" enctype="multipart/form-data">
+		<input type="hidden" name="action" value="insertCategory">
+      <div class="title-container">
+        <h1 class="titleAlt">Categorias: Nova categoria</h1>
+        <div class="title-lineAlt" align="center" ></div>
+    </div>
+
+            <div class="fieldsetBox">
+                <label for="name_NC">Nome</label>
+                <input type="text" placeholder="Digite o Nome da Categoria" name="name" id="name_NC" th:field="*{name}" required>
+            </div>
+           
+            <div class="fieldsetImageBox">
+            <label for="file_NC">Imagem</label>
+           		<input type="file" name="imageFile" id="file_NC" required>
+            </div>
+
+        
+			<div class="centralize">
+			    <button id="confirmBtn" onclick="confirmSubmission()">Salvar</button>
+			</div>
+			<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
+		</form>
+    </main>
+    
+    <script>
+	    function confirmSubmission() {
+	        if (confirm("Tem certeza de que deseja salvar esta categoria?")) {
+	            document.getElementById("Content_NewCategory").submit();
+	        } else {
+	            return false;
+	        }
+	    }
+	    
+	</script>
 </body>
 </html>

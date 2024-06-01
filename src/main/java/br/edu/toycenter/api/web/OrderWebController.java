@@ -8,6 +8,8 @@ import java.util.List;
 
 import br.edu.toycenter.api.request.ClientRequestDTO;
 import br.edu.toycenter.api.request.EmailRequestDTO;
+import br.edu.toycenter.api.response.OrderItemResponseDTO;
+import br.edu.toycenter.infrastructure.entities.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -95,9 +97,12 @@ public class OrderWebController {
 		if (!clientIsLogged()) return  "redirect:/client/login";
 
 		OrderResponseDTO responseDTO = service.findByClientIdAndId(clientId, orderId);
-		OrderRequestDTO requestDTO = convert.forOrderRequestDTO(responseDTO);
-		model.addAttribute("requestDTO", requestDTO);
-		model.addAttribute("number", index);
+		AuxOrderRequestDTO auxOrderRequestDTO = auxOrderConvert.forAuxOrderRequestDTO(responseDTO, index);
+		model.addAttribute("auxOrderRequestDTO", auxOrderRequestDTO);
+		model.addAttribute("clientId", clientId);
+		model.addAttribute("orderId", orderId);
+		model.addAttribute("index", index);
+
 		return "order/update";
 	}
 
@@ -154,9 +159,10 @@ public class OrderWebController {
 		return "redirect:/order";
 	}
 	
-	@PutMapping("/update/client/{clientId}/{orderId}")
-	public String updateByClientId(@ModelAttribute("orderDTO") OrderRequestDTO orderDTO, @PathVariable String clientId, @PathVariable String orderId) {
-		service.updateByClientId(clientId, orderId, orderDTO);
+	@PutMapping("/update/client/{clientId}/{orderId}/{index}")
+	public String updateByIndex(@ModelAttribute("auxOrderRequestDTO") AuxOrderRequestDTO auxOrderRequestDTO, @PathVariable String clientId, @PathVariable String orderId, @PathVariable("index") int index) {
+		orderDTO = auxOrderConvert.forOrderRequestDTO(auxOrderRequestDTO);
+		service.updateByIndex(clientId, orderId, orderDTO, index);
 		return "redirect:/order";
 	}
 

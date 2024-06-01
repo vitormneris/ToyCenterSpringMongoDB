@@ -1,35 +1,68 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/remodel.css}">
+    <link rel="stylesheet" th:href="@{/css/stylelogin.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Login ADM</title>
 </head>
 <body>
-<nav>
-    <ul>
-        <li><a th:href="@{'/product'}">GO TO PRODUCTS</a></li>
-        <li><a th:href="@{'/order'}">GO TO ORDERS</a></li>
-        <li><a th:href="@{'/category'}">GO TO CATEGORIES</a></li>
-        <li><a th:href="@{'/category/findAll'}">TO MANAGER CATEGORIES</a></li>
-        <li><a th:href="@{'/product/findAll'}">TO MANAGER PRODUCT</a></li>
-		<li><a th:href="@{'/client/findAll'}">TO MANAGER CLIENT</a></li>	
-		<li><a th:href="@{'/administrator/findAll'}">TO MANAGER ADMINISTRATOR</a></li>	
-    </ul>
-</nav>
+<header>
+	<nav class="nav-logo">
+		<div class="logo">
+			<a href="getAllToy.html"> <img
+					src="image/logoToyCenterAlt.svg" alt=""></a>
+		</div>
 
-    <form th:action="@{'/client/login'}" method="POST" th:object="${clientDTO}">
+		<div class="store-name">
+			<h1>TOY CENTER</h1>
+		</div>
 
-        <label>E-mail</label>
-        <input type="email" th:field="*{email}"> <br>
+		<div class="space"></div>
+	</nav>
 
-        <label>Password</label>
-        <input type="password" th:field="*{password}"> <br>
+	<nav class="menu">
+		<div class="menuList">
+			<a th:href="@{'/product'}">Inicio</a>
+			<a th:href="@{'/category'}">Categorias</a>
 
-        <input type="submit" value="submit">
-    </form>
-	<a th:href="@{'/client/signup'}">SIGNUP</a>
-    <p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
+			<div class="dropdown">
+				<button class="dropbtn">Administração</button>
+				<div class="dropdown-content">
+					<a th:href="@{'/product/findAll'}">Brinquedos</a>
+					<a th:href="@{'/category/findAll'}">Categorias</a>
+					<a th:href="@{'/client/findAll'}">Clientes</a>
+					<a th:href="@{'/administrator/findAll'}">Administradores</a>
+				</div>
+			</div>
+
+			<a th:href="@{'/order'}">Ver pedidos</a>
+			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a th:href="@{'/client/login'}">Entrar</a>
+		</div>
+	</nav>
+
+</header>
+
+
+<div class="login_container">
+    	<form id="login_form" th:action="@{'/client/login'}" method="POST" th:object="${clientDTO}">
+            <h1 class="login_title">Login</h1>
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" th:field="*{email}" placeholder="Digite o email.." required>
+
+            <label for="senha">Senha:</label>
+            <input type="password" name="password" id="senha" th:field="*{password}" placeholder="Digite a senha.." required>
+            	
+            <input id="login_button" type="submit" value="Entrar">
+        </form>
+		<a th:href="@{'/client/signup'}">SIGNUP</a>
+    </div>
 </body>
 </html>

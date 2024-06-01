@@ -1,0 +1,112 @@
+.container_pedidos{
+    display: box;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.camadaPed_0{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 50px 50px;
+}
+
+.camadaPed_1{
+    background-color: var(--Branco);
+    padding: 20px;
+    width: 100%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+}
+
+.subtitulo_pedido{
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--AzulAtual);
+    padding-bottom: 10px;
+}
+
+.numero_pedido{
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+.tabela_Pedidos{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    overflow-y: auto;
+    max-height: 500px;
+    border-bottom: 2px solid black;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td{
+    padding: 12px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ped_compact:nth-child(n){
+max-width: 100px;
+overflow: hidden;
+}
+
+.ped_compact:hover{
+    overflow: visible;
+    white-space: normal;
+    z-index: 1;
+    background-color: #fff;
+}
+
+.trw_Ped{
+    background-color: rgba(1, 1, 1, 0.1);
+}
+
+.ped_controls{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    gap: 20px;
+}
+
+.linkEdit, .linkDelete {
+    padding: 8px 16px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.linkEdit {
+    background-color: var(--AzulAtual);
+    color: white;
+}
+
+.linkEdit:hover{
+    background-color: #263d84;
+}
+
+.linkDelete {
+    background-color: red;
+    color: white;
+}
+
+.linkDelete:hover {
+	background-color:rgb(128, 0, 0);
+}
+
+.valor_totalPed{
+    font-weight: bold;
+    font-size: 22px;
+}

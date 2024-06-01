@@ -1,48 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-</head>
-<body>
-<nav>
-	<ul>
-		<li><a th:href="@{'/client/login'}">LOGIN CLIENT</a></li>
-		<li><a th:href="@{'/client/login'}">LOGIN ADMINISTRATOR</a></li>
-		<li><a th:href="@{'/order'}">GO TO ORDERS</a></li>
-		<li><a th:href="@{'/category'}">GO TO CATEGORIES</a></li>
-		<li><a th:href="@{'/category/findAll'}">TO MANAGER CATEGORIES</a></li>
-		<li><a th:href="@{'/product/findAll'}">TO MANAGER PRODUCT</a></li>
-		<li><a th:href="@{'/client/findAll'}">TO MANAGER CLIENT</a></li>	
-		<li><a th:href="@{'/administrator/findAll'}">TO MANAGER ADMINISTRATOR</a></li>	
-	</ul>
-</nav>
-<h1 th:text="${categoryName}"></h1>
-<table border="solid black 3px">
-	<tr>
-		<th>Id</th>
-		<th>Name</th>
-		<th>Image</th>
-		<th>Brand</th>
-		<th>Price</th>
-		<th>Description</th>
-		<th>Details</th>
-		<th>Controles</th>
-	</tr>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
-	<tr th:each="productDTO : ${listProductDTO}">
-		<td th:text="${productDTO.id}"></td>
-		<td th:text="${productDTO.name}"></td>
-		<td> <a th:href="@{'/product/oneProduct/' + ${productDTO.id}}">  <img th:src="${productDTO.image}"> </a></td>
-		<td th:text="${productDTO.brand}"></td>
-		<td th:text="${productDTO.price}"></td>
-		<td th:text="${productDTO.description}"></td>
-		<td th:text="${productDTO.details}"></td>
-		<td>
-			<a th:href="@{'/order/insert/' + ${productDTO.id}}">insert in order</a>
-		</td>
-	</tr>
-</table>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/css/remodel.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Toy Center categoria</title>
+</head>
+
+<body>
+<header>
+	<nav class="nav-logo">
+		<div class="logo">
+			<a href="getAllToy.html"> <img
+					src="image/logoToyCenterAlt.svg" alt=""></a>
+		</div>
+
+		<div class="store-name">
+			<h1>TOY CENTER</h1>
+		</div>
+
+		<div class="space"></div>
+	</nav>
+
+	<nav class="menu">
+		<div class="menuList">
+			<a th:href="@{'/product'}">Inicio</a>
+			<a th:href="@{'/category'}">Categorias</a>
+
+			<div class="dropdown">
+				<button class="dropbtn">Administração</button>
+				<div class="dropdown-content">
+					<a th:href="@{'/product/findAll'}">Brinquedos</a>
+					<a th:href="@{'/category/findAll'}">Categorias</a>
+					<a th:href="@{'/client/findAll'}">Clientes</a>
+					<a th:href="@{'/administrator/findAll'}">Administradores</a>
+				</div>
+			</div>
+
+			<a th:href="@{'/order'}">Ver pedidos</a>
+			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a th:href="@{'/client/login'}">Entrar</a>
+		</div>
+	</nav>
+
+</header>
+
+
+<div class="title-container">
+        <h1 class="title" th:text="${categoryName}">Nome da Categoria</h1>
+        <div class="title-line" aling="center" ></div>
+    </div>
+
+    <div class="cards-container">
+        <div class="row">
+			<div class="card" th:each="productDTO : ${listProductDTO}">
+                <a th:href="@{'/product/oneProduct/' + ${productDTO.id}}">
+                	<img th:src="${productDTO.image}" alt="Image" title="Ver mais sobre"></a>
+                <h4 th:text="${productDTO.name}">nome brinquedo</h4>
+                <p th:text="${productDTO.price}">R$500,00</p>
+				<a th:href="@{'/order/insert/' + ${productDTO.id}}">insert in order</a>
+			</div>
+
+        </div>
+    </div>
+
 </body>
 </html>
+
+
