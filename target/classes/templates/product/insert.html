@@ -42,20 +42,14 @@
 					<a th:href="@{'/administrator/findAll'}">Administradores</a>
 				</div>
 			</div>
-
 			<a th:href="@{'/order'}">Ver pedidos</a>
-			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
 			<a th:href="@{'/client/login'}">Entrar</a>
+			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
 		</div>
 	</nav>
-
 </header>
-
-
-
-<a class="botao" th:href="@{'/product/findAll'}">Voltar</a>
-	
-	
+	<a class="botao" th:href="@{'/product/findAll'}">Voltar</a>
 	<main id="Main_ContentNT" class="Container_NewToy">
 		<form id="Content_NewToy" th:action="@{/product/insert}" method="POST"
 			enctype="multipart/form-data" th:object="${productDTO}">

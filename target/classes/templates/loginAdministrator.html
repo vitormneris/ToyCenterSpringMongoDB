@@ -40,30 +40,27 @@
 					<a th:href="@{'/administrator/findAll'}">Administradores</a>
 				</div>
 			</div>
-
 			<a th:href="@{'/order'}">Ver pedidos</a>
-			<a href="team.html">Sobre a Equipe</a>
+			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
 			<a th:href="@{'/client/login'}">Entrar</a>
+			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
 		</div>
 	</nav>
-
 </header>
-
-
 <div class="login_container">
-    	<form id="login_form" th:action="@{'/administrator/login'}" method="POST" th:object="${administratorDTO}">
-            <h1 class="login_title">Login Administrador</h1>
+	<form id="login_form" th:action="@{'/administrator/login'}" method="POST" th:object="${administratorDTO}">
+		<h1 class="login_title">Login administrador</h1>
 
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" th:field="*{email}" placeholder="Digite o email.." required>
+		<label for="email">Email:</label>
+		<input type="email" name="email" id="email" th:field="*{email}" placeholder="Digite o email.." required>
 
-            <label for="senha">Senha:</label>
-            <input type="password" name="password" id="senha" th:field="*{password}" placeholder="Digite a senha.." required>
+		<label for="senha">Senha:</label>
+		<input type="password" name="password" id="senha" th:field="*{password}" placeholder="Digite a senha.." required>
 
-            <input id="login_button" type="submit" value="Entrar">
-			<br><br>
-			<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
-		</form>
+		<input id="login_button" type="submit" value="Entrar">
+		<br><br>
+		<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
+	</form>
 </div>
 </body>
 </html>

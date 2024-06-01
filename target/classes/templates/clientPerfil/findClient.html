@@ -40,13 +40,12 @@
 					<a th:href="@{'/administrator/findAll'}">Administradores</a>
 				</div>
 			</div>
-
 			<a th:href="@{'/order'}">Ver pedidos</a>
-			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
 			<a th:href="@{'/client/login'}">Entrar</a>
+			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
 		</div>
 	</nav>
-
 </header>
 
 <div class="containerAdm">
@@ -57,7 +56,6 @@
 				<table>
 					<thead>
 					<tr>
-						<th>Id</th>
 						<th>CPF</th>
 						<th>Name</th>
 						<th>E-mail</th>
@@ -70,7 +68,6 @@
 					<tr class="trb">
 
 					<tr class="trw" >
-						<td th:text="${clientDTO.id}">codigo cliente</td>
 						<td class="toy-compact-cell" th:text="${clientDTO.cpf}">cpf cliente</td>
 						<td class="toy-compact-cell" th:text="${clientDTO.name}">nome cliente</td>
 						<td class="toy-compact-cell" th:text="${clientDTO.email}">email cliente</td>
@@ -78,7 +75,7 @@
 						<td class="toy-compact-cell" th:text="${clientDTO.password}">senha cliente</td>
 						<td class="controls">
 							<a  class="linkEdit" th:href="@{'/client/updateByClient/' + ${clientDTO.id}}">update</a>
-							<a class="linkDelete" onclick="deleteUser()" th:href="@{'/client/deleteByClient/' + ${clientDTO.id}}">delete</a>
+							<a class="linkDelete" th:attr="onclick=${'deleteClient('+ '''' + clientDTO.id + '''' + ')'}">delete</a>
 						</td>
 					</tr>
 					</tbody>
@@ -89,15 +86,14 @@
 			</div>
 		</div>
 		<script>
-			function deleteUser(number) {
-			    if (window.confirm("Você tem certeza de que deseja Excluir o usuário?")) {
-			        console.log("User deleted successfully!");
-			        fetch('http://localhost:8080/ToyCenter/UserController?action=deleteUser&user_code=' + number, {
-			            method: 'POST',
-			        })
-			        .then(response => {
-			            console.log('Server response:', response);
-			            window.location.href = "http://localhost:8080/ToyCenter/UserController?action=getAllUser";
+			function deleteClient(id) {
+			    if (window.confirm("Você tem certeza de que deseja excluir sua conta?")) {
+					fetch('http://localhost:8080/client/deleteByClient/' + id, {
+						method: 'DELETE',
+					})
+					.then(response => {
+						console.log('Server response:', response);
+						window.location.href = "http://localhost:8080/product";
 			        })
 			        .catch(error => {
 			            console.error('Request error:', error);
@@ -109,24 +105,22 @@
 			}
 
 			function logOff() {
-			    if (window.confirm("Você tem certeza de que deseja sair?")) {
-			        console.log("User quit successfully!");
-			        fetch('http://localhost:8080/ToyCenter/UserController?action=logOut', {
-			            method: 'GET',
-			        })
-			        .then(response => {
-			            console.log('Server response:', response);
-			            window.location.href = "http://localhost:8080/ToyCenter/UserController?action=getAllUser";
-			        })
-			        .catch(error => {
-			            console.error('Request error:', error);
-			        });
-			    } else {
-			        console.log("User not quit.");
+				if (window.confirm("Você tem certeza de que deseja sair?")) {
+					fetch('http://localhost:8080/client/logout', {
+						method: 'GET',
+					})
+					.then(response => {
+						console.log('Server response:', response);
+						window.location.href = "http://localhost:8080/product";
+					})
+					.catch(error => {
+						console.error('Request error:', error);
+					});
+				} else {
+					console.log("User not quit.");
 
-			    }
+				}
 			}
-
 		</script>
 	</div>
 </div>

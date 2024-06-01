@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import br.edu.toycenter.business.exceptions.DatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -90,10 +91,14 @@ public class AdministratorService {
 	public void delete(String id) {
 		try {
 			Optional<Administrator> objAdministrator = repository.findById(id);
-			
+			List<Administrator> administratorList = repository.findAll();
+			if (administratorList.size() == 1)
+				throw new DatabaseException("Can't possible delete this administrator, because he is the only administrator.");
 			repository.delete(objAdministrator.get());
 		} catch (NoSuchElementException e) {
 			throw new ResourceNotFoundException("Id", id);
+		} catch (DatabaseException e) {
+			throw new DatabaseException(e.getMessage());
 		}
 	}
 

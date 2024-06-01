@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.toycenter.api.request.EmailRequestDTO;
+import br.edu.toycenter.api.request.ProductRequestDTO;
+import br.edu.toycenter.api.response.ProductResponseDTO;
+import br.edu.toycenter.business.ProductService;
+import br.edu.toycenter.infrastructure.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,6 +43,9 @@ public class OrderWebController {
 	
 	@Autowired
 	ClientService clientService;
+
+	@Autowired
+	ProductService productService;
 
 	@Autowired
 	EmailService emailService;
@@ -82,8 +89,9 @@ public class OrderWebController {
 		}
 		
 		AuxOrderRequestDTO auxOrderRequestDTO = new AuxOrderRequestDTO(null, clientId, 0, productId);
-		
-		model.addAttribute("productId", productId);
+
+		ProductResponseDTO productDTO = productService.findById(productId);
+		model.addAttribute("productDTO", productDTO);
 		model.addAttribute("listId", listOrderId);
 		model.addAttribute("orderRequestDTO", auxOrderRequestDTO);
 		return "order/insert";
@@ -96,11 +104,12 @@ public class OrderWebController {
 		if (!clientIsLogged()) return  "redirect:/client/login";
 		OrderResponseDTO responseDTO = service.findByClientIdAndId(clientId, orderId);
 		AuxOrderRequestDTO auxOrderRequestDTO = auxOrderConvert.forAuxOrderRequestDTO(responseDTO, index);
+		ProductResponseDTO productDTO = productService.findById(auxOrderRequestDTO.productId());
+		model.addAttribute("productDTO", productDTO);
 		model.addAttribute("auxOrderRequestDTO", auxOrderRequestDTO);
 		model.addAttribute("clientId", clientId);
 		model.addAttribute("orderId", orderId);
 		model.addAttribute("index", index);
-
 		return "order/update";
 	}
 
@@ -141,12 +150,12 @@ public class OrderWebController {
 				"Olá, " + clientRequestDTO.name() + ", efetue sua compra!",
 				"Olá, " + clientRequestDTO.name() + ", tudo bem?" +
 						"\n recebemos uma solicitação de compra da sua conta na TOYCENTER" +
-						"\n -------------------------------------------------------------" +
+						"\n ----------------------------------------------------------------------------------------" +
 						"\n PEDIDO:" +
 						"\n DATA E HORA: " + formattedDateTime +
 						"\n TOTAL: " + orderResponseDTO.total() +
 						"\n ITENS DE PEDIDO: " + orderResponseDTO.orderItens() +
-						"\n -------------------------------------------------------------" +
+						"\n ----------------------------------------------------------------------------------------" +
 						"\n CLIQUE NO LINK PARA PROSSEGUIR " +
 						"\n http://localhost:8080/category");
 		emailService.sendEmail(emailRequestDTO);

@@ -14,18 +14,18 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 </head>
-
 <body>
-
 <header>
     <nav class="nav-logo">
         <div class="logo">
-            <a href="getAllToy.html"> <img src="image/logoToyCenterAlt.svg" alt=""></a>
+            <a href="getAllToy.html"> <img
+                    src="image/logoToyCenterAlt.svg" alt=""></a>
         </div>
 
         <div class="store-name">
             <h1>TOY CENTER</h1>
         </div>
+
         <div class="space"></div>
     </nav>
 
@@ -43,19 +43,15 @@
                     <a th:href="@{'/administrator/findAll'}">Administradores</a>
                 </div>
             </div>
-
             <a th:href="@{'/order'}">Ver pedidos</a>
-            <a href="sobre_a_equipe.html">Sobre a Equipe</a>
+            <a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
             <a th:href="@{'/client/login'}">Entrar</a>
+            <a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
         </div>
     </nav>
-
 </header>
-
     <div class="container_pedidos">
         <h2 class="subtitulo_pedido">Pedidos</h2>
-
-
         <div class="camadaPed_0" th:each="orderDTO, index : ${orderDTOList}">
             <div class="camadaPed_1">
                 <div class="tabela_Pedidos">
@@ -80,7 +76,7 @@
                                 <td class="ped_compact" th:text="${orderItem.subTotal}">Subtotal</td>
 
                                 <td class="ped_controls">
-                                    <a class="linkDelete" onclick="deleteUser()" th:href="@{'/order/delete/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id} + '/' + ${number.index}}">Deletar</a>
+                                    <a class="linkDelete" th:attr="onclick='deleteOrderItem(\'' + ${orderDTO.client.id} + '\', \'' + ${orderDTO.id} + '\', \'' + ${number.index} + '\')'">Deletar</a>
                                     <a class="linkEdit" th:href="@{'/order/update/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id} + '/' + ${number.index}}">Atualizar</a>
                                 </td>
                             </tr>
@@ -88,10 +84,49 @@
 		            </table>
                     <p>Momento: <span th:text="${orderDTO.moment}"></span> </p>
                     <p>Total R$ <span class="valor_totalPed" th:text="${orderDTO.total}"></span> </p>
-                    <a th:href="@{'/order/delete/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">delete order</a>
+                    <a th:attr="onclick='deleteOrder(\'' + ${orderDTO.client.id} + '\', \'' + ${orderDTO.id} + '\')'">delete order</a>
                     <a th:href="@{'/order/orderBuy/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}"><button type="button" id="buy">Comprar</button></a>
                 </div>
             </div>
         </div>
     </div>
 </body>
+<script>
+    function deleteOrderItem(clientId, orderId, index) {
+        if (window.confirm("Você tem certeza de que deseja excluir o item de pedido?")) {
+            fetch('http://localhost:8080/order/delete/client/' + clientId + '/' + orderId + '/' + index, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                console.log('Server response:', response);
+			    window.location.href = "http://localhost:8080/order";
+            })
+            .catch(error => {
+                console.error('Request error:', error);
+            });
+        } else {
+            console.log("Deletion canceled by user.");
+
+        }
+    }
+
+    function deleteOrder(clientId, orderId) {
+        if (window.confirm("Você tem certeza de que deseja excluir o pedido?")) {
+            fetch('http://localhost:8080/order/delete/client/' + clientId + '/' + orderId, {
+                method: 'DELETE',
+            })
+            .then(response => {
+                console.log('Server response:', response);
+				window.location.href = "http://localhost:8080/order";
+            })
+            .catch(error => {
+                console.error('Request error:', error);
+            });
+        } else {
+            console.log("Deletion canceled by user.");
+
+        }
+    }
+
+</script>
+</html>
