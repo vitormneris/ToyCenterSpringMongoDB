@@ -1,52 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/remodel.css}">
+	<link rel="stylesheet" th:href="@{/css/styleToy.css}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <title>Brinquedo</title>
 </head>
-<nav>
-    <ul>
-        <li><a th:href="@{'/client/login'}">LOGIN CLIENT</a></li>
-		<li><a th:href="@{'/client/login'}">LOGIN ADMINISTRATOR</a></li>
-        <li><a th:href="@{'/order'}">GO TO ORDERS</a></li>
-        <li><a th:href="@{'/category'}">GO TO CATEGORIES</a></li>
-        <li><a th:href="@{'/category/findAll'}">TO MANAGER CATEGORIES</a></li>
-        <li><a th:href="@{'/product/findAll'}">TO MANAGER PRODUCT</a></li>
-		<li><a th:href="@{'/client/findAll'}">TO MANAGER CLIENT</a></li>	
-		<li><a th:href="@{'/administrator/findAll'}">TO MANAGER ADMINISTRATOR</a></li>	
-    </ul>
-</nav>
 
 <body>
-<table border="solid black 3px">
-    <tr>
-        <th>Id</th>
-        <th>Name</th>
-        <th>Image</th>
-        <th>Brand</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Details</th>
-        <th>Categories</th>
-        <th>Controles</th>
-    </tr>
-        <td th:text="${productDTO.id}"></td>
-        <td th:text="${productDTO.name}"></td>
-        <td> <img th:src="${productDTO.image}"> </td>
-        <td th:text="${productDTO.brand}"></td>
-        <td th:text="${productDTO.price}"></td>
-        <td th:text="${productDTO.description}"></td>
-        <td th:text="${productDTO.details}"></td>
-        <td>
-            <ul>
-                <li th:each="category : ${productDTO.categories}" th:text="${category.name}"></li>
-            </ul>
-        </td>
-        <td>
-            <a th:href="@{'/order/insert/' + ${productDTO.id}}">insert in order</a>
-        </td>
-    </tr>
-</table>
+<header>
+	<nav class="nav-logo">
+		<div class="logo">
+			<a href="getAllToy.html"> <img
+					src="image/logoToyCenterAlt.svg" alt=""></a>
+		</div>
+
+		<div class="store-name">
+			<h1>TOY CENTER</h1>
+		</div>
+
+		<div class="space"></div>
+	</nav>
+
+	<nav class="menu">
+		<div class="menuList">
+			<a th:href="@{'/product'}">Inicio</a>
+			<a th:href="@{'/category'}">Categorias</a>
+
+			<div class="dropdown">
+				<button class="dropbtn">Administração</button>
+				<div class="dropdown-content">
+					<a th:href="@{'/product/findAll'}">Brinquedos</a>
+					<a th:href="@{'/category/findAll'}">Categorias</a>
+					<a th:href="@{'/client/findAll'}">Clientes</a>
+					<a th:href="@{'/administrator/findAll'}">Administradores</a>
+				</div>
+			</div>
+
+			<a th:href="@{'/order'}">Ver pedidos</a>
+			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a th:href="@{'/client/login'}">Entrar</a>
+		</div>
+	</nav>
+
+</header>
+
+	<div class="containerToy">
+		<div class="toyContent">
+			<div class="rowToy">
+				<div class="toyimg">
+					<img th:src="${productDTO.image}" alt="">
+				</div>
+
+				<div class="toyInfo">
+				<h3 class="brand">marca</h3>
+					<p class="brand_D" th:text="${productDTO.brand}">Nome marca</p>
+
+						<h2 class="name">nome</h2>
+						<p class="name_D" th:text="${productDTO.name}">nome brinquedo </p>
+
+						<p class="price">preço</p>
+						<p class="price_D" th:text="${productDTO.price}"> R$: 99,90</p>
+						
+						<p class="description">descrição</p>
+						<p class="description_D" th:text="${productDTO.description}">um boneco muito bonito e elegante</p>
+
+						<p class="details">detalhes</p>
+						<p class="details_D" th:text="${productDTO.details}"></p>
+						<button type="button" class="buy" href>Comprar</button>
+						<a th:href="@{'/order/insert/' + ${productDTO.id}}">insert in order</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

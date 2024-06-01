@@ -1,0 +1,151 @@
+.containerToy {
+    margin: 50px 50px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+}
+
+
+/* display: flex;
+background-color: var(--Azul);
+width: 100%;
+/* max-width: 800px;
+border-radius: 35px;
+padding: 20px;
+justify-content:center; */
+
+.toyContent {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 35px;
+    background-color: var(--AzulAtual);
+}
+
+.rowToy{ 
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px
+}
+
+.toyimg {
+    position: relative;
+    width: 51%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+
+
+.toyimg img {
+    border-radius: 15px;
+    width: 100%;
+    height: auto;
+    margin-right: 20px;
+    border-radius: 35px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+    margin-bottom:30px;
+}
+
+.toyInfo{
+    position: relative;
+    width: 49%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+
+.brand {
+    font-weight: bold;
+    font-size: 25px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.brand_D{
+    font-weight: 500;
+    font-size:15px;
+    margin-bottom: 20px;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 26px;
+    color: black;
+}
+
+.name_D{
+    /* font-weight:600; */
+    font-size:20px;
+    margin-bottom: 20px;
+}
+
+.price {
+    font-weight: bold;
+    font-size: 26px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.price_D{
+    /* font-weight:600; */
+    font-size:20px;
+    margin-bottom: 20px;
+}
+
+.description {
+    font-weight: bold;
+    font-size: 26px;
+    color: black;
+}
+
+.description_D{
+    /* font-weight:600; */
+    font-size:20px;
+    margin-bottom: 20px;
+}
+
+.details {
+    font-weight: bold;
+    font-size: 26px;
+    color: black;
+}
+
+.details_D{
+    font-size:20px;
+    margin-bottom: 20px;
+}
+
+.buy {
+    outline: none;
+    text-decoration: none;
+    box-shadow: none;
+	font-weight: 700;
+    font-family: "Poppins", sans-serif;
+    background-color: rgb(rgba(220, 220, 220, 0.929));
+    color: black;
+    transition:0.4s;
+    font-size: 24px;
+    border-radius:35px;
+    width:150px;
+    height:48px;
+    margin-bottom:20px;
+}
+
+.buy:hover{
+    color: var(--Branco);
+    background-color: var(--Azul);
+    transform: scale(1.1);
+    border-color:var(--Branco)
+}
+
+.buy:active{
+	transform:scale(0.9);
+}

@@ -1,5 +1,7 @@
 package br.edu.toycenter.api.convert;
 
+import br.edu.toycenter.api.response.OrderResponseDTO;
+import br.edu.toycenter.infrastructure.entities.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,5 +28,14 @@ public class AuxOrderConvert {
         OrderRequestDTO orderRequestDTO = orderConvert.forOrderRequestDTO(order);
         orderRequestDTO.orderItems().add(orderItemDTO);
         return orderRequestDTO;
+    }
+
+    public AuxOrderRequestDTO forAuxOrderRequestDTO(OrderResponseDTO orderRequestDTO, int index) {
+        AuxOrderRequestDTO auxOrderRequestDTO = new AuxOrderRequestDTO(
+                orderRequestDTO.id(),
+                orderRequestDTO.client().getId(),
+                orderRequestDTO.orderItens().get(index).quantity(),
+                orderRequestDTO.orderItens().get(index).product().getId());
+        return auxOrderRequestDTO;
     }
 }

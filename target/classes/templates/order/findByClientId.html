@@ -1,64 +1,103 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toy Center usuário</title>
+    <link rel="stylesheet" th:href="@{/css/remodel.css}">
+    <link rel="stylesheet" th:href="@{/css/pedido.css}">
+    <link rel="stylesheet" th:href="@{/css/styleForm.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
-	<nav>
-		<ul>
-			<li><a th:href="@{'/client/login'}">LOGIN CLIENT</a></li>
-			<li><a th:href="@{'/client/login'}">LOGIN ADMINISTRATOR</a></li>
-			<li><a th:href="@{'/product'}">GO TO PRODUCTS</a></li>
-			<li><a th:href="@{'/category'}">GO TO CATEGORIES</a></li>
-			<li><a th:href="@{'/category/findAll'}">TO MANAGER CATEGORIES</a></li>
-			<li><a th:href="@{'/product/findAll'}">TO MANAGER PRODUCT</a></li>
-			<li><a th:href="@{'/client/findAll'}">TO MANAGER CLIENT</a></li>	
-			<li><a th:href="@{'/administrator/findAll'}">TO MANAGER ADMINISTRATOR</a></li>
-		</ul>
-	</nav>
 
-	<div th:each="orderDTO : ${orderDTOList}">
-		<a th:href="@{'/order/orderBuy/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">buy</a>
-		<a th:href="@{'/order/delete/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">delete order</a>
-		<p th:text="${orderDTO.id}"></p>
-		<p th:text="${orderDTO.moment}"></p>
-		<p th:text="${orderDTO.total}"> </p>
-		<p th:text="${orderDTO.client.name}"></p>
-		<table border="solid black 3px">
-			<tr>
-				<th>Quantity</th>
-				<th>price</th>
-				<th>subTotal</th>
-				<th>Id</th>
-				<th>Name</th>
-				<th>Image</th>
-				<th>Brand</th>
-				<th>Price</th>
-				<th>Description</th>
-				<th>Details</th>
-				<th>Controles</th>
-			</tr>
-			<tr th:each="orderItem, number : ${orderDTO.orderItens}">
-				<td th:text="${orderItem.quantity}"></td>
-				<td th:text="${orderItem.price}"></td>
-				<td th:text="${orderItem.subTotal}"></td>
-				<td th:text="${orderItem.product.id}"></td>
-				<td th:text="${orderItem.product.name}"></td>
-				<td th:text="${orderItem.product.image}"> </td>
-				<td th:text="${orderItem.product.brand}"></td>
-				<td th:text="${orderItem.product.price}"></td>
-				<td th:text="${orderItem.product.description}"></td>
-				<td th:text="${orderItem.product.details}"></td>
-				<td>
-					<a th:href="@{'/order/update/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id} + '/' + ${number.index}}">update (OFF)</a>
-					<a th:href="@{'/order/delete/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id} + '/' + ${number.index}}">delete</a>
-				</td>
-			</tr>
-		</table>
-	</div>
+<header>
+    <nav class="nav-logo">
+        <div class="logo">
+            <a href="getAllToy.html"> <img
+                    src="image/logoToyCenterAlt.svg" alt=""></a>
+        </div>
+
+        <div class="store-name">
+            <h1>TOY CENTER</h1>
+        </div>
+
+        <div class="space"></div>
+    </nav>
+
+    <nav class="menu">
+        <div class="menuList">
+            <a th:href="@{'/product'}">Inicio</a>
+            <a th:href="@{'/category'}">Categorias</a>
+
+            <div class="dropdown">
+                <button class="dropbtn">Administração</button>
+                <div class="dropdown-content">
+                    <a th:href="@{'/product/findAll'}">Brinquedos</a>
+                    <a th:href="@{'/category/findAll'}">Categorias</a>
+                    <a th:href="@{'/client/findAll'}">Clientes</a>
+                    <a th:href="@{'/administrator/findAll'}">Administradores</a>
+                </div>
+            </div>
+
+            <a th:href="@{'/order'}">Ver pedidos</a>
+            <a href="sobre_a_equipe.html">Sobre a Equipe</a>
+            <a th:href="@{'/client/login'}">Entrar</a>
+        </div>
+    </nav>
+
+</header>
+
+    <div class="container_pedidos">
+        <h2 class="subtitulo_pedido">Pedidos</h2>
+
+
+        <div class="camadaPed_0" th:each="orderDTO : ${orderDTOList}">
+            <div class="camadaPed_1">
+                <div class="tabela_Pedidos">
+                    <h2 class="numero_pedido">Pedido 1</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Preço</th>
+                                <th>Subtotal</th>
+			                	<th>Operações</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="trw_Ped" th:each="orderItem, number : ${orderDTO.orderItens}">
+                                
+                                <td class="ped_compact" th:text="${orderItem.product.name}">nome produto</td>
+                                <td class="ped_compact" th:text="${orderItem.quantity}">quantidade</td>
+                                <td class="ped_compact" th:text="${orderItem.product.price}">preço</td>
+                                <td class="ped_compact" th:text="${orderItem.subTotal}">Subtotal</td>
+
+                                <td class="ped_controls">
+                                    <a class="linkDelete" onclick="deleteUser()" th:href="@{'/order/delete/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id} + '/' + ${number.index}}">Deletar</a>
+                                    <a class="linkEdit" th:href="@{'/order/update/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id} + '/' + ${number.index}}">Atualizar</a>
+                                </td>
+                            </tr>
+                        </tbody>
+		    </table>
+                    <p>Data e hora: <p th:text="${orderDTO.moment}"></p> </p>
+                    <p>R$ <p class="valor_totalPed" th:text="${orderDTO.total}"></p> </p>
+                    <a th:href="@{'/order/delete/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">delete order</a>
+                    <a th:href="@{'/order/orderBuy/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">buy</a>
+                </div>
+            </div>
+        </div>
+        <!-- fim pedido 1 -->
+    </div>
+
+
+
 </body>
-</html>

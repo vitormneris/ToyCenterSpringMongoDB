@@ -117,6 +117,22 @@ public class OrderService {
 		}
 	}
 
+	public OrderResponseDTO updateByIndex(String clientId, String id, OrderRequestDTO orderRequestDTO, int index) {
+		try {
+			Order order = orderConvert.forOrder(orderRequestDTO);
+			Optional<Order> obj = repository.findByClientIdAndId(clientId, id);
+			obj.get().getOrderItens().get(index).setQuantity(order.getOrderItens().get(0).getQuantity());
+			checkFields(obj.orElseThrow());
+			Order orderUpdate = obj.orElseThrow();
+			Order orderUpdated = repository.save(orderUpdate);
+			return orderConvert.forOrderResponseDTO(orderUpdated);
+		} catch (InvalidFormatException e) {
+			throw new InvalidFormatException(e.getMessage());
+		} catch (NoSuchElementException e) {
+			throw new ResourceNotFoundException("Client Id", clientId);
+		}
+	}
+
 	public OrderResponseDTO updateByClientId(String clientId, String id, OrderRequestDTO orderRequestDTO) {
 		try {
 			Order order = orderConvert.forOrder(orderRequestDTO);
@@ -139,6 +155,7 @@ public class OrderService {
 			for (OrderItem oi : order.getOrderItens()) {
 				oi.setPrice(oi.getProduct().getPrice());
 			}
+
 
 			updateData(obj.orElseThrow(), order);
 

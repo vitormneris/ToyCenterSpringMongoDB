@@ -1,34 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
 </head>
 <body>
-	<nav>
-		<ul>
-			<li><a th:href="@{'/order'}">BACK TO ORDERS</a></li>
-		</ul>
-	</nav>
 
-	<form th:action="@{'/order/update/client/' + ${clientId} + '/' + ${orderId}}" method="POST" th:object="${requestDTO}">
-		<input type="hidden" name="_method" value="put">
+<nav>
+	<ul>
+		<li><a th:href="@{'/order'}">BACK TO PRODUCTS</a></li>
+	</ul>
+</nav>
 
-		<label>Id</label>
-		<input type="text" th:value="*{id}" readonly> <br>
+<form th:action="@{'/order/update/client/' + ${clientId} + '/' + ${orderId} + '/' + ${index}}" method="POST" th:object="${auxOrderRequestDTO}">
+	<input type="hidden" name="_method" value="put">
 
-		<label>Client Id</label>
-		<input type="text" th:field="*{clientId}" readonly> <br>
+	<label>Order id:</label><br>
+	<input type="text" th:field="*{id}" readonly>
 
-		<label>Quantity</label>
-		<input type="number" step="1" min="1" th:field="*{orderItems[__${number}__].quantity}"> <br>
+	<label>Client Id</label>
+	<input type="text" th:field="*{clientId}" readonly> <br>
 
-		<label>Product Id</label>
-		<input type="text" th:field="*{orderItems[__${number}__].productId}" readonly> <br>
+	<label>Quantity</label>
+	<input type="number" step="1" min="1" th:field="*{quantity}"> <br>
 
-		<input type="submit" value="submit">
-	</form>
-	<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
+	<label>Product Id</label>
+	<input type="text" th:field="*{productId}" readonly> <br>
+
+	<input type="submit" value="submit">
+</form>
+<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
 </body>
 </html>

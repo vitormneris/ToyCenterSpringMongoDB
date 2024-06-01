@@ -1,53 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toy Center ADM</title>
+	<link rel="stylesheet" th:href="@{/css/remodel.css}">
+	<link rel="stylesheet" th:href="@{/css/styleAdm.css}">
+	<link rel="stylesheet" th:href="@{/css/styleForm.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
 </head>
 <body>
-	<nav>
-	<ul>
-		<li><a th:href="@{'/client/login'}">LOGIN</a></li>
-		<li><a th:href="@{'/order'}">GO TO ORDERS</a></li>
-		<li><a th:href="@{'/product'}">GO TO PRODUCT</a></li>
-		<li><a th:href="@{'/category'}">GO TO CATEGORIES</a></li>
-		<li><a th:href="@{'/category/findAll'}">TO MANAGER CATEGORIES</a></li>	</ul>
-		<li><a th:href="@{'/administrator/findAll'}">TO MANAGER ADMINISTRATOR</a></li>	</ul>
+<header>
+	<nav class="nav-logo">
+		<div class="logo">
+			<a href="getAllToy.html"> <img
+					src="image/logoToyCenterAlt.svg" alt=""></a>
+		</div>
+
+		<div class="store-name">
+			<h1>TOY CENTER</h1>
+		</div>
+
+		<div class="space"></div>
 	</nav>
 
-	<table border="solid black 3px">
-	  <tr>
-	    <th>Id</th>
-	    <th>Name</th>
-	    <th>Image</th>
-		<th>Brand</th>
-		<th>Price</th>
-		<th>Description</th>
-		<th>Details</th>
-		<th>Categories</th>
-		<th>Controles</th>
-	  </tr>
-	  
-	  <tr th:each="productDTO : ${listProductDTO}">
-	    <td th:text="${productDTO.id}"></td>
-	    <td th:text="${productDTO.name}"></td>
-	    <td> <img th:src="${productDTO.image}"> </td>
-		<td th:text="${productDTO.brand}"></td>
-		<td th:text="${productDTO.price}"></td>
-		<td th:text="${productDTO.description}"></td>
-		<td th:text="${productDTO.details}"></td>
-	    <td>
-		    <ul>
-		  	  <li th:each="category : ${productDTO.categories}" th:text="${category.name}"></li>
-		    </ul>
-	    </td>
-		<td>
-			<a th:href="@{'/product/update/' + ${productDTO.id}}">update</a>
-			<a th:href="@{'/product/delete/' + ${productDTO.id}}">delete</a>
-		</td>
-	  </tr>
-	</table>
-	<a href="/product/insert">insert</a>
+	<nav class="menu">
+		<div class="menuList">
+			<a th:href="@{'/product'}">Inicio</a>
+			<a th:href="@{'/category'}">Categorias</a>
+
+			<div class="dropdown">
+				<button class="dropbtn">Administração</button>
+				<div class="dropdown-content">
+					<a th:href="@{'/product/findAll'}">Brinquedos</a>
+					<a th:href="@{'/category/findAll'}">Categorias</a>
+					<a th:href="@{'/client/findAll'}">Clientes</a>
+					<a th:href="@{'/administrator/findAll'}">Administradores</a>
+				</div>
+			</div>
+
+			<a th:href="@{'/order'}">Ver pedidos</a>
+			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a th:href="@{'/client/login'}">Entrar</a>
+		</div>
+	</nav>
+
+</header>
+
+
+<div class="containerAdm">
+		<div class="camada0">
+			<div class="camada1">
+				<h2 class="subtitulo">Administração: Brinquedos</h2>
+				<div class="tabela">
+					<table>
+						<thead>
+							<tr>
+								<th>Codigo do brinquedo</th>
+								<th>Imagem do brinquedo</th>
+								<th>Nome do brinquedo</th>
+								<th>Categorias do brinquedo</th>
+								<th>Marca do brinquedo</th>
+								<th>Preço do brinquedo</th>
+								<th>Descrição do brinquedo</th>
+								<th>Detalhes do brinquedo</th>
+								<th>Operações do brinquedo</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+							<tr class="trb" >
+							
+							<tr class="trw" th:each="productDTO : ${listProductDTO}">
+							
+								<td th:text="${productDTO.id}">codigo</td>
+								<td> <a th:href="@{'/product/oneProduct/' + ${productDTO.id}}"><img th:src="${productDTO.image}" width="100px" height="100px"> </a></td>
+								
+								<td class="toy-compact-cell" th:text="${productDTO.name}">nome</td>
+								<td class="toy-compact-cell">
+									<ul>
+									<li th:each="category : ${productDTO.categories}" th:text="${category.name}"></li>
+								</ul>
+								</td>
+								<td class="toy-compact-cell" th:text="${productDTO.brand}"></td>
+								<td th:text="${productDTO.price}">preço</td>
+								<td class="toy-compact-cell" th:text="${productDTO.description}">>descrição</td>
+								<td class="toy-compact-cell" th:text="${productDTO.details}">detalhes</td>
+								<td class="controls">
+									<a class="linkDelete" onclick="deleteToy()" th:href="@{'/product/delete/' + ${productDTO.id}}" >Deletar</a>
+									<a class="linkEdit" th:href="@{'/product/update/' + ${productDTO.id}}">Atualizar</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<br> <br> 
+				<div class="centralizeButton">
+				<a class="confirmBtn" href="/product/insert">Adicionar</a>
+				<br><br>
+				<a class="confirmBtn" onclick="logOff()">Deslogar</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<script>
+	function deleteToy(number) {
+	    if (window.confirm("Você tem certeza de que deseja Excluir o brinquedo?")) {
+	        console.log("Toy deleted successfully!");
+	        fetch('http://localhost:8080/ToyCenter/ToyController?action=deleteToy&toy_code=' + number, {
+	            method: 'POST', 
+	        })
+	        .then(response => {
+	            console.log('Server response:', response);
+	            window.location.href = "http://localhost:8080/ToyCenter/ToyController?action=getAllToyAdm";
+	        })
+	        .catch(error => {
+	            console.error('Request error:', error);
+	        });
+	    } else {
+	        console.log("Deletion canceled by toy.");
+	        
+	    }
+	}
+	
+	function logOff() {
+	    if (window.confirm("Você tem certeza de que deseja sair?")) {
+	        console.log("User quit successfully!");
+	        fetch('http://localhost:8080/ToyCenter/UserController?action=logOut', {
+	            method: 'GET', 
+	        })
+	        .then(response => {
+	            console.log('Server response:', response);
+	            window.location.href = "http://localhost:8080/ToyCenter/ToyController?action=getAllToyAdm";
+	        })
+	        .catch(error => {
+	            console.error('Request error:', error);
+	        });
+	    } else {
+	        console.log("User not quit.");
+	        
+	    }
+	}
+
+  </script>
+	
 </body>
 </html>

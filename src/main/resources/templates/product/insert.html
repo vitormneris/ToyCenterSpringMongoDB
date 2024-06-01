@@ -1,39 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" th:href="@{/css/styleForm.css}">
+	<link rel="stylesheet" th:href="@{/css/remodel.css}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+	<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
+	<title>Inserir Brinquedo</title>
+
 </head>
 <body>
-	<form th:action="@{/product/insert}" method="POST" th:object="${productDTO}" enctype='multipart/form-data'>
-		<label>Name</label>
-		<input type="text" th:field="*{name}"> <br>
-		
-		<label>Image</label>
-		<input type="file" name="imageFile"> <br>
-		
-		<label>Brand</label>
-		<input type="text" th:field="*{brand}"> <br>
-		
-		<label>Price</label>
-		<input type="number" min="0.0" step="0.01" th:field="*{price}"> <br>
-		
-		<label>Description</label>
-		<input type="text" th:field="*{description}"> <br>
-		
-		<label>Details</label>
-		<input type="text" th:field="*{details}"> <br>
-
-		<label>Select Categories:</label><br>
-		<div th:each="category : ${listCategoryDTO}">
-			<input type="checkbox" th:field="*{categoriesId}" th:value="${category.id}">
-			<label th:text="${category.name}"></label><br>
+<header>
+	<nav class="nav-logo">
+		<div class="logo">
+			<a href="getAllToy.html"> <img
+					src="image/logoToyCenterAlt.svg" alt=""></a>
 		</div>
 
-		<input type="submit" value="submit">
-	</form>
-	<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
+		<div class="store-name">
+			<h1>TOY CENTER</h1>
+		</div>
 
+		<div class="space"></div>
+	</nav>
+
+	<nav class="menu">
+		<div class="menuList">
+			<a th:href="@{'/product'}">Inicio</a>
+			<a th:href="@{'/category'}">Categorias</a>
+
+			<div class="dropdown">
+				<button class="dropbtn">Administração</button>
+				<div class="dropdown-content">
+					<a th:href="@{'/product/findAll'}">Brinquedos</a>
+					<a th:href="@{'/category/findAll'}">Categorias</a>
+					<a th:href="@{'/client/findAll'}">Clientes</a>
+					<a th:href="@{'/administrator/findAll'}">Administradores</a>
+				</div>
+			</div>
+
+			<a th:href="@{'/order'}">Ver pedidos</a>
+			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a th:href="@{'/client/login'}">Entrar</a>
+		</div>
+	</nav>
+
+</header>
+
+
+
+<a class="botao" th:href="@{'/product/findAll'}">Voltar</a>
+	
+	
+	<main id="Main_ContentNT" class="Container_NewToy">
+		<form id="Content_NewToy" th:action="@{/product/insert}" method="POST"
+			enctype="multipart/form-data" th:object="${productDTO}">
+
+    <div class="title-container">
+        <h1 class="titleAlt">Catálogo de Brinquedos: Novo Brinquedo</h1>
+        <div class="title-lineAlt" align="center" ></div>
+    </div>
+
+			<div class="fieldsetBox">
+				<label for="name_NT">Nome</label> <input type="text"
+					placeholder="Digite o Nome do Brinquedo" name="name" th:field="*{name}"
+					id="name_NT" required>
+			</div>
+
+			<div class="fieldsetBox">
+				<label for="brand_NT">Marca</label> <input type="text"
+					placeholder="Digite o nome da Marca do Brinquedo" name="brand" th:field="*{brand}"
+					id="brand_NT" required>
+			</div>
+
+			<div class="fieldsetBox">
+				<label for="description_NT">Descrição</label> <input type="text"
+					placeholder="Digite a Descrição do Brinquedo"
+					name="description" th:field="*{description}" id="description_NT" required>
+			</div>
+
+			<div class="fieldsetImageBox">
+				<label for="file_NT">Imagem</label> 
+				<input type="file" name="imageFile"  id="file_NT" required>
+			</div>
+
+			<div class="fieldsetPriceBox">
+				<label for="price_NT">Valor R$</label> <input type="number" min="0.0" step="0.01" th:field="*{price}"
+					max="1000000000" placeholder="Digite o Valor"
+					class="price_nt" name="price" id="price_NT" required>
+			</div>
+
+			<div >
+		
+			    <label class="categoryLabel">Categorias:</label>
+			    <select name="toy_categories" id="categorias" multiple>
+			    	<option th:each="category : ${listCategoryDTO}" th:field="*{categoriesId}" th:value="${category.id}" th:text="${category.name}"></option>
+			    </select>
+          
+			</div>
+
+			<div class="fieldsetBox">
+				<label for="details_NT">Detalhes</label>
+				<textarea class="detailsBox" maxlength="1080" placeholder="Escreva os Detalhes do Brinquedo" name="details" th:field="*{details}" id="details_NT"></textarea>
+			</div>
+
+			<div class="centralize">
+			    <button id="confirmBtn" type="submit" value="submit" >Salvar</button>
+			</div>
+			<br>
+			<br>
+		</form>
+		<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
+
+	</main>
+	
+	<script>
+	    function confirmSubmission() {
+	        if (confirm("Tem certeza de que deseja salvar este brinquedo?")) {
+	            document.getElementById("Content_NewToy").submit();
+	        } else {
+	            return false;
+	        }
+	    }
+	    
+	</script>
+	<script> new MultiSelectTag('categorias') </script> 
 </body>
 </html>
