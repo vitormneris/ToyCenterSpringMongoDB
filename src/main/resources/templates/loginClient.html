@@ -40,15 +40,13 @@
 					<a th:href="@{'/administrator/findAll'}">Administradores</a>
 				</div>
 			</div>
-
 			<a th:href="@{'/order'}">Ver pedidos</a>
-			<a href="team.html">Sobre a Equipe</a>
+			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
 			<a th:href="@{'/client/login'}">Entrar</a>
+			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
 		</div>
 	</nav>
-
 </header>
-
 
 <div class="login_container">
     	<form id="login_form" th:action="@{'/client/login'}" method="POST" th:object="${clientDTO}">
@@ -62,7 +60,7 @@
             	
             <input id="login_button" type="submit" value="Entrar">
 			<br><br>
-			<a th:href="@{'/client/signup'}">SIGNUP</a>
+			<a th:href="@{'/client/signup'}">Não tem uma conta aqui? Cadastre-se</a>
 			<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
         </form>
 </div>

@@ -11,7 +11,6 @@
     <title>Toy Center categoria</title>
 
 </head>
-
 <body>
 <header>
 	<nav class="nav-logo">
@@ -41,30 +40,26 @@
 					<a th:href="@{'/administrator/findAll'}">Administradores</a>
 				</div>
 			</div>
-
 			<a th:href="@{'/order'}">Ver pedidos</a>
-			<a href="team.html">Sobre a Equipe</a>
+			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
 			<a th:href="@{'/client/login'}">Entrar</a>
+			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
 		</div>
 	</nav>
-
 </header>
 
-
-<div class="title-container">
+	<div class="title-container">
         <h1 class="title">Categorias</h1>
         <div class="title-line" align="center" ></div>
     </div>
     
     <div class="cards-container">
 		<div class="categoryCards" th:each="categoryDTO : ${listCategoryDTO}">
-
-					<div class="cardCategory">
-						<a class="centralize" th:href="@{'/product/productsByCategory/' + ${categoryDTO.id}}">
-						<img th:src="${categoryDTO.image}"></a>
-						<h4 class="centralize" th:text="${categoryDTO.name}">categoria nome</h4>
-					</div>
-	
+			<div class="cardCategory">
+				<a class="centralize" th:href="@{'/product/productsByCategory/' + ${categoryDTO.id}}">
+				<img th:src="${categoryDTO.image}"></a>
+				<h4 class="centralize" th:text="${categoryDTO.name}">categoria nome</h4>
+			</div>
 		</div>
     </div>
 </body>

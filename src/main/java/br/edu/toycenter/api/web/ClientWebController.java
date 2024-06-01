@@ -53,7 +53,7 @@ public class ClientWebController {
 		session.setAttribute("previousURI", ("/client/updateByClient/" + clientId));
 		if (!clientIsLogged()) return  "redirect:/client/login";
 		ClientResponseDTO clientResponseDTO = service.findById(clientId);
-		clientDTO = clientConvert.forClientRequestDTO(clientResponseDTO);
+		ClientRequestDTO clientDTO = clientConvert.forClientRequestDTO(clientResponseDTO);
 		model.addAttribute("clientDTO", clientDTO);
 		return "/clientPerfil/update";
 	}
@@ -64,8 +64,8 @@ public class ClientWebController {
 		session.setAttribute("previousURI", ("/client/deleteByClient/" + clientId));
 		if (!clientIsLogged()) return  "redirect:/client/login";
 		model.addAttribute("clientId", clientId);
-		return "/clientPerfil/delete";
-	}
+        return null;
+    }
 
 	@GetMapping("/findAll")
 	public String findAll(Model model) {
@@ -139,7 +139,6 @@ public class ClientWebController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute ClientRequestDTO clientRequestDTO, HttpSession session, HttpServletRequest request) {
-
         if (service.login(clientRequestDTO)) {
             ClientResponseDTO clientResponseDTO = service.findByEmail(clientRequestDTO.email());
             session.setAttribute("clientId", clientResponseDTO.id());
