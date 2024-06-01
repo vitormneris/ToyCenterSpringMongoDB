@@ -20,14 +20,12 @@
 <header>
     <nav class="nav-logo">
         <div class="logo">
-            <a href="getAllToy.html"> <img
-                    src="image/logoToyCenterAlt.svg" alt=""></a>
+            <a href="getAllToy.html"> <img src="image/logoToyCenterAlt.svg" alt=""></a>
         </div>
 
         <div class="store-name">
             <h1>TOY CENTER</h1>
         </div>
-
         <div class="space"></div>
     </nav>
 
@@ -58,10 +56,10 @@
         <h2 class="subtitulo_pedido">Pedidos</h2>
 
 
-        <div class="camadaPed_0" th:each="orderDTO : ${orderDTOList}">
+        <div class="camadaPed_0" th:each="orderDTO, index : ${orderDTOList}">
             <div class="camadaPed_1">
                 <div class="tabela_Pedidos">
-                    <h2 class="numero_pedido">Pedido 1</h2>
+                    <h2 class="numero_pedido">Pedido <span th:text="${index.index + 1}"></span></h2>
                     <table>
                         <thead>
                             <tr>
@@ -87,17 +85,13 @@
                                 </td>
                             </tr>
                         </tbody>
-		    </table>
-                    <p>Data e hora: <p th:text="${orderDTO.moment}"></p> </p>
-                    <p>R$ <p class="valor_totalPed" th:text="${orderDTO.total}"></p> </p>
+		            </table>
+                    <p>Momento: <span th:text="${orderDTO.moment}"></span> </p>
+                    <p>Total R$ <span class="valor_totalPed" th:text="${orderDTO.total}"></span> </p>
                     <a th:href="@{'/order/delete/client/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">delete order</a>
-                    <a th:href="@{'/order/orderBuy/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">buy</a>
+                    <a th:href="@{'/order/orderBuy/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}"><button type="button" id="buy">Comprar</button></a>
                 </div>
             </div>
         </div>
-        <!-- fim pedido 1 -->
     </div>
-
-
-
 </body>

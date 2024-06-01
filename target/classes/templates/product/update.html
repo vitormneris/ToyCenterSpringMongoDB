@@ -97,18 +97,20 @@
             	 id="price_ET" th:field="*{price}">
             </div>
 
+<!--            <div>-->
+<!--                <p class="categoryLabel">Categorias:</p>-->
+<!--                <select name="toy_categories" id="categorias">-->
+<!--                    <option th:each="category : ${listCategoryDTO}" th:field="*{categoriesId}" th:value="${category.id}" th:text="${category.name}"> </option>-->
+<!--                </select>-->
+<!--            </div>-->
 
-            
-                <div>
-                    <p class="categoryLabel">Categorias:</p>
-                    <select name="toy_categories" id="categorias" multiple>
-                               <option th:each="category : ${listCategoryDTO}" th:field="*{categoriesId}" th:value="${category.id}" th:text="${category.name}" selected>codigo categoria</option>
-                               <option th:each="category : ${listCategoryDTO}" th:field="*{categoriesId}" th:value="${category.id}" th:text="${category.name}">nome categoria</option>
-                    </select>
-                </div>
-		
+            <label>Select Categories:</label><br>
+            <div th:each="category : ${listCategoryDTO}">
+                <input type="checkbox" th:field="*{categoriesId}" th:value="${category.id}">
+                <label th:text="${category.name}"></label><br>
+            </div>
+
 			<textarea class="detailsBoxAlt" width="1"></textarea>
-			
 			
 			<div class="fieldsetBox">
 			<label for="details_NT">Detalhes</label>			

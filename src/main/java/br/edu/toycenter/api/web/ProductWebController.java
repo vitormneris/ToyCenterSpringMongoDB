@@ -74,15 +74,15 @@ public class ProductWebController {
 		}
 
 		model.addAttribute("categoryName", categoryResponseDTO.name());
-
 		model.addAttribute("listProductDTO", responseDTOByCategoryList);
 		return "/productsByCategory";
 	}
 
 	@GetMapping("/findAll")
 	public String findAll(Model model) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/product/findAll"));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
-		
 		List<ProductResponseDTO> productResponseDTOList = service.findAll();
 		model.addAttribute("listProductDTO", productResponseDTOList);
 		return "/product/findAll";
@@ -90,35 +90,32 @@ public class ProductWebController {
 	
 	@GetMapping("/insert")
 	public String insert(Model model) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/product/insert"));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
-
-		
 		List<CategoryResponseDTO> categoryResponseDTOList = categoryService.findAll();
-
 		model.addAttribute("productDTO", productRequestDTO);
 		model.addAttribute("listCategoryDTO", categoryResponseDTOList);
-
 		return "/product/insert";
 	}
 	
 	@GetMapping("/update/{id}")
 	public String update(Model model, @PathVariable("id") String id) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/product/update/" + id));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
-
-		
 		ProductResponseDTO productResponseDTO = service.findById(id);
 		List<CategoryResponseDTO> categoryResponseDTOList = categoryService.findAll();
-
 		model.addAttribute("productRequestDTO", convert.forProductRequestDTO(productResponseDTO));
 		model.addAttribute("listCategoryDTO", categoryResponseDTOList);
-
 		return "/product/update";
 	}
 	
 	@GetMapping("/delete/{id}")
 	public String delete(Model model, @PathVariable("id") String id) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/product/delete/" + id));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
-		
 		model.addAttribute("productId", id);
 		return "/product/delete";
 	}
@@ -132,7 +129,8 @@ public class ProductWebController {
 	
 	@PutMapping("/update/{id}")
 	public String update(@ModelAttribute("productDTO") ProductRequestDTO productDTO, @RequestParam("imageFile") MultipartFile file, @PathVariable String id) {		
-    	if (file.isEmpty()) {
+		System.out.println(productDTO);
+		if (file.isEmpty()) {
     		service.update(id, productDTO);
     	} else {
     		ProductRequestDTO productDTOWithImage = service.productDTOWithImage(productDTO, file);
@@ -144,7 +142,6 @@ public class ProductWebController {
 	
 	@DeleteMapping("/delete/{id}")
 	public String delete(@PathVariable String id) {
-		
 		service.delete(id);
 		return "redirect:/product/findAll";
 	}

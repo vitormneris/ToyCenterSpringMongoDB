@@ -38,6 +38,8 @@ public class AdministratorWebController {
     
 	@GetMapping("/findAll")
 	public String findAll(Model model) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/administrator/findAll"));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		List<AdministratorResponseDTO> listAdministratorDTO = service.findAll();
 		model.addAttribute("listAdministratorDTO", listAdministratorDTO);
@@ -46,6 +48,8 @@ public class AdministratorWebController {
 	
 	@GetMapping("/insert")
 	public String insert(Model model) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/administrator/insert"));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		model.addAttribute("administratorDTO", administratorDTO);
 		return "/administrator/insert";
@@ -53,18 +57,28 @@ public class AdministratorWebController {
 
     @GetMapping("/update/{administratorId}")
     public String update(Model model, @PathVariable String administratorId) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/administrator/update" + administratorId));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
         AdministratorResponseDTO administratorResponseDTO = service.findById(administratorId);
-        administratorDTO = administratorConvert.forAdministratorRequestDTO(administratorResponseDTO);
-        model.addAttribute("administratorDTO", administratorDTO);
+		AdministratorRequestDTO administratorRequestDTO = administratorConvert.forAdministratorRequestDTO(administratorResponseDTO);
+        model.addAttribute("administratorDTO", administratorRequestDTO);
         return "/administrator/update";
     }
     
 	@GetMapping("/delete/{id}")
 	public String delete(Model model, @PathVariable("id") String id) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/administrator/delete" + id));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		model.addAttribute("administratorId", id);
 		return "/administrator/delete";
+	}
+
+	@GetMapping("/team")
+	public String equipe(Model model) {
+		model.addAttribute("administratorDTO", administratorDTO);
+		return "/team";
 	}
 
     @GetMapping("/login")
@@ -87,12 +101,12 @@ public class AdministratorWebController {
 	}
 
     @PostMapping("/login")
-    public String login(@ModelAttribute AdministratorRequestDTO administratorRequestDTO, HttpSession session) {
+    public String login(@ModelAttribute AdministratorRequestDTO administratorRequestDTO, HttpSession session, HttpServletRequest request) {
 
         if (service.login(administratorRequestDTO)) {
             AdministratorResponseDTO administratorResponseDTO = service.findByEmail(administratorRequestDTO.email());
             session.setAttribute("administratorId", administratorResponseDTO.id());
-            return "redirect:/product/findAll";
+			return "redirect:" + ((session.getAttribute("previousURI") == null) ? ("/administrator/findAll") : (session.getAttribute("previousURI")));
         }
         return "redirect:/administrator/login";
     }

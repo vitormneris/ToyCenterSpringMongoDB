@@ -96,11 +96,17 @@
 
 			<div >
 		
-			    <label class="categoryLabel">Categorias:</label>
-			    <select name="toy_categories" id="categorias" multiple>
-			    	<option th:each="category : ${listCategoryDTO}" th:field="*{categoriesId}" th:value="${category.id}" th:text="${category.name}"></option>
-			    </select>
-          
+<!--			    <label class="categoryLabel">Categorias:</label>-->
+<!--			    <select name="toy_categories" id="categorias">-->
+<!--			    	<option th:each="category : ${listCategoryDTO}" th:field="*{categoriesId}" th:value="${category.id}" th:text="${category.name}"></option>-->
+<!--			    </select>-->
+
+			<label>Select Categories:</label><br>
+			<div th:each="category : ${listCategoryDTO}">
+				<input type="checkbox" th:field="*{categoriesId}" th:value="${category.id}">
+				<label th:text="${category.name}"></label><br>
+			</div>
+
 			</div>
 
 			<div class="fieldsetBox">
@@ -126,7 +132,6 @@
 	            return false;
 	        }
 	    }
-	    
 	</script>
 	<script> new MultiSelectTag('categorias') </script> 
 </body>
