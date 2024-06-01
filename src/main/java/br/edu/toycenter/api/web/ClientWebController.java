@@ -38,11 +38,10 @@ public class ClientWebController {
 
 	@GetMapping("/findClient")
 	public String findAClient(Model model) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/client/findClient"));
 		if (!clientIsLogged()) return  "redirect:/client/login";
-
-		HttpSession session = request.getSession();
 		String clientId = (String) session.getAttribute("clientId");
-
 		ClientResponseDTO clientDTO = service.findById(clientId);
 		model.addAttribute("clientDTO", clientDTO);
 		return "/clientPerfil/findClient";
@@ -50,6 +49,8 @@ public class ClientWebController {
 
 	@GetMapping("/updateByClient/{clientId}")
 	public String updateByClient(Model model, @PathVariable String clientId) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/client/updateByClient/" + clientId));
 		if (!clientIsLogged()) return  "redirect:/client/login";
 		ClientResponseDTO clientResponseDTO = service.findById(clientId);
 		clientDTO = clientConvert.forClientRequestDTO(clientResponseDTO);
@@ -57,15 +58,19 @@ public class ClientWebController {
 		return "/clientPerfil/update";
 	}
 
-	@GetMapping("/deleteByClient/{id}")
-	public String deleteByClient(Model model, @PathVariable("id") String id) {
+	@GetMapping("/deleteByClient/{clientId}")
+	public String deleteByClient(Model model, @PathVariable("clientId") String clientId) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/client/deleteByClient/" + clientId));
 		if (!clientIsLogged()) return  "redirect:/client/login";
-		model.addAttribute("clientId", id);
+		model.addAttribute("clientId", clientId);
 		return "/clientPerfil/delete";
 	}
 
 	@GetMapping("/findAll")
 	public String findAll(Model model) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/client/findAll"));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		List<ClientResponseDTO> listClientDTO = service.findAll();
 		model.addAttribute("listClientDTO", listClientDTO);
@@ -74,6 +79,8 @@ public class ClientWebController {
 	
 	@GetMapping("/insert")
 	public String insert(Model model) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/client/insert"));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		model.addAttribute("clientDTO", clientDTO);
 		return "/client/insert";
@@ -87,17 +94,21 @@ public class ClientWebController {
 
     @GetMapping("/update/{clientId}")
     public String update(Model model, @PathVariable String clientId) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/client/update/" + clientId));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
         ClientResponseDTO clientResponseDTO = service.findById(clientId);
-        clientDTO = clientConvert.forClientRequestDTO(clientResponseDTO);
-        model.addAttribute("clientDTO", clientDTO);
+		ClientRequestDTO clientRequestDTO = clientConvert.forClientRequestDTO(clientResponseDTO);
+        model.addAttribute("clientDTO", clientRequestDTO);
         return "/client/update";
     }
     
-	@GetMapping("/delete/{id}")
-	public String delete(Model model, @PathVariable("id") String id) {
+	@GetMapping("/delete/{clientId}")
+	public String delete(Model model, @PathVariable("clientId") String clientId) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/client/delete/" + clientId));
 		if (!administratorIsLogged()) return  "redirect:/administrator/login";
-		model.addAttribute("clientId", id);
+		model.addAttribute("clientId", clientId);
 		return "/client/delete";
 	}
 
@@ -127,12 +138,12 @@ public class ClientWebController {
 	}
 
     @PostMapping("/login")
-    public String login(@ModelAttribute ClientRequestDTO clientRequestDTO, HttpSession session) {
+    public String login(@ModelAttribute ClientRequestDTO clientRequestDTO, HttpSession session, HttpServletRequest request) {
 
         if (service.login(clientRequestDTO)) {
             ClientResponseDTO clientResponseDTO = service.findByEmail(clientRequestDTO.email());
             session.setAttribute("clientId", clientResponseDTO.id());
-            return "redirect:/product";
+            return "redirect:" + ((session.getAttribute("previousURI") == null) ? ("/product") : (session.getAttribute("previousURI")));
         }
         return "redirect:/client/login";
     }

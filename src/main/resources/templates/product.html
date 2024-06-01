@@ -43,7 +43,7 @@
 			</div>
 
 			<a th:href="@{'/order'}">Ver pedidos</a>
-			<a href="sobre_a_equipe.html">Sobre a Equipe</a>
+			<a href="team.html">Sobre a Equipe</a>
 			<a th:href="@{'/client/login'}">Entrar</a>
 		</div>
 	</nav>
@@ -72,7 +72,6 @@
 
 						<p class="details">detalhes</p>
 						<p class="details_D" th:text="${productDTO.details}"></p>
-						<button type="button" class="buy" href>Comprar</button>
 						<a th:href="@{'/order/insert/' + ${productDTO.id}}">insert in order</a>
 				</div>
 			</div>

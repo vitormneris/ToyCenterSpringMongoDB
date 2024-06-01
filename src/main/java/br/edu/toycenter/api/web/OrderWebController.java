@@ -6,10 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.toycenter.api.request.ClientRequestDTO;
 import br.edu.toycenter.api.request.EmailRequestDTO;
-import br.edu.toycenter.api.response.OrderItemResponseDTO;
-import br.edu.toycenter.infrastructure.entities.OrderItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,9 +57,10 @@ public class OrderWebController {
 	
 	@GetMapping()
 	public String findByClientId(Model model) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", "/order");
 		if (!clientIsLogged()) return  "redirect:/client/login";
 
-		HttpSession session = request.getSession();
 		String clientId = (String) session.getAttribute("clientId");
 		List<OrderResponseDTO> listResponseDTO = service.findByClientId(clientId);
 		int lastIndex = listResponseDTO.size() - 1;
@@ -73,11 +71,10 @@ public class OrderWebController {
 	
 	@GetMapping("/insert/{productId}")
 	public String insert(Model model, @PathVariable("productId") String productId) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/order/insert/" + productId));
 		if (!clientIsLogged()) return  "redirect:/client/login";
-
-		HttpSession session = request.getSession();
 		String clientId = (String) session.getAttribute("clientId");
-
 		ClientResponseDTO clientDTO = clientService.findById(clientId);
 		List<String> listOrderId = new ArrayList<>();
 		for (Order order : clientDTO.orders()) {
@@ -94,8 +91,9 @@ public class OrderWebController {
 	
 	@GetMapping("/update/client/{clientId}/{orderId}/{index}")
 	public String update(Model model, @PathVariable("clientId") String clientId, @PathVariable("orderId") String orderId, @PathVariable("index") int index) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/order/update/client/" + clientId + "/" + orderId + "/" + index));
 		if (!clientIsLogged()) return  "redirect:/client/login";
-
 		OrderResponseDTO responseDTO = service.findByClientIdAndId(clientId, orderId);
 		AuxOrderRequestDTO auxOrderRequestDTO = auxOrderConvert.forAuxOrderRequestDTO(responseDTO, index);
 		model.addAttribute("auxOrderRequestDTO", auxOrderRequestDTO);
@@ -108,8 +106,9 @@ public class OrderWebController {
 
 	@GetMapping("/delete/client/{clientId}/{orderId}/{index}")
 	public String delete(Model model, @PathVariable("clientId") String clientId, @PathVariable("orderId") String orderId,  @PathVariable("index") int index) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/order/delete/client/" + clientId + "/" + orderId + "/" + index));
 		if (!clientIsLogged()) return  "redirect:/client/login";
-
 		model.addAttribute("clientId", clientId);
 		model.addAttribute("orderId", orderId);
 		model.addAttribute("index", index);
@@ -118,8 +117,9 @@ public class OrderWebController {
 
 	@GetMapping("/delete/client/{clientId}/{orderId}")
 	public String delete(Model model, @PathVariable("clientId") String clientId, @PathVariable("orderId") String orderId) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/order/delete/client/" + clientId + "/" + orderId));
 		if (!clientIsLogged()) return  "redirect:/client/login";
-
 		model.addAttribute("clientId", clientId);
 		model.addAttribute("orderId", orderId);
 		return "order/deleteOrder";
@@ -127,10 +127,11 @@ public class OrderWebController {
 
 	@GetMapping(value = "/orderBuy/{clientId}/{orderId}")
 	public String orderBuy(Model model, @PathVariable("clientId") String clientId, @PathVariable("orderId") String orderId) {
+		HttpSession	session = request.getSession();
+		session.setAttribute("previousURI", ("/order/orderBuy/" + clientId + "/" + orderId));
 		if (!clientIsLogged()) return  "redirect:/client/login";
 		ClientResponseDTO clientRequestDTO = clientService.findById(clientId);
 		OrderResponseDTO orderResponseDTO = service.findById(orderId);
-
 		Instant instant = Instant.now();
 		ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");

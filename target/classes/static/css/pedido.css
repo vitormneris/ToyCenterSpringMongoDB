@@ -110,3 +110,30 @@ overflow: hidden;
     font-weight: bold;
     font-size: 22px;
 }
+
+button #buy {
+    outline: none;
+    text-decoration: none;
+    box-shadow: none;
+	font-weight: 700;
+    font-family: "Poppins", sans-serif;
+    background-color: rgb(rgba(220, 220, 220, 0.929));
+    color: black;
+    transition:0.4s;
+    font-size: 24px;
+    border-radius:35px;
+    width:150px;
+    height:48px;
+    margin-bottom:20px;
+}
+
+button #buy:hover {
+    color: var(--Branco);
+    background-color: var(--Azul);
+    transform: scale(1.1);
+    border-color:var(--Branco)
+}
+
+button #buy:active{
+	transform:scale(0.9);
+}

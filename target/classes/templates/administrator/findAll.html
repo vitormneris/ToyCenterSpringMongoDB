@@ -74,9 +74,9 @@
 								<td class="toy-compact-cell" th:text="${administratorDTO.email}">email administrador</td>
 								<td class="toy-compact-cell" th:text="${administratorDTO.password}">senha administrador</td>
 
-								<td class="controls"><a class="linkDelete"
-									onclick="deleteUser()" th:href="@{'/administrator/delete/' + ${administratorDTO.id}}">Deletar</a> <a
-									class="linkEdit" th:href="@{'/administrator/update/' + ${administratorDTO.id}}">Atualizar</a>
+								<td class="controls">
+									<a class="linkDelete" th:attr="onclick=${'deleteAdministrator('+ '''' + administratorDTO.id + '''' + ')'}">Deletar</a>
+									<a class="linkEdit" th:href="@{'/administrator/update/' + ${administratorDTO.id}}">Atualizar</a>
 								</td>
 							</tr>
 						</tbody>
@@ -89,15 +89,15 @@
 				</div>
 			</div>
 			<script>
-			function deleteUser(number) {
-			    if (window.confirm("Você tem certeza de que deseja Excluir o usuário?")) {
-			        console.log("User deleted successfully!");
-			        fetch('http://localhost:8080/ToyCenter/UserController?action=deleteUser&user_code=' + number, {
-			            method: 'POST', 
-			        })
-			        .then(response => {
-			            console.log('Server response:', response);
-			            window.location.href = "http://localhost:8080/ToyCenter/UserController?action=getAllUser";
+			function deleteAdministrator(id) {
+			    if (window.confirm("Você tem certeza de que deseja excluir o administrador?")) {
+			        console.log("Administrator deleted successfully!");
+					fetch('http://localhost:8080/administrator/delete/' + id, {
+						method: 'DELETE',
+					})
+					.then(response => {
+						console.log('Server response:', response);
+						window.location.href = "http://localhost:8080/administrator/findAll";
 			        })
 			        .catch(error => {
 			            console.error('Request error:', error);
@@ -109,22 +109,22 @@
 			}
 			
 			function logOff() {
-			    if (window.confirm("Você tem certeza de que deseja sair?")) {
-			        console.log("User quit successfully!");
-			        fetch('http://localhost:8080/ToyCenter/UserController?action=logOut', {
-			            method: 'GET', 
-			        })
-			        .then(response => {
-			            console.log('Server response:', response);
-			            window.location.href = "http://localhost:8080/ToyCenter/UserController?action=getAllUser";
-			        })
-			        .catch(error => {
-			            console.error('Request error:', error);
-			        });
-			    } else {
-			        console.log("User not quit.");
-			        
-			    }
+				if (window.confirm("Você tem certeza de que deseja sair?")) {
+					console.log("User quit successfully!");
+					fetch('http://localhost:8080/administrator/logout', {
+						method: 'GET',
+					})
+					.then(response => {
+						console.log('Server response:', response);
+						window.location.href = "http://localhost:8080/product";
+					})
+					.catch(error => {
+						console.error('Request error:', error);
+					});
+				} else {
+					console.log("User not quit.");
+
+				}
 			}
 		
 		  </script>

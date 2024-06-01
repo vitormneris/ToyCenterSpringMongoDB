@@ -71,7 +71,7 @@
 						   <td><img th:src="${categoryDTO.image}" width="100px" height="100px"></td>
 								<td class="toy-compact-cell" th:text="${categoryDTO.name}">categoria nome</td>
 								<td class="controls">
-									<a class="linkDelete" onclick="deleteCategory()" th:href="@{'/category/delete/' + ${categoryDTO.id}}">Deletar</a>
+									<a class="linkDelete" th:attr="onclick=${'deleteCategory('+ '''' + categoryDTO.id + '''' + ')'}">Deletar</a>
 								    <a class="linkEdit" th:href="@{'/category/update/' + ${categoryDTO.id}}">Atualizar</a>
 								</td>
 							</tr>
@@ -86,42 +86,43 @@
 	        <br><br>
 	        </div>
             <script>
-			function deleteCategory(number) {
-			    if (window.confirm("Você tem certeza de que deseja Excluir a categoria?")) {
+			function deleteCategory(id) {
+			    if (window.confirm("Você tem certeza de que deseja excluir a categoria?")) {
 			        console.log("Category deleted successfully!");
-			        fetch('http://localhost:8080/ToyCenter/CategoryController?action=deleteCategory&category_code=' + number, {
-			            method: 'POST', 
-			        })
-			        .then(response => {
-			            console.log('Server response:', response);
-			            window.location.href = "http://localhost:8080/ToyCenter/CategoryController?action=getAllCategoryAdm";
+					fetch('http://localhost:8080/category/delete/' + id, {
+						method: 'DELETE',
+					})
+					.then(response => {
+						if (response.ok) {
+							console.log('Server response:', response);
+							window.location.href = "http://localhost:8080/category/findAll";
+						}
 			        })
 			        .catch(error => {
 			            console.error('Request error:', error);
 			        });
 			    } else {
 			        console.log("Deletion canceled by category.");
-			        
 			    }
 			}
 			
 			function logOff() {
-			    if (window.confirm("Você tem certeza de que deseja sair?")) {
-			        console.log("User quit successfully!");
-			        fetch('http://localhost:8080/ToyCenter/UserController?action=logOut', {
-			            method: 'GET', 
-			        })
-			        .then(response => {
-			            console.log('Server response:', response);
-			            window.location.href = "http://localhost:8080/ToyCenter/CategoryController?action=getAllCategoryAdm";
-			        })
-			        .catch(error => {
-			            console.error('Request error:', error);
-			        });
-			    } else {
-			        console.log("User not quit.");
-			        
-			    }
+				if (window.confirm("Você tem certeza de que deseja sair?")) {
+					console.log("User quit successfully!");
+					fetch('http://localhost:8080/administrator/logout', {
+						method: 'GET',
+					})
+					.then(response => {
+						console.log('Server response:', response);
+						window.location.href = "http://localhost:8080/product";
+					})
+					.catch(error => {
+						console.error('Request error:', error);
+					});
+				} else {
+					console.log("User not quit.");
+
+				}
 			}
 		
 		  </script>

@@ -90,7 +90,7 @@
 								<td class="toy-compact-cell" th:text="${productDTO.description}">>descrição</td>
 								<td class="toy-compact-cell" th:text="${productDTO.details}">detalhes</td>
 								<td class="controls">
-									<a class="linkDelete" onclick="deleteToy()" th:href="@{'/product/delete/' + ${productDTO.id}}" >Deletar</a>
+									<a class="linkDelete" th:attr="onclick=${'deleteToy('+ '''' + productDTO.id + '''' + ')'}">Deletar</a>
 									<a class="linkEdit" th:href="@{'/product/update/' + ${productDTO.id}}">Atualizar</a>
 								</td>
 							</tr>
@@ -110,15 +110,15 @@
 	</div>
 
 	<script>
-	function deleteToy(number) {
+	function deleteToy(id) {
 	    if (window.confirm("Você tem certeza de que deseja Excluir o brinquedo?")) {
 	        console.log("Toy deleted successfully!");
-	        fetch('http://localhost:8080/ToyCenter/ToyController?action=deleteToy&toy_code=' + number, {
-	            method: 'POST', 
+	        fetch('http://localhost:8080/product/delete/' + id, {
+	            method: 'DELETE',
 	        })
 	        .then(response => {
 	            console.log('Server response:', response);
-	            window.location.href = "http://localhost:8080/ToyCenter/ToyController?action=getAllToyAdm";
+	            window.location.href = "http://localhost:8080/product/findAll";
 	        })
 	        .catch(error => {
 	            console.error('Request error:', error);
@@ -132,12 +132,12 @@
 	function logOff() {
 	    if (window.confirm("Você tem certeza de que deseja sair?")) {
 	        console.log("User quit successfully!");
-	        fetch('http://localhost:8080/ToyCenter/UserController?action=logOut', {
+	        fetch('http://localhost:8080/administrator/logout', {
 	            method: 'GET', 
 	        })
 	        .then(response => {
 	            console.log('Server response:', response);
-	            window.location.href = "http://localhost:8080/ToyCenter/ToyController?action=getAllToyAdm";
+	            window.location.href = "http://localhost:8080/product";
 	        })
 	        .catch(error => {
 	            console.error('Request error:', error);
