@@ -71,9 +71,24 @@ public class OrderWebController {
 		String clientId = (String) session.getAttribute("clientId");
 		List<OrderResponseDTO> listResponseDTO = service.findByClientId(clientId);
 		List<OrderResponseDTO> listDTO = new ArrayList<>();
-		listDTO.add(listResponseDTO.get(0));
+
+		if (!(listResponseDTO.size() == 1)) {
+			listDTO.add(listResponseDTO.get(0));
+		}
 		model.addAttribute("orderDTOList", listDTO);
 		return "order/findByClientId";
+	}
+
+	@GetMapping("/checkEmail")
+	public String emailSend(Model model) {
+		if (!clientIsLogged()) return  "redirect:/client/login";
+		return "checkEmail";
+	}
+
+	@GetMapping("/confirmedEmail")
+	public String confirmedEmail(Model model) {
+		if (!clientIsLogged()) return  "redirect:/client/login";
+		return "confirmedEmail";
 	}
 	
 	@GetMapping("/insert/{productId}")
@@ -88,13 +103,10 @@ public class OrderWebController {
 		for (Order order : clientDTO.orders()) {
 			listOrderId.add(order.getId());
 		}
-		
-		AuxOrderRequestDTO auxOrderRequestDTO = new AuxOrderRequestDTO(null, clientId, 0, productId);
-		List<String> listId = new ArrayList<>();
-		listId.add(listOrderId.get(0));
+		String orderId = listOrderId.get(0);
+		AuxOrderRequestDTO auxOrderRequestDTO = new AuxOrderRequestDTO(orderId, clientId, 0, productId);
 		ProductResponseDTO productDTO = productService.findById(productId);
 		model.addAttribute("productDTO", productDTO);
-		model.addAttribute("listId", listId);
 		model.addAttribute("orderRequestDTO", auxOrderRequestDTO);
 		return "order/insert";
 	}
@@ -159,9 +171,9 @@ public class OrderWebController {
 						"\n ITENS DE PEDIDO: " + orderResponseDTO.orderItens() +
 						"\n ----------------------------------------------------------------------------------------" +
 						"\n CLIQUE NO LINK PARA PROSSEGUIR " +
-						"\n http://localhost:8080/category");
+						"\n http://localhost:8080/order/confirmedEmail");
 		emailService.sendEmail(emailRequestDTO);
-		return "redirect:/product";
+		return "redirect:/order/checkEmail";
 	}
 
 	@PutMapping("/insert")

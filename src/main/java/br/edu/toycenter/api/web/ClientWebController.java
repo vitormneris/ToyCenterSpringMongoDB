@@ -58,14 +58,13 @@ public class ClientWebController {
 		return "/clientPerfil/update";
 	}
 
-	@GetMapping("/deleteByClient/{clientId}")
-	public String deleteByClient(Model model, @PathVariable("clientId") String clientId) {
-		HttpSession	session = request.getSession();
-		session.setAttribute("previousURI", ("/client/deleteByClient/" + clientId));
-		if (!clientIsLogged()) return  "redirect:/client/login";
-		model.addAttribute("clientId", clientId);
-        return null;
-    }
+//	@GetMapping("/deleteByClient/{clientId}")
+//	public String deleteByClient(Model model, @PathVariable("clientId") String clientId) {
+//		HttpSession	session = request.getSession();
+//		session.setAttribute("previousURI", ("/client/deleteByClient/" + clientId));
+//		if (!clientIsLogged()) return  "redirect:/client/login";
+//        return null;
+//    }
 
 	@GetMapping("/findAll")
 	public String findAll(Model model) {
@@ -154,8 +153,9 @@ public class ClientWebController {
 	}
 
 	@DeleteMapping("/deleteByClient/{id}")
-	public String deleteByClient(@PathVariable String id) {
+	public String deleteByClient(Model model, @PathVariable String id) {
 		service.delete(id);
+		logout(model);
 		return "redirect:/client/logout";
 	}
 

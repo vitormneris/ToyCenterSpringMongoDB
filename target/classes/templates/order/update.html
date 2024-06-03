@@ -71,8 +71,6 @@
 				<form th:action="@{'/order/update/client/' + ${clientId} + '/' + ${orderId} + '/' + ${index}}" method="POST" th:object="${auxOrderRequestDTO}">
 					<input type="hidden" name="_method" value="put">
 
-					<label>Order id:</label><br>
-
 					<label for="quantidade" class="quantidadeLabel"><p class="desCarrinho">Quantidade:</p></label>
 					<div class="ajusteQuantidade">
 						<button type="button" class="btnQuantidade menos">-</button>

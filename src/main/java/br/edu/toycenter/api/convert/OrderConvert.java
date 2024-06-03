@@ -53,10 +53,12 @@ public class OrderConvert {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd/MM/yyyy");
 			formattedDateTime = formatter.format(instant.atZone(zoneId));
 		}
+
+		String total = String.format("%.2f", order.getTotal());
 		OrderResponseDTO orderDTO = new OrderResponseDTO(
 				order.getId(),
 				formattedDateTime,
-				order.getTotal(),
+				total,
 				client,
 				orderItemDTO);
 				
@@ -78,10 +80,11 @@ public class OrderConvert {
 			orderItemResponseDTOS.add(orderItemConvert.forOrderItemResponseDTO(orderItem));
 		}
 
+		String total = String.format("%.2f", order.getTotal());
 		OrderResponseDTO orderDTO = new OrderResponseDTO(
 				order.getId(),
 				formattedDateTime,
-				order.getTotal(),
+				total,
 				client,
 				orderItemResponseDTOS);
 

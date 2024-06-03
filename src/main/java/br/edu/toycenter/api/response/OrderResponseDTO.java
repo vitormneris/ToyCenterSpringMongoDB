@@ -8,7 +8,7 @@ import br.edu.toycenter.infrastructure.entities.Client;
 public record OrderResponseDTO(
 		String id,
 		String moment,
-		Double total,
+		String total,
 		Client client,
 		List<OrderItemResponseDTO> orderItens) {
 

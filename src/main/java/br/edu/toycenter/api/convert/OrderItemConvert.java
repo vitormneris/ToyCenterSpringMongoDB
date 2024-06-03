@@ -29,11 +29,15 @@ public class OrderItemConvert {
 	}
 	
 	public OrderItemResponseDTO forOrderItemResponseDTO(OrderItem orderItem) {
+
+		String price = String.format("%.2f", orderItem.getPrice());
+		String subtTotal = String.format("%.2f", orderItem.getSubTotal());
+
 		OrderItemResponseDTO OrderItemDTO = new OrderItemResponseDTO(				
 				orderItem.getQuantity(),
-				orderItem.getPrice(),
+				price,
 				orderItem.getProduct(),
-				orderItem.getSubTotal());
+				subtTotal);
 				
 		return OrderItemDTO;
 	}
