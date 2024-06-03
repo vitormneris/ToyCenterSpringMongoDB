@@ -28,12 +28,14 @@ public class ProductConvert {
 	}
 
 	public ProductResponseDTO forProductResponseDTO(Product product, List<Category> listCategory) {
-		ProductResponseDTO productDTO = new ProductResponseDTO(				
+		String price = String.format("%.2f", product.getPrice());
+
+		ProductResponseDTO productDTO = new ProductResponseDTO(
 				product.getId(),
 				product.getName(),
 				product.getImage(),
 				product.getBrand(),
-				product.getPrice(),
+				price,
 				product.getDescription(),
 				product.getDetails(),
 				listCategory);
@@ -46,13 +48,13 @@ public class ProductConvert {
 		for (Category category : productResponseDTO.categories()) {
 			categoriesId.add(category.getId());
 		}
-
+		Double price = Double.parseDouble(productResponseDTO.price());
 		ProductRequestDTO productRequestDTO = new ProductRequestDTO(
 				productResponseDTO.id(),
 				productResponseDTO.name(),
 				productResponseDTO.image(),
 				productResponseDTO.brand(),
-				productResponseDTO.price(),
+				price,
 				productResponseDTO.description(),
 				productResponseDTO.details(),
 				categoriesId);

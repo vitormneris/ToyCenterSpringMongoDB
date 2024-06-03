@@ -9,7 +9,7 @@ public record ProductResponseDTO(
 		String name,
 		String image,
 		String brand,
-		Double price,
+		String price,
 		String description,
 		String details,
 		List<Category> categories) {

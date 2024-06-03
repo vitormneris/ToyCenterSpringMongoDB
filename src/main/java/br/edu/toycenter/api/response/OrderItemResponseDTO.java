@@ -4,9 +4,9 @@ import br.edu.toycenter.infrastructure.entities.Product;
 
 public record OrderItemResponseDTO(
 		Integer quantity,
-		Double price, 
+		String price,
 		Product product,
-		Double subTotal)  {
+		String subTotal)  {
 
 	@Override
 	public String toString() {
