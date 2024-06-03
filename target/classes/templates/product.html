@@ -8,6 +8,7 @@
 	<link rel="stylesheet" th:href="@{/css/styleToy.css}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Brinquedo</title>
 </head>
@@ -24,7 +25,7 @@
 			<h1>TOY CENTER</h1>
 		</div>
 
-		<div class="space"></div>
+		<div class="space"><div class="menuList"><a class="loginBtn" th:href="@{'/client/login'}">ENTRAR</a></div></div>
 	</nav>
 
 	<nav class="menu">
@@ -43,8 +44,8 @@
 			</div>
 			<a th:href="@{'/order'}">Ver pedidos</a>
 			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
-			<a th:href="@{'/client/login'}">Entrar</a>
 			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
+
 		</div>
 	</nav>
 </header>
@@ -57,21 +58,21 @@
 				</div>
 
 				<div class="toyInfo">
-				<h3 class="brand">marca</h3>
-					<p class="brand_D" th:text="${productDTO.brand}">Nome marca</p>
+				<h3 class="text_h">marca</h3>
+					<p class="text_d" th:text="${productDTO.brand}">Nome marca</p>
 
-						<h2 class="name">nome</h2>
-						<p class="name_D" th:text="${productDTO.name}">nome brinquedo </p>
+						<h2 class="text_h">nome</h2>
+						<p class="text_d" th:text="${productDTO.name}">nome brinquedo </p>
 
-						<p class="price">preço</p>
-						<p class="price_D" th:text="${productDTO.price}"> R$: 99,90</p>
+					<p class="text_h">preço</p>
+					<p class="text_d">R$: <span th:text="${productDTO.price}">99,90</span></p>
 						
-						<p class="description">descrição</p>
-						<p class="description_D" th:text="${productDTO.description}">um boneco muito bonito e elegante</p>
+						<p class="text_h">descrição</p>
+						<p class="text_d" th:text="${productDTO.description}">um boneco muito bonito e elegante</p>
 
-						<p class="details">detalhes</p>
-						<p class="details_D" th:text="${productDTO.details}"></p>
-						<a th:href="@{'/order/insert/' + ${productDTO.id}}">insert in order</a>
+						<p class="text_h">detalhes</p>
+						<p class="text_d" th:text="${productDTO.details}"></p>
+						<a class="buy" th:href="@{'/order/insert/' + ${productDTO.id}}">Incluir ao pedido <i class="fa fa-cart-plus" style="font-size:24px"></i></a>
 				</div>
 			</div>
 		</div>

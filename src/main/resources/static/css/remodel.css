@@ -37,7 +37,7 @@ body {
 header{
 	/* descomente para ter um header que sempre aparecera no topo
     position:sticky;
-	top:0px; 
+	top:0px;
 	*/
 	z-index:999;
     padding: 20px 5%;
@@ -80,13 +80,18 @@ header{
     align-items: center;
 }
 .store-name h1{
-	color: var(--fundoAzul);
+	color: var(--fundoBranco);
 	font-size: 25px;
     font-weight: 800;
 }
 
 .space {
+display:flex;
+flex-flow:column nowrap;
     width: 15vw;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
 }
 
 /* Menu com links */
@@ -100,25 +105,54 @@ header{
     align-items: center;
 }
 
+
 .menuList {
     display: flex;
-    width: 50%;
-    height: 25px;
-    justify-content: space-between;
-    margin: 70px;
+    width: 70%;
+    height: 40px;
+    justify-content: space-around;
+    margin: 70px auto;
 }
 
 .menuList a {
 	font-weight: 600;
     text-decoration: none;
     height: 4vh;
-    color: 	var(--fundoAzul);
+    color: 	var(--fundoBranco);
     transition:0.4s;
+    cursor:pointer;
 }
 
 .menuList a:hover {
-    border-bottom: 1px solid black;
-    transform: scale(1.1);
+    border-bottom: 1px solid var(--fundoBranco);
+    transform: scale(1.05);
+}
+.menuList .loginBtn{
+        outline: none;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        font-weight: 700;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--fundoBranco);
+        color: var(--AzulAtual);
+        border: none;
+        transition: 0.3s ease-in-out;
+        font-size: 18px;
+        border-radius: 25px;
+        width: 150px;
+        height: 48px;
+        padding: 12px 12px;
+        cursor: pointer;
+        text-transform: uppercase;
+}
+.menuList .loginBtn:hover{
+    background-color: var(--Azul);
+    color: var(--Branco);
+    transform: translateY(-2px);
+}
+
+.menuList .loginBtn:active {
+    transform: scale(0.90);
 }
 
 .dropdown {
@@ -137,8 +171,11 @@ header{
     height: 4vh;
     transition:0.4s;
      font-size: 20px;
+     color: var(--fundoBranco);
 }
+
 .dropdown:hover .dropbtn {
+    color: var(--fundoBranco);
     transform: scale(1.1);
 }
 
@@ -160,7 +197,10 @@ header{
 }
 
 .dropdown:hover .dropdown-content {
-  display:block;
+ display:block;
+  border-radius: 15px;
+  border: 1px solid var(--AzulAtual);
+  padding: 20px 20px;
 }
 .dropdown-content a:hover {
     border-bottom: none;
@@ -170,6 +210,7 @@ header{
 .dropdown-content a:active{
 	transform:scale(0.9);
 }
+
 
 /* Banner */
 .banner_container{
@@ -207,7 +248,7 @@ header{
 
 .title {
     font-weight: 600;
-    color: var(--AzulAtual);    
+    color: var(--AzulAtual);
 }
 
 .title-line{
@@ -218,7 +259,7 @@ header{
 }
 .titleAlt {
     font-weight: 600;
-    color: var(--fundoAzul);    
+    color: var(--fundoAzul);
 }
 .title-lineAlt{
 	height:6px;
@@ -246,20 +287,22 @@ header{
 .card {
     background-color: var(--AzulAtual);
     border-radius: 35px;
-    flex-basis: 25%;
-    padding: 10px;
+    flex-basis: 30%; /*25%*/
+    padding: 20px;
     min-width: 300px;
     min-height:300px;
     margin-bottom: 50px;
     color: #0f172a;
-    transition:0.4s;
+    transition: 0.3s ease;
     text-overflow: hidden;
     justify-content: center;
     text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow:hidden;
 }
 
 .cardCategory:hover,.card:hover{
-	transform:scale(1.08);
+	transform: scale(1.05);
 	border:5px solid var(--AzulAtual);
 }
 
@@ -276,15 +319,20 @@ header{
    	padding-left:10px;
    	font-size:20px;
 	font-weight:600;
+	color:var(--fundoBranco);
 }
 
 .card p {
     text-align: center;
     font-style: normal;
     color: var(--Branco);
-    font-size:18px;
+    font-size:22px;
     font-weight:700;
     overflow:hidden;
+    margin-bottom:12px;
+}
+.card span{
+color:var(--Branco);
 }
 .teamCard{
 	display:flex;
@@ -349,6 +397,7 @@ header{
 .cardCategory h4{
 	padding-left:10px;
 	font-size:20px;
+	color:var(--fundoBranco);
 }
 /* barra de rolagem*/
 
@@ -357,20 +406,20 @@ header{
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--fundoBranco); 
+  background: var(--fundoBranco);
   border-radius:35px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--Azul); 
+  background: var(--Azul);
   border-radius:35px;
   transition:ease;
   border:1px solid var(--fundoBranco);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--fundoAzul); 
-  
+  background: var(--fundoAzul);
+
 }
 ::-webkit-scrollbar-corner{
 	display:none;
@@ -391,4 +440,36 @@ a.botao {
 
 a.botao:hover {
     background-color: #072240;
+}
+
+.card a.addBtn i{
+margin:12px 12px;
+}
+.card .addBtn{
+    outline: none;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+    font-family: "Poppins", sans-serif;
+    background-color: var(--fundoBranco);
+    color: var(--AzulAtual);
+    border: none;
+    transition: 0.3s ease-in-out;
+    font-size: 18px;
+    border-radius: 25px;
+    width: 150px;
+    height: 48px;
+    padding: 12px 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.card .addBtn:hover{
+    background-color: var(--Azul);
+    color: var(--Branco);
+    transform: translateY(-2px);
+}
+
+.card .addBtn:active {
+    transform: scale(0.90);
 }

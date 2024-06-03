@@ -69,25 +69,28 @@ label{
     text-transform: uppercase;
 }
 
-#login_button{
+#login_button {
     font-weight: 600;
     font-size: 15px;
     text-transform: uppercase;
     width: 275px;
-    border: 0;
+    border: none;
     padding: 20px;
     cursor: pointer;
     border-radius: 30px;
-    background-color: var(--fundoAzul);
+    background-color: var(--Azul);
     color: white;
-    transition:0.4s;
-    box-shadow:none;
+    transition: 0.4s;
+    box-shadow: none;
+    outline: none;
 }
-#login_button:hover{
-	transform:scale(1.1);
-	box-shadow:0px 0px 14px 5px rgba(0, 0, 0, 0.4);
+
+#login_button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 14px 5px rgba(0, 0, 0, 0.4);
     background-color: var(--Azul);
 }
-#login_button:active{
-	transform:scale(0.7);
+
+#login_button:active {
+    transform: scale(0.95);
 }

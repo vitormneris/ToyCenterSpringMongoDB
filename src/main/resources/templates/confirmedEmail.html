@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/css/remodel.css}">
-    <link rel="stylesheet" th:href="@{/css/errorStyle.css}">
+    <link rel="stylesheet" th:href="@{/css/remodel.css}" href="/static/css/remodel.css">
+    <link rel="stylesheet" th:href="@{/css/errorStyle.css}" href="/static/css/errorStyle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <title>Toy Center inicio</title>
+    <title>Toy Center</title>
 </head>
 
 <body>
@@ -49,13 +49,14 @@
     </nav>
 </header>
 <div class="centralize">
-    <div class="errorContainer">
-    <h1 class="errorH1" th:text="'Error: ' + ${message}"></h1>
-    <p class="errorP" th:text="'Description: ' + ${description}"></p>
-    <p class="errorP" th:text="'Status: ' + ${status}"></p>
-    <p class="errorP" th:text="'Timestamp: ' + ${timestamp}"></p>
-    <p class="errorP" th:text="'Path: ' + ${path}"></p>
-    <a class="errorA" th:href="@{/product}">Voltar ao início</a>
+    <div class="emailContainer">
+    <h1 class="emailH1">Compra concluida!</h1>
+    <p class="emailP">Sua compra foi confirmada, parabéns pela aquisição de seu novo brinquedo!</p>
+    <p class="emailP">Duvidas ou problemas? Nos envie um e-mail.</p>
+    <p class="emailP">Agradecemos pela preferencia!</p>
+
+    <p class="emailP"></p>
+    <a class="emailA" th:href="@{/product}">Voltar ao início</a>
     </div>
 </div>
 </body>

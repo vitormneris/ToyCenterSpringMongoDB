@@ -11,6 +11,7 @@ form{
     text-align: center;
     border-radius: 30px;
     padding:50px 50px;
+    margin-bottom:10vh;
 }
 
 .cadastro_container{
@@ -25,6 +26,7 @@ form{
     align-items: center;
     width: 35vw;
     background-color: var(--Branco);
+    margin-bottom:10vh;
 }
 
 .cadastro_title{

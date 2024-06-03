@@ -7,6 +7,7 @@
 	<link rel="stylesheet" th:href="@{/css/remodel.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Toy Center categoria</title>
 </head>
@@ -23,7 +24,7 @@
 			<h1>TOY CENTER</h1>
 		</div>
 
-		<div class="space"></div>
+		<div class="space"><div class="menuList"><a class="loginBtn" th:href="@{'/client/login'}">ENTRAR</a></div></div>
 	</nav>
 
 	<nav class="menu">
@@ -42,8 +43,8 @@
 			</div>
 			<a th:href="@{'/order'}">Ver pedidos</a>
 			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
-			<a th:href="@{'/client/login'}">Entrar</a>
 			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
+
 		</div>
 	</nav>
 </header>
@@ -60,8 +61,8 @@
                 <a th:href="@{'/product/oneProduct/' + ${productDTO.id}}">
                 	<img th:src="${productDTO.image}" alt="Image" title="Ver mais sobre"></a>
                 <h4 th:text="${productDTO.name}">nome brinquedo</h4>
-                <p th:text="${productDTO.price}">R$500,00</p>
-				<a th:href="@{'/order/insert/' + ${productDTO.id}}">insert in order</a>
+				<p>R$: <span th:text="${productDTO.price}"></span></p>
+				<a class="addBtn" th:href="@{'/order/insert/' + ${productDTO.id}}"><i class="fa fa-cart-plus" style="font-size:24px"></i></a>
 			</div>
 
         </div>

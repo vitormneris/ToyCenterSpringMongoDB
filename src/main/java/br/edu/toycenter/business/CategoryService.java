@@ -137,7 +137,8 @@ public class CategoryService {
 	}
 
 	private String uploadImage(MultipartFile file) throws InvalidFormatException, InternalError {
-		String url = "/home/vitor/Documents/workspace-spring-tool-suite-4-4.22.1.RELEASE/ToyCenterSpringMongoDB/src/main/resources/static/images/category/";
+		String url = "C:/DEV/GIT_repo/ToyCenterSpringMongoDB/src/main/resources/static/images/category/";
+		//String url = "/home/vitor/Documents/workspace-spring-tool-suite-4-4.22.1.RELEASE/ToyCenterSpringMongoDB/src/main/resources/static/images/category/";
 
 		if (file.isEmpty())
 			throw new InvalidFormatException("The image can not be null.");
