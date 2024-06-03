@@ -137,7 +137,8 @@ public class ProductService {
 	}
 	
     private String uploadImage(MultipartFile file) throws InvalidFormatException, InternalError {
-    	String url = "/home/vitor/Documents/workspace-spring-tool-suite-4-4.22.1.RELEASE/ToyCenterSpringMongoDB/src/main/resources/static/images/product/";
+		String url = "C:/DEV/GIT_repo/ToyCenterSpringMongoDB/src/main/resources/static/images/product/";
+		//String url = "/home/vitor/Documents/workspace-spring-tool-suite-4-4.22.1.RELEASE/ToyCenterSpringMongoDB/src/main/resources/static/images/product/";
     	
     	if (file.isEmpty()) 
     		throw new InvalidFormatException("The image can not be null.");

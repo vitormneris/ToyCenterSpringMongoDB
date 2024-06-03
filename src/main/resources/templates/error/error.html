@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/remodel.css}">
+    <link rel="stylesheet" th:href="@{/css/errorStyle.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -23,7 +24,7 @@
             <h1>TOY CENTER</h1>
         </div>
 
-        <div class="space"></div>
+        <div class="space"><div class="menuList"><a class="loginBtn" th:href="@{'/client/login'}">ENTRAR</a></div></div>
     </nav>
 
     <nav class="menu">
@@ -42,16 +43,20 @@
             </div>
             <a th:href="@{'/order'}">Ver pedidos</a>
             <a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
-            <a th:href="@{'/client/login'}">Entrar</a>
             <a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
+
         </div>
     </nav>
 </header>
-    <h1 th:text="'Error: ' + ${message}"></h1>
-    <p th:text="'Description: ' + ${description}"></p>
-    <p th:text="'Status: ' + ${status}"></p>
-    <p th:text="'Timestamp: ' + ${timestamp}"></p>
-    <p th:text="'Path: ' + ${path}"></p>
-    <a th:href="@{/product}">Back to home page</a>
+<div class="centralize">
+    <div class="errorContainer">
+    <h1 class="errorH1" th:text="'Error: ' + ${message}"></h1>
+    <p class="errorP" th:text="'Description: ' + ${description}"></p>
+    <p class="errorP" th:text="'Status: ' + ${status}"></p>
+    <p class="errorP" th:text="'Timestamp: ' + ${timestamp}"></p>
+    <p class="errorP" th:text="'Path: ' + ${path}"></p>
+    <a class="errorA" th:href="@{/product}">Voltar ao início</a>
+    </div>
+</div>
 </body>
 </html>

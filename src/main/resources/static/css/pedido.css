@@ -42,6 +42,7 @@
     overflow-y: auto;
     max-height: 500px;
     border-bottom: 2px solid black;
+    display:contents;
 }
 
 table{
@@ -87,6 +88,7 @@ overflow: hidden;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 
 .linkEdit {
     background-color: var(--AzulAtual);
@@ -136,4 +138,12 @@ button #buy:hover {
 
 button #buy:active{
 	transform:scale(0.9);
+}
+.exInfo{
+    font-size:18px;
+    font-weight:600;
+
+}
+.exControl{
+    float: right;
 }

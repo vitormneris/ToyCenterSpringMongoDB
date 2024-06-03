@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" th:href="@{/css/remodel.css}">
 	<link rel="stylesheet" th:href="@{/css/styleToy.css}">
-	<link rel="stylesheet" th:href="@{/css/styleCompra.css}">
+	<link rel="stylesheet" th:href="@{/css/styleComprar.css}">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link
@@ -18,9 +18,16 @@
 <body>
 <header>
 	<nav class="nav-logo">
-		<div class="logo"><a href="getAllToy.html"> <img src="image/logoToyCenterAlt.svg" alt=""></a></div>
-		<div class="store-name"><h1>TOY CENTER</h1></div>
-		<div class="space"></div>
+		<div class="logo">
+			<a href="getAllToy.html"> <img
+					src="image/logoToyCenterAlt.svg" alt=""></a>
+		</div>
+
+		<div class="store-name">
+			<h1>TOY CENTER</h1>
+		</div>
+
+		<div class="space"><div class="menuList"><a class="loginBtn" th:href="@{'/client/login'}">ENTRAR</a></div></div>
 	</nav>
 
 	<nav class="menu">
@@ -37,11 +44,10 @@
 					<a th:href="@{'/administrator/findAll'}">Administradores</a>
 				</div>
 			</div>
-
 			<a th:href="@{'/order'}">Ver pedidos</a>
 			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
-			<a th:href="@{'/client/login'}">Entrar</a>
 			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
+
 		</div>
 	</nav>
 </header>
@@ -70,7 +76,7 @@
 					<label for="quantidade" class="quantidadeLabel"><p class="desCarrinho">Quantidade:</p></label>
 					<div class="ajusteQuantidade">
 						<button type="button" class="btnQuantidade menos">-</button>
-						<input id="quantidade" name="quantidade" class="inputQuantidade" step="1" min="1" th:field="*{quantity}"> <br>
+						<input id="quantidade" name="quantidade" class="inputQuantidade" step="1" min="1" th:field="*{quantity}">
 						<button type="button" class="btnQuantidade mais">+</button>
 					</div>
 

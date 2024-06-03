@@ -164,3 +164,78 @@ a.botao1:hover {
 .trb {
 	background-color: rgba(1, 1, 1, 0.3);
 }
+.containerUser{
+        background-color: var(--AzulAtual);
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+    width: 50%;
+    border-radius: 30px;
+    margin-bottom:10vh;
+    margin-top:10vh;
+}
+.camadaUser {
+    padding: 20px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    display:flex;
+    flex-flow:column nowrap;
+       width: 100%;
+}
+.camadaUser h2{
+color:var(--fundoBranco);
+text-align:center;
+}
+.userInfo{
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+.linkEditUser {
+    background-color: var(--Azul);
+    color: var(--fundoBranco);
+        padding: 8px 16px;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+}
+
+.linkEditUser:hover{
+    background-color: #263d84;
+}
+.logOutBtn{
+        outline: none;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        font-weight: 700;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--fundoBranco);
+        color: var(--AzulAtual);
+        border: none;
+        transition: 0.3s ease-in-out;
+        font-size: 16px;
+        border-radius: 25px;
+        width:220px;
+        height: 48px;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        cursor: pointer;
+        text-transform: uppercase;
+        display:inline-block;
+        text-align:center;
+}
+.logOutBtn:hover{
+        background-color: var(--Azul);
+        color: var(--Branco);
+        transform: translateY(-2px);
+}
+.logOutBtn:active{
+       transform: scale(0.90);
+}

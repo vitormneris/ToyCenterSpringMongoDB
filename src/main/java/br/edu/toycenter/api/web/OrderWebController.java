@@ -70,9 +70,9 @@ public class OrderWebController {
 
 		String clientId = (String) session.getAttribute("clientId");
 		List<OrderResponseDTO> listResponseDTO = service.findByClientId(clientId);
-		int lastIndex = listResponseDTO.size() - 1;
-		listResponseDTO.remove(lastIndex);
-		model.addAttribute("orderDTOList", listResponseDTO);
+		List<OrderResponseDTO> listDTO = new ArrayList<>();
+		listDTO.add(listResponseDTO.get(0));
+		model.addAttribute("orderDTOList", listDTO);
 		return "order/findByClientId";
 	}
 	
@@ -84,15 +84,17 @@ public class OrderWebController {
 		String clientId = (String) session.getAttribute("clientId");
 		ClientResponseDTO clientDTO = clientService.findById(clientId);
 		List<String> listOrderId = new ArrayList<>();
+
 		for (Order order : clientDTO.orders()) {
 			listOrderId.add(order.getId());
 		}
 		
 		AuxOrderRequestDTO auxOrderRequestDTO = new AuxOrderRequestDTO(null, clientId, 0, productId);
-
+		List<String> listId = new ArrayList<>();
+		listId.add(listOrderId.get(0));
 		ProductResponseDTO productDTO = productService.findById(productId);
 		model.addAttribute("productDTO", productDTO);
-		model.addAttribute("listId", listOrderId);
+		model.addAttribute("listId", listId);
 		model.addAttribute("orderRequestDTO", auxOrderRequestDTO);
 		return "order/insert";
 	}

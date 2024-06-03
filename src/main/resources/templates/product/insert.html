@@ -25,7 +25,7 @@
 			<h1>TOY CENTER</h1>
 		</div>
 
-		<div class="space"></div>
+		<div class="space"><div class="menuList"><a class="loginBtn" th:href="@{'/client/login'}">ENTRAR</a></div></div>
 	</nav>
 
 	<nav class="menu">
@@ -44,8 +44,8 @@
 			</div>
 			<a th:href="@{'/order'}">Ver pedidos</a>
 			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
-			<a th:href="@{'/client/login'}">Entrar</a>
 			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
+
 		</div>
 	</nav>
 </header>
@@ -94,11 +94,14 @@
 <!--			    <select name="toy_categories" id="categorias">-->
 <!--			    	<option th:each="category : ${listCategoryDTO}" th:field="*{categoriesId}" th:value="${category.id}" th:text="${category.name}"></option>-->
 <!--			    </select>-->
-
-			<label>Select Categories:</label><br>
-			<div th:each="category : ${listCategoryDTO}">
+				<div class="fieldsetBoxList">
+			<label id="listLabel">Selecione Categorias:</label><br>
+					<div class="items">
+			<div class="options" th:each="category : ${listCategoryDTO}">
 				<input type="checkbox" th:field="*{categoriesId}" th:value="${category.id}">
 				<label th:text="${category.name}"></label><br>
+			</div>
+					</div>
 			</div>
 
 			</div>

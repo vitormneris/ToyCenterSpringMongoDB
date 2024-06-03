@@ -26,7 +26,7 @@
             <h1>TOY CENTER</h1>
         </div>
 
-        <div class="space"></div>
+        <div class="space"><div class="menuList"><a class="loginBtn" th:href="@{'/client/login'}">ENTRAR</a></div></div>
     </nav>
 
     <nav class="menu">
@@ -45,8 +45,8 @@
             </div>
             <a th:href="@{'/order'}">Ver pedidos</a>
             <a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
-            <a th:href="@{'/client/login'}">Entrar</a>
             <a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
+
         </div>
     </nav>
 </header>
@@ -82,10 +82,14 @@
                             </tr>
                         </tbody>
 		            </table>
+                    <div class="exInfo">
                     <p>Momento: <span th:text="${orderDTO.moment}"></span> </p>
                     <p>Total R$ <span class="valor_totalPed" th:text="${orderDTO.total}"></span> </p>
-                    <a th:attr="onclick='deleteOrder(\'' + ${orderDTO.client.id} + '\', \'' + ${orderDTO.id} + '\')'">delete order</a>
-                    <a th:href="@{'/order/orderBuy/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}"><button type="button" id="buy">Comprar</button></a>
+                    </div>
+                    <div class="exControl">
+                    <a class="linkDelete" th:attr="onclick='deleteOrder(\'' + ${orderDTO.client.id} + '\', \'' + ${orderDTO.id} + '\')'">Excluir Carrinho</a>
+                    <a class="linkEdit" th:href="@{'/order/orderBuy/' + ${orderDTO.client.id} + '/' + ${orderDTO.id}}">Comprar</a>
+                    </div>
                 </div>
             </div>
         </div>
