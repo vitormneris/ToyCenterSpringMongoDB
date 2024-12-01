@@ -10,7 +10,7 @@ Desenvolvedores:
  João Vítor Moreira Dos Santos Neris - BackEnd e Banco de dados (JAVA e MONGODB) 
 
  &nbsp;
- Fábio Monte Alves - FrontEnd e BackEnd (HTML, CSS) 
+ Fábio Monte Alves - FrontEnd (HTML, CSS) 
  
 &nbsp;
  Guilherme Cabral de Lima - FrontEnd (HTML, CSS e JS) 
