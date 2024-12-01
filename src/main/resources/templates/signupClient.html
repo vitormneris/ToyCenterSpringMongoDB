@@ -74,8 +74,9 @@
 			    <button id="confirmBtn" onclick="confirmSubmission()" type="submit">Salvar</button>
 			</div>
             <br><br>
-        </form>
-    </div>
+		</form>
+		<p th:if="${message != null}" th:text="${message}" style="color: red;"></p>
+	</div>
 
     <script>
 	    function confirmSubmission() {
