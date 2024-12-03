@@ -1,9 +1,7 @@
 package br.edu.toycenter.config;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -11,16 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import br.edu.toycenter.model.entities.Administrator;
 import br.edu.toycenter.model.entities.Category;
-import br.edu.toycenter.model.entities.Client;
-import br.edu.toycenter.model.entities.Order;
-import br.edu.toycenter.model.entities.OrderItem;
 import br.edu.toycenter.model.entities.Product;
-import br.edu.toycenter.model.repositories.AdministratorRepository;
 import br.edu.toycenter.model.repositories.CategoryRepository;
-import br.edu.toycenter.model.repositories.ClientRepository;
-import br.edu.toycenter.model.repositories.OrderRepository;
 import br.edu.toycenter.model.repositories.ProductRepository;
 
 @Configuration
@@ -28,26 +19,13 @@ import br.edu.toycenter.model.repositories.ProductRepository;
 @RequiredArgsConstructor
 public class TestConfig implements CommandLineRunner {
     private final MongoTemplate mongoTemplate;
-	private final ClientRepository clientRepository;
-	private final AdministratorRepository administratorRepository;
 	private final ProductRepository productRepository;
 	private final CategoryRepository categoryRepository;
-	private final OrderRepository orderRepository;
-	
+
 	@Override
 	public void run(String... args) {
         mongoTemplate.getDb().drop();
-		
-        Administrator ua1 = new Administrator(null, "admin", "admin@admin", "admin");
-        
-        administratorRepository.save(ua1);
 
-        Client uc1 = new Client(null, "951.954.148-88", "Maria Brown", "maria@gmail.com", "11988888888", "65cc4123");
-        Client uc2 = new Client(null, "152.361.141-64", "Alex Green", "alex@gmail.com", "11977777777", "123456");
-        Client uc3 = new Client(null, "142.141.391-51", "James Red", "james@gmail.com", "11966666666", "654cc321");
-		
-		clientRepository.saveAll(Arrays.asList(uc1, uc2, uc3));
-		
 		Product p1 = new Product(null, "Carrinho de controle remoto", "/images/product/pinguim1.webp", "Estrela", 99.90, "Carrinho de controle remoto de qualidade"
 				, "Carrinho a pilha de 40 cm", new ArrayList<>());
 		Product p2 = new Product(null, "Boneca da Barbie", "/images/product/pinguim1.webp", "Funtoy", 120.99, "Boneca da Barbie do seus sonhos"
@@ -74,33 +52,5 @@ public class TestConfig implements CommandLineRunner {
 		productRepository.saveAll(Arrays.asList(p1, p2, p3));
 		
 		categoryRepository.saveAll(Arrays.asList(c1, c2, c3));
-		
-		OrderItem oi1 = new OrderItem(1, p1.getPrice(), p1);
-		OrderItem oi2 = new OrderItem(2, p2.getPrice(), p2);
-		OrderItem oi3 = new OrderItem(3, p3.getPrice(), p3);
-		
-		Order o1 = new Order(null, Instant.parse("2019-06-20T19:53:07Z"), uc1.getId(), List.of(oi1));
-		Order o2 = new Order(null, Instant.parse("2019-07-21T03:42:10Z"), uc2.getId(), List.of(oi2));
-		Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), uc3.getId(), List.of(oi3));
-	
-		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
-		
-		uc1.getOrdersId().add(o1.getId());
-		uc2.getOrdersId().add(o2.getId());
-		uc3.getOrdersId().add(o3.getId());
-
-		clientRepository.saveAll(Arrays.asList(uc1, uc2, uc3));
-
-		o1 = new Order(null, null, uc1.getId(), new ArrayList<>());
-		o2 = new Order(null, null, uc2.getId(), new ArrayList<>());
-		o3 = new Order(null, null, uc3.getId(), new ArrayList<>());
-
-		orderRepository.saveAll(Arrays.asList(o1, o2, o3));
-
-		uc1.getOrdersId().add(o1.getId());
-		uc2.getOrdersId().add(o2.getId());
-		uc3.getOrdersId().add(o3.getId());
-
-		clientRepository.saveAll(Arrays.asList(uc1, uc2, uc3));
 	}
 }

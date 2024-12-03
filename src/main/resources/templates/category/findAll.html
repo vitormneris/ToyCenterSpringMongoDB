@@ -12,41 +12,36 @@
 	<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-<header>
-	<nav class="nav-logo">
-		<div class="logo">
-			<a href="getAllToy.html"> <img
-					src="image/logoToyCenterAlt.svg" alt=""></a>
-		</div>
-
-		<div class="store-name">
-			<h1>TOY CENTER</h1>
-		</div>
-
-		<div class="space"><div class="menuList"><a class="loginBtn" th:href="@{'/client/login'}">ENTRAR</a></div></div>
-	</nav>
-
-	<nav class="menu">
-		<div class="menuList">
-			<a th:href="@{'/product'}">Inicio</a>
-			<a th:href="@{'/category'}">Categorias</a>
-
-			<div class="dropdown">
-				<button class="dropbtn">Administração</button>
-				<div class="dropdown-content">
-					<a th:href="@{'/product/findAll'}">Brinquedos</a>
-					<a th:href="@{'/category/findAll'}">Categorias</a>
-					<a th:href="@{'/client/findAll'}">Clientes</a>
-					<a th:href="@{'/administrator/findAll'}">Administradores</a>
-				</div>
+	<header>
+		<nav class="nav-logo">
+			<div class="logo">
+				<a href="getAllToy.html"> <img
+						src="image/logoToyCenterAlt.svg" alt=""></a>
 			</div>
-			<a th:href="@{'/order'}">Ver pedidos</a>
-			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
-			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
+	
+			<div class="store-name">
+				<h1>TOY CENTER</h1>
+			</div>
+		</nav>
+	
+		<nav class="menu">
+			<div class="menuList">
+				<a th:href="@{'/product'}">Inicio</a>
+				<a th:href="@{'/category'}">Categorias</a>
+	
+				<div class="dropdown">
+					<button class="dropbtn">Administração</button>
+					<div class="dropdown-content">
+						<a th:href="@{'/product/findAll'}">Brinquedos</a>
+						<a th:href="@{'/category/findAll'}">Categorias</a>
+					</div>
+				</div>
+				<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
+	
+			</div>
+		</nav>
+	</header>
 
-		</div>
-	</nav>
-</header>
 	<div class="containerAdm">
 	  <div class="camada0">
 	    <div class="camada1">
@@ -79,8 +74,6 @@
 	        <div class="centralizeButton">
 	        <a id="confirmBtn" href="/category/insert">Adicionar</a>
 				<br><br>
-				<a class="confirmBtn" onclick="logOff()">Deslogar</a>
-	        <br><br>
 	        </div>
             <script>
 			function deleteCategory(id) {
@@ -101,25 +94,6 @@
 			    } else {
 			        console.log("Deletion canceled by category.");
 			    }
-			}
-			
-			function logOff() {
-				if (window.confirm("Você tem certeza de que deseja sair?")) {
-					console.log("User quit successfully!");
-					fetch('http://localhost:8080/administrator/logout', {
-						method: 'GET',
-					})
-					.then(response => {
-						console.log('Server response:', response);
-						window.location.href = "http://localhost:8080/product";
-					})
-					.catch(error => {
-						console.error('Request error:', error);
-					});
-				} else {
-					console.log("User not quit.");
-
-				}
 			}
 		  </script>
 	    </div>

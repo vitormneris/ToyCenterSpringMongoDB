@@ -41,7 +41,6 @@ public class CategoryWebController {
 	public String findAll(Model model) {
 		HttpSession	session = request.getSession();
 		session.setAttribute("previousURI", ("/category/findAll"));
-		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		List<CategoryResponseDTO> listCategoryDTO = service.findAll();
 		model.addAttribute("listCategoryDTO", listCategoryDTO);
 		return "/category/findAll";
@@ -51,7 +50,6 @@ public class CategoryWebController {
 	public String insert(Model model) {
 		HttpSession	session = request.getSession();
 		session.setAttribute("previousURI", ("/category/insert"));
-		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		model.addAttribute("categoryRequestDTO", new CategoryRequestDTO(null, null, null, null));
 		return "/category/insert";
 	}
@@ -60,7 +58,6 @@ public class CategoryWebController {
 	public String update(Model model, @PathVariable("id") String id) {
 		HttpSession	session = request.getSession();
 		session.setAttribute("previousURI", ("/category/update/" + id));
-		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		CategoryResponseDTO categoryResponseDTO = service.findById(id);
 		model.addAttribute("categoryRequestDTO", convert.forCategoryRequestDTO(categoryResponseDTO));
 		return "/category/update";
@@ -70,7 +67,6 @@ public class CategoryWebController {
 	public String delete(Model model, @PathVariable("id") String id) {
 		HttpSession	session = request.getSession();
 		session.setAttribute("previousURI", ("/category/delete/" + id));
-		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		model.addAttribute("categoryId", id);
 		return "/category/delete";
 	}
@@ -98,12 +94,5 @@ public class CategoryWebController {
 	public String delete(@PathVariable String id) {
 		service.delete(id);
 		return "redirect:/category/findAll";
-	}
-	
-	private boolean administratorIsLogged() {
-		HttpSession session = request.getSession();
-		String adminsitratorId = (String) session.getAttribute("administratorId");
-		if (adminsitratorId == null) return false;
-		return true;
 	}
 }

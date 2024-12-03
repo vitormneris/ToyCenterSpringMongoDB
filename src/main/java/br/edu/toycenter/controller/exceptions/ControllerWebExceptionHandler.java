@@ -20,12 +20,6 @@ public class ControllerWebExceptionHandler {
         return "redirect:" + request.getRequestURI();
     }
 
-    @ExceptionHandler(LoginInvalidException.class)
-    public String loginInvalid(LoginInvalidException e, HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("message", e.getMessage());
-        return "redirect:" + request.getRequestURI();
-    }
-
     @ExceptionHandler(ResourceNotFoundException.class)
     public String resourceNotFound(ResourceNotFoundException e, HttpServletRequest request, Model model) {
         model.addAttribute("status", HttpStatus.NOT_FOUND.value());

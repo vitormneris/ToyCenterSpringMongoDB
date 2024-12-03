@@ -72,7 +72,6 @@ public class ProductWebController {
 	public String findAll(Model model) {
 		HttpSession	session = request.getSession();
 		session.setAttribute("previousURI", ("/product/findAll"));
-		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		List<ProductResponseDTO> productResponseDTOList = service.findAll();
 		model.addAttribute("listProductDTO", productResponseDTOList);
 		return "/product/findAll";
@@ -82,7 +81,6 @@ public class ProductWebController {
 	public String insert(Model model) {
 		HttpSession	session = request.getSession();
 		session.setAttribute("previousURI", ("/product/insert"));
-		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		List<CategoryResponseDTO> categoryResponseDTOList = categoryService.findAll();
 		model.addAttribute("productDTO", new ProductRequestDTO(null, null, null, null, null, null, null, null));
 		model.addAttribute("listCategoryDTO", categoryResponseDTOList);
@@ -93,7 +91,6 @@ public class ProductWebController {
 	public String update(Model model, @PathVariable("id") String id) {
 		HttpSession	session = request.getSession();
 		session.setAttribute("previousURI", ("/product/update/" + id));
-		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		ProductResponseDTO productResponseDTO = service.findById(id);
 		List<CategoryResponseDTO> categoryResponseDTOList = categoryService.findAll();
 		model.addAttribute("productRequestDTO", convert.forProductRequestDTO(productResponseDTO));
@@ -105,7 +102,6 @@ public class ProductWebController {
 	public String delete(Model model, @PathVariable("id") String id) {
 		HttpSession	session = request.getSession();
 		session.setAttribute("previousURI", ("/product/delete/" + id));
-		if (!administratorIsLogged()) return  "redirect:/administrator/login";
 		model.addAttribute("productId", id);
 		return "/product/delete";
 	}
@@ -134,12 +130,5 @@ public class ProductWebController {
 	public String delete(@PathVariable String id) {
 		service.delete(id);
 		return "redirect:/product/findAll";
-	}
-	
-	private boolean administratorIsLogged() {
-		HttpSession session = request.getSession();
-		String adminsitratorId = (String) session.getAttribute("administratorId");
-		if (adminsitratorId == null) return false;
-		return true;
 	}
 }

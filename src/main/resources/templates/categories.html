@@ -12,45 +12,39 @@
 
 </head>
 <body>
-<header>
-	<nav class="nav-logo">
-		<div class="logo">
-			<a href="getAllToy.html"> <img
-					src="image/logoToyCenterAlt.svg" alt=""></a>
-		</div>
-
-		<div class="store-name">
-			<h1>TOY CENTER</h1>
-		</div>
-
-		<div class="space"><div class="menuList"><a class="loginBtn" th:href="@{'/client/login'}">ENTRAR</a></div></div>
-	</nav>
-
-	<nav class="menu">
-		<div class="menuList">
-			<a th:href="@{'/product'}">Inicio</a>
-			<a th:href="@{'/category'}">Categorias</a>
-
-			<div class="dropdown">
-				<button class="dropbtn">Administração</button>
-				<div class="dropdown-content">
-					<a th:href="@{'/product/findAll'}">Brinquedos</a>
-					<a th:href="@{'/category/findAll'}">Categorias</a>
-					<a th:href="@{'/client/findAll'}">Clientes</a>
-					<a th:href="@{'/administrator/findAll'}">Administradores</a>
-				</div>
+	<header>
+		<nav class="nav-logo">
+			<div class="logo">
+				<a href="getAllToy.html"> <img
+						src="image/logoToyCenterAlt.svg" alt=""></a>
 			</div>
-			<a th:href="@{'/order'}">Ver pedidos</a>
-			<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
-			<a th:href="@{'/client/findClient'}">Gerenciar Perfil</a>
-
-		</div>
-	</nav>
-</header>
+	
+			<div class="store-name">
+				<h1>TOY CENTER</h1>
+			</div>
+		</nav>
+	
+		<nav class="menu">
+			<div class="menuList">
+				<a th:href="@{'/product'}">Inicio</a>
+				<a th:href="@{'/category'}">Categorias</a>
+	
+				<div class="dropdown">
+					<button class="dropbtn">Administração</button>
+					<div class="dropdown-content">
+						<a th:href="@{'/product/findAll'}">Brinquedos</a>
+						<a th:href="@{'/category/findAll'}">Categorias</a>
+					</div>
+				</div>
+				<a th:href="@{'/administrator/team'}">Sobre a Equipe</a>
+	
+			</div>
+		</nav>
+	</header>
 
 	<div class="title-container">
         <h1 class="title">Categorias</h1>
-        <div class="title-line" align="center" ></div>
+        <div class="title-line"></div>
     </div>
     
     <div class="cards-container">
