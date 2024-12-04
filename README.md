@@ -1,24 +1,24 @@
-Projeto Toy Center com spring boot
+## Projeto Toy Center com spring boot
 
 &nbsp;
-Projeto de uma loja de brinquedo feito na faculdade. Usando Java 17 com Spring boot e banco de dados NoSQL Mongo DB.
+Projeto da faculdade FATEC Itaquera, ministrado pelo professor Jadir Mendoça. É um projeto de e-commerce bem simples com as entidades categoria e produto em relacionamento, o foco desse projeto estava em aprender o desenvolvimento de aplicações web usando as tecnologias: Java, Spring Boot e Banco de dados NoSQL. Além disso, foi usado HTML5, CSS3, Javascript e thymeleaf no front-end.
 
 &nbsp;
 Desenvolvedores:
 
 &nbsp;
- João Vítor Moreira Dos Santos Neris - BackEnd e Banco de dados (JAVA e MONGODB) 
+ EU: João Vítor Moreira Dos Santos Neris - Back-end e Banco de dados (JAVA, MONGODB e Thymeleaf) 
 
  &nbsp;
- Fábio Monte Alves - FrontEnd (HTML, CSS) 
+ Fábio Monte Alves - Front-end (HTML, CSS) 
  
 &nbsp;
- Guilherme Cabral de Lima - FrontEnd (HTML, CSS e JS) 
+ Guilherme Cabral de Lima - Front-end (HTML, CSS e JS) 
  
 &nbsp;
- Matheus Godoy dos Reis - FrontEnd (HTML e CSS) 
+ Matheus Godoy dos Reis - Front-end (HTML e CSS) 
  
 &nbsp;
- Jósé Henrique Almeida Motta - FrontEnd (HTML e CSS) 
+ Jósé Henrique Almeida Motta - Front-end (HTML e CSS) 
 
  
